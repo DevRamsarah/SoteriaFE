@@ -1,0 +1,17 @@
+<div class="container-fluid">
+    <div class="form-group"><input type="text" [(ngModel)]="EmployeeName" class="form-control"
+                    placeholder="Enter Guard Name"></div>
+    <div class="form-group"><input type="number" [(ngModel)]="EmployeeAge" class="form-control"
+                    placeholder="Enter Guard Age"></div>
+    <div class="form-group"><input type="text" [(ngModel)]="EmployeeAddress" class="form-control"
+                    placeholder="Enter Guard Address"></div>
+    <div class="form-group"><input type="text" [(ngModel)]="EmployeeCity" class="form-control"
+                    placeholder="Enter Guard City"></div>
+    <div class="form-group"><button class="btn btn-primary" (click)="createEmployee()"
+                    [disabled]="!EmployeeName || !EmployeeAge || !EmployeeAddress || !EmployeeCity">Create
+                    Employee</button>
+    </div>
+    <div class="form-group">
+            <h4>{{message}}</h4>
+    </div>
+</div>
