@@ -21,7 +21,9 @@ import { SchedulerComponent } from './scheduler/scheduler.component';
 import { TimeClockComponent } from './time-clock/time-clock.component';
 import { PayrollComponent } from './payroll/payroll.component';
 import { InvoiceComponent } from './invoice/invoice.component';
-import { ProfileComponent } from './profile/profile.component'
+import { ProfileComponent } from './profile/profile.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component'
 @NgModule({
   declarations: [
     AppComponent,
@@ -41,7 +43,9 @@ import { ProfileComponent } from './profile/profile.component'
     TimeClockComponent,
     PayrollComponent,
     InvoiceComponent,
-    ProfileComponent
+    ProfileComponent,
+    LoginComponent,
+    RegisterComponent
 
   ],
   imports: [

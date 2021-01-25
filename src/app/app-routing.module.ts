@@ -5,6 +5,8 @@ import { GuardComponent } from './guard/guard.component';
 import { ClientComponent } from './client/client.component';
 import { LocationComponent } from './location/location.component';
 import { DispatcherComponent } from './dispatcher/dispatcher.component';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
@@ -24,6 +26,14 @@ const routes: Routes = [
   },
   {
     path: 'Dispatcher', component: DispatcherComponent,
+
+  },
+  {
+    path: 'Login', component: LoginComponent,
+
+  },
+  {
+    path: 'Register', component: RegisterComponent,
 
   },
 ];
