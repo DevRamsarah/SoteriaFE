@@ -10,7 +10,7 @@ import { RegisterComponent } from './register/register.component';
 
 const routes: Routes = [
   {
-    path: 'Home', component: HomeComponent,
+    path: 'Dashboard', component: HomeComponent,
 
   },
   {
