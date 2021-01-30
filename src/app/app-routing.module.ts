@@ -18,7 +18,7 @@ const routes: Routes = [
 
   },
   {
-    path: 'Client', component: ClientComponent,
+    path: 'Clients', component: ClientComponent,
 
   }, {
     path: 'Location', component: LocationComponent,

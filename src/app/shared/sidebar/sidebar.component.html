@@ -10,30 +10,72 @@
 				<a href="index.html" class="logo">Soteria
 				</a>
 			</h1>
-			<ul class="list-unstyled components mb-5">
-				<li class="active">
-					<a href="#"><span class="fa fa-home mr-3"></span>Home</a>
-				</li>
-				<li>
-					<a href="#"><span class="fa fa-user mr-3"></span>About</a>
-				</li>
-				<li>
-					<a href="#"><span class="fa fa-briefcase mr-3"></span>Works</a>
-				</li>
-				<li>
-					<a href="#"><span class="fa fa-sticky-note mr-3"></span>Blog</a>
-				</li>
-				<li>
-					<a href="#"><span class="fa fa-suitcase mr-3"></span>Gallery</a>
-				</li>
-				<li>
-					<a href="#"><span class="fa fa-cogs mr-3"></span>Services</a>
-				</li>
-				<li>
-					<a href="#"><span class="fa fa-paper-plane mr-3"></span>Contacts</a>
-				</li>
-			</ul>
+			<mat-nav-list>
+				<ul class="list-unstyled components mb-5">
+					<li>
+						<a [routerLink]="['dashboard']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Dashboard</a>
+					</li>
+					<li>
+						<a [routerLink]="['Clients']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Clients</a>
+					</li>
+					<li>
+						<a [routerLink]="['Guards']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Guards</a>
+					</li>
+					<li>
+						<a [routerLink]="['Tracker']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Tracker</a>
+					</li>
+					<li>
+						<a [routerLink]="['Dispatcher']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Dispatcher</a>
+					</li>
+					<li>
+						<a [routerLink]="['Visitors']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Visitors</a>
+					</li>
+					<li>
+						<a [routerLink]="['Messenger']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Messenger</a>
+					</li>
+					<li>
+						<a [routerLink]="['Reports']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Reports</a>
+					</li>
 
+					<h2 matSubheader>Admin</h2>
+					<li>
+						<a [routerLink]="['Scheduler']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Scheduler</a>
+					</li>
+					<li>
+						<a [routerLink]="['Time']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Time Clock</a>
+					</li>
+					<li>
+						<a [routerLink]="['Payroll']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Payroll</a>
+					</li>
+					<li>
+						<a [routerLink]="['Invoicer']" [routerLinkActive]="['active']" aria-expanded="false">
+							<span class="fa fa-home mr-3"></span>
+							Invoicer</a>
+					</li>
+				</ul>
+			</mat-nav-list>
 		</div>
 	</nav>
 
