@@ -23,7 +23,10 @@ import { PayrollComponent } from './payroll/payroll.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { ProfileComponent } from './profile/profile.component';
 import { LoginComponent } from './login/login.component';
-import { RegisterComponent } from './register/register.component'
+import { RegisterComponent } from './register/register.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
+import { CustomMaterialModule } from './material.module';
+import { FlexLayoutModule } from '@angular/flex-layout';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,7 +63,10 @@ import { RegisterComponent } from './register/register.component'
       storageBucket: "demoauth-48ba3.appspot.com",
       messagingSenderId: "176754222221",
       appId: "1:176754222221:web:797017e545d6794ff6eec4"
-    })
+    }),
+    BrowserAnimationsModule,
+    FlexLayoutModule,
+    CustomMaterialModule
   ],
   providers: [FirebaseService],
   bootstrap: [AppComponent]

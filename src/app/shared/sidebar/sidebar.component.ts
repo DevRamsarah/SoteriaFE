@@ -8,7 +8,7 @@ import { FirebaseService } from 'src/services/firebase.service';
 })
 export class SidebarComponent implements OnInit {
   @Output() isLogout = new EventEmitter<void>()
-
+  status: boolean = false;
   constructor(public firebaseService: FirebaseService
   ) {
   }
@@ -17,6 +17,8 @@ export class SidebarComponent implements OnInit {
     this.firebaseService.logout()
     this.isLogout.emit()
   }
-
+  clickEvent() {
+    this.status = !this.status;
+  }
   ngOnInit(): void { }
 }
