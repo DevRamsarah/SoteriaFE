@@ -1,28 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Rancho&display=swap');
 h1{
-  padding-top: 22.9px;
-  padding-bottom: 14.9px;
+  padding-top: 2.7vh;
+  padding-bottom: 1.8vh;
   display: flex;
   justify-content: center;
   align-items: center;
   background: #47c5ff;
   font-family: 'Rancho', cursive;
-  letter-spacing: 12px;
+  letter-spacing: 1.44vh;
 }
 .hide{
-  margin-left: -210px;
+  margin-left: -30vh;
 }
 a {text-decoration: none;}
 .wrapper {
   width: 100%;
-  min-height: 100vh;
-  margin-top: -70px;
- }
+}
 
 #sidebar {
+  display: absolute;
+  top: -70px;
   border-right:  solid 1px rgba(189, 189, 189, 0.637);
-  min-width: 210px;
-  max-width: 210px;
+  min-width: 30vh;
+  max-width: 30vh;
   background: #fff;
   color: #000;
   -webkit-transition: all 0.3s;
@@ -31,31 +31,31 @@ a {text-decoration: none;}
   position: relative; }
 
   #sidebar.active {
-    margin-left: -270px; }
+    margin-left: -32.7vh; }
   #sidebar h1 {
-    margin-bottom: 20px;
+    margin-bottom: 2.4vh;
     font-weight: 700;
-    font-size: 36px; }
+    font-size: 6vh; }
 
     #sidebar h1 .logo {
       color: #fff; }
       #sidebar ul  {
-       margin-top: -19.5px; }
+       margin-top: -2.4vh; }
       
         #sidebar ul li {
-          width: 210px;
-          height: 53px;
-          font-size: 14.5px;
+          width: 30vh;
+          height: 6vh;
+          font-size: 1.8vh;
           font-weight: 500;
-        padding-bottom: 3px;
+        padding-bottom: 0.36vh;
         display: flex;
   align-items: center; }
   
 
         #sidebar ul li a span {
-          padding-left:40px ; 
+          padding-left:4.82vh ; 
           padding-right:0px ;
-        width: 60px; }
+        width: 7.23vh; }
 
           #sidebar ul li:hover {
             background: rgba(218, 216, 216, 0.26); }
@@ -64,7 +64,7 @@ a {text-decoration: none;}
 
 
     #sidebar ul li a {
-      padding: 10px 0;
+      padding: 1.2vh 0;
       display: block;
       color: #000;
    }
@@ -82,7 +82,7 @@ a {text-decoration: none;}
       color: #47c5ff; }
   @media (max-width: 991.98px) {
     #sidebar {
-      margin-left: -210px; }
+      margin-left: -30vh; }
       #sidebar.active {
         margin-left: 0; } }
 
@@ -90,16 +90,16 @@ a {text-decoration: none;}
   #sidebar .custom-menu {
     display: inline-block;
     position: absolute;
-    top: 7px;
+    top: 0.84vh;
     right: 0;
-    margin-right: -35px;
+    margin-right: -4.22vh;
     -webkit-transition: 0.3s;
     -o-transition: 0.3s;
     transition: 0.3s; }
 
     #sidebar .custom-menu .ham {
-      margin-top: 20px;
-      font-size: 25px;
+      margin-top: 2.41vh;
+      font-size: 3.01vh;
     }
     @media (prefers-reduced-motion: reduce) {
       #sidebar .custom-menu {

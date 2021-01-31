@@ -1,14 +1,18 @@
-<app-header></app-header>
+<app-login></app-login>
 
-<div class="wrapper d-flex align-items-stretch">
+<div *ngIf="!logIn">
+    <app-header></app-header>
 
-    <app-sidebar></app-sidebar>
+    <div class="wrapper d-flex align-items-stretch">
+
+        <app-sidebar></app-sidebar>
 
 
-    <!-- Page Content  -->
-    <div id="content" class="  pt-3">
+        <!-- Page Content  -->
+        <div id="content" class="  pt-3">
 
-        <router-outlet></router-outlet>
+            <router-outlet></router-outlet>
 
+        </div>
     </div>
 </div>

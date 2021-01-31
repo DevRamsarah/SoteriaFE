@@ -12,7 +12,6 @@ input {
 }
 
 .container {
-  position: relative;
   width: 100%;
   background-color: #fff;
   min-height: 100vh;
@@ -69,7 +68,7 @@ form.sign-in-form {
 .input-field {
   max-width: 380px;
   width: 100%;
-  background-color: #f0f0f0;
+  background-color: #ffffff;
   margin: 10px 0;
   height: 55px;
   border-radius: 55px;
@@ -77,12 +76,15 @@ form.sign-in-form {
   grid-template-columns: 15% 85%;
   padding: 0 0.4rem;
   position: relative;
+  border-bottom: thin solid #4481eb;
+  border-top: thin solid #00000067;
+
 }
 
 .input-field i {
   text-align: center;
   line-height: 55px;
-  color: #acacac;
+  color: #4481eb;
   transition: 0.5s;
   font-size: 1.1rem;
 }
@@ -98,7 +100,7 @@ form.sign-in-form {
 }
 
 .input-field input::placeholder {
-  color: #aaa;
+  color: #4481eb;
   font-weight: 500;
 }
 
@@ -151,6 +153,7 @@ form.sign-in-form {
   background-color: #4d84e2;
 }
 .panels-container {
+  background: white;
   position: absolute;
   height: 100%;
   width: 100%;
@@ -164,7 +167,7 @@ form.sign-in-form {
   content: "";
   position: absolute;
   height: 2000px;
-  width: 2000px;
+  width: 100%;
   top: -10%;
   right: 48%;
   transform: translateY(-50%);

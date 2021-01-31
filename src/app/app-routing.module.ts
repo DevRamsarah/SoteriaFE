@@ -7,10 +7,11 @@ import { LocationComponent } from './location/location.component';
 import { DispatcherComponent } from './dispatcher/dispatcher.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 const routes: Routes = [
   {
-    path: 'Dashboard', component: HomeComponent,
+    path: 'Dashboard', component: DashboardComponent,
 
   },
   {
@@ -34,6 +35,10 @@ const routes: Routes = [
   },
   {
     path: 'Register', component: RegisterComponent,
+
+  },
+  {
+    path: 'Home', component: HomeComponent,
 
   },
 ];
