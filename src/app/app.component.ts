@@ -9,7 +9,7 @@ import { FirebaseService } from 'src/services/firebase.service';
 export class AppComponent implements OnInit {
   title = 'SoteriaFE';
   isSignIn = false;
-  logIn = true;
+  logIn = false;
   constructor(public firebaseService: FirebaseService) { }
   ngOnInit() {
     console.log(this.logIn);

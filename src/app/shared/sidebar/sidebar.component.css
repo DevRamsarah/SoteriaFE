@@ -44,12 +44,11 @@ a {text-decoration: none;}
       
         #sidebar ul li {
           width: 30vh;
-          height: 6vh;
+    
           font-size: 1.8vh;
           font-weight: 500;
-        padding-bottom: 0.36vh;
-        display: flex;
-  align-items: center; }
+   
+        }
   
 
         #sidebar ul li a span {
@@ -60,9 +59,6 @@ a {text-decoration: none;}
           #sidebar ul li:hover {
             background: rgba(218, 216, 216, 0.26); }
 
- 
-
-
     #sidebar ul li a {
       padding: 1.2vh 0;
       display: block;
@@ -71,16 +67,20 @@ a {text-decoration: none;}
 
       #sidebar ul li a span {
         color: #000; }
+ 
+  
+   #sidebar ul li > a.active, #sidebar ul li > a.active span  {
+      background: transparent;
+      color: #47c5ff; }
+
       #sidebar ul li:hover a{
         color: tomato;
     }
     #sidebar ul li:hover a span{
       color: tomato;
   }
-   #sidebar ul li > a.active, #sidebar ul li > a.active span  {
-      background: transparent;
-      color: #47c5ff; }
-  @media (max-width: 991.98px) {
+
+  @media (max-width: 591.98px) {
     #sidebar {
       margin-left: -30vh; }
       #sidebar.active {
@@ -101,6 +101,13 @@ a {text-decoration: none;}
       margin-top: 2.41vh;
       font-size: 3.01vh;
     }
+
+
+
+
+
+
+
     @media (prefers-reduced-motion: reduce) {
       #sidebar .custom-menu {
         -webkit-transition: none;
