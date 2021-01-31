@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   }
   enterWebsite($event) {
     this.logIn = !this.logIn
-    console.log(this.logIn);
+
 
   }
 

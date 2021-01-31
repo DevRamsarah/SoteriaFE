@@ -1,4 +1,4 @@
-<app-login></app-login>
+<app-login *ngIf="logIn" (log)="enterWebsite($event)"></app-login>
 
 <div *ngIf="!logIn">
     <app-header></app-header>

@@ -13,8 +13,8 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {
   }
   enterWebsite() {
-    // this.log.emit();
-    console.log("a");
+    this.log.emit();
+
 
   }
   clickEvent() {
