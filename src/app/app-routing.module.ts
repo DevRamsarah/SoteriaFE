@@ -8,6 +8,16 @@ import { DispatcherComponent } from './dispatcher/dispatcher.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { PostSiteComponent } from './post-site/post-site.component';
+import { VisitorsComponent } from './visitors/visitors.component';
+import { ReportComponent } from './report/report.component';
+import { TimeClockComponent } from './time-clock/time-clock.component';
+import { PayrollComponent } from './payroll/payroll.component';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { TrackerComponent } from './tracker/tracker.component';
+import { MessengerComponent } from './messenger/messenger.component';
+import { SchedulerComponent } from './scheduler/scheduler.component';
+
 
 const routes: Routes = [
   {
@@ -39,6 +49,42 @@ const routes: Routes = [
   },
   {
     path: 'Home', component: HomeComponent,
+
+  },
+  {
+    path: 'Visitors', component: VisitorsComponent,
+
+  },
+  {
+    path: 'PostSite', component: PostSiteComponent,
+
+  },
+  {
+    path: 'Tracker', component: TrackerComponent,
+
+  },
+  {
+    path: 'Messenger', component: MessengerComponent,
+
+  },
+  {
+    path: 'Reports', component: ReportComponent,
+
+  },
+  {
+    path: 'Scheduler', component: SchedulerComponent,
+
+  },
+  {
+    path: 'Time', component: TimeClockComponent,
+
+  },
+  {
+    path: 'Payroll', component: PayrollComponent,
+
+  },
+  {
+    path: 'Invoicer', component: InvoiceComponent,
 
   },
 ];
