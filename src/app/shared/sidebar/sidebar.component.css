@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Rancho&display=swap');
 h1{
-  padding-top: 2.7vh;
-  padding-bottom: 1.8vh;
+  padding-top: 2.5vh;
+  padding-bottom: 1vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -9,20 +9,21 @@ h1{
   font-family: 'Rancho', cursive;
   letter-spacing: 1.44vh;
 }
+
 .hide{
   margin-left: -30vh;
 }
 a {text-decoration: none;}
 .wrapper {
   width: 100%;
+margin-top: -60px;
 }
 
 #sidebar {
-  display: absolute;
-  top: -70px;
   border-right:  solid 1px rgba(189, 189, 189, 0.637);
-  min-width: 30vh;
+  min-width: 25vh;
   max-width: 30vh;
+  height: 100vh;
   background: #fff;
   color: #000;
   -webkit-transition: all 0.3s;
@@ -38,7 +39,9 @@ a {text-decoration: none;}
     font-size: 6vh; }
 
     #sidebar h1 .logo {
-      color: #fff; }
+      color: #fff; 
+    font-size: 40px;}
+
       #sidebar ul  {
        margin-top: -2.4vh; }
       

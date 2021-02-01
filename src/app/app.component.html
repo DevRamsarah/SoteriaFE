@@ -1,11 +1,11 @@
 <app-login *ngIf="logIn" (log)="enterWebsite($event)"></app-login>
 
 <div *ngIf="!logIn">
-    <app-header></app-header>
+    <app-header class="header"></app-header>
+    <div class=" d-flex ">
 
-    <div class="wrapper d-flex align-items-stretch">
+    <app-sidebar class="sidebar"></app-sidebar>
 
-        <app-sidebar></app-sidebar>
 
 
         <!-- Page Content  -->
