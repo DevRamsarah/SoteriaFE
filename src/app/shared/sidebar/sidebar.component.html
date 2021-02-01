@@ -1,7 +1,7 @@
 <div class="wrapper d-flex align-items-stretch "   >
 	<nav id="sidebar" [ngClass]="status ? 'hide' : ''" style="z-index: 10;">
 		<div class="custom-menu" (click)="clickEvent()">
-			<div class="ham" type="button">
+			<div class="ham" type="button" title="Menu Toggle">
 				<i class="fa fa-bars"></i>
 			</div>
 		</div>
@@ -13,74 +13,74 @@
 			<mat-nav-list>
 				<ul class="list-unstyled components mb-5">
 					<li>
-						<a [routerLink]="['Dashboard']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Dashboard']" [routerLinkActive]="['active']" title="Dashboard">
 							<span class="fa fa-home mr-3"></span>
 							Dashboard</a>
 					</li>
 					<li>
-						<a [routerLink]="['Clients']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Clients']" [routerLinkActive]="['active']" title="Clients">
 							<span class="fa fa-user mr-3"></span>
 							Clients</a>
 					</li>
 					<li>
-						<a [routerLink]="['Guards']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Guards']" [routerLinkActive]="['active']" title="Guards">
 							<span class="fa fa-user-secret mr-3"></span>
 							Guards</a>
 					</li>
 					<li>
-						<a [routerLink]="['PostSite']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['PostSite']" [routerLinkActive]="['active']" title="PostSite">
 							<span class="fa fa-map-marker mr-3"></span>
 							Post Site</a>
 					</li>
 					<li>
-						<a [routerLink]="['Tracker']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Tracker']" [routerLinkActive]="['active']" title="Tracker">
 							<span class="fa fa-map-signs mr-3"></span>
 							Tracker</a>
 					</li>
 					<li>
-						<a [routerLink]="['Dispatcher']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Dispatcher']" [routerLinkActive]="['active']" title="Dispatcher">
 							<span class="fa fa-exclamation mr-3"></span>
 							Dispatcher</a>
 					</li>
 					<li>
-						<a [routerLink]="['Visitors']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Visitors']" [routerLinkActive]="['active']" title="Visitors">
 							<span class="fa fa-users mr-3"></span>
 							Visitors</a>
 					</li>
 					<li>
-						<a [routerLink]="['Messenger']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Messenger']" [routerLinkActive]="['active']" title="Messenger">
 							<span class="fa fa-comments-o mr-3"></span>
 							Messenger</a>
 					</li>
 					<li>
-						<a [routerLink]="['Reports']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Reports']" [routerLinkActive]="['active']" title="Reports">
 							<span class="fa fa-line-chart mr-3"></span>
 							Reports</a>
 					</li>
 
 					<h2 matSubheader>Admin</h2>
 					<li>
-						<a [routerLink]="['Scheduler']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Scheduler']" [routerLinkActive]="['active']" title="Scheduler">
 							<span class="fa fa-calendar-plus-o mr-3"></span>
 							Scheduler</a>
 					</li>
 					<li>
-						<a [routerLink]="['Time']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Time']" [routerLinkActive]="['active']" title="Time Clock">
 							<span class="fa fa-clock-o mr-3"></span>
 							Time Clock</a>
 					</li>
 					<li>
-						<a [routerLink]="['Payroll']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Payroll']" [routerLinkActive]="['active']" title="Payroll">
 							<span class="fa fa-money mr-3"></span>
 							Payroll</a>
 					</li>
 					<li>
-						<a [routerLink]="['Invoicer']" [routerLinkActive]="['active']" aria-expanded="false">
+						<a [routerLink]="['Invoicer']" [routerLinkActive]="['active']" title="Invoicer">
 							<span class="fa fa-calculator mr-3"></span>
 							Invoicer</a>
 					</li>
 					<li>
-						<a href="#homeSubmenu" data-toggle="collapse" aria-expanded="false">
+						<a href="#homeSubmenu" data-toggle="collapse" title="">
 							<span class="fa fa-user mr-3"></span>
 							Clients</a>
 						<ul class="collapse list-unstyled" id="homeSubmenu">
