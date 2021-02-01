@@ -1,75 +1,58 @@
 <div class="container-fluid">
-    <div class="d-sm-flex justify-content-between align-items-center mb-4">
-        <h3 class="text-dark mb-0">Dashboard</h3><a class="btn btn-primary btn-sm d-none d-sm-inline-block"
-            role="button" href="#"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate Report</a>
+    <div class="d-sm-flex justify-content-between align-items-center mb-3">
+        <h3 class="text-muted mb-0">Dashboard</h3>
+        <button mat-raised-button class="btn-primary"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Generate
+            Report</button>
     </div>
     <div class="row">
-        <div class="col-md-6 col-xl-3 mb-4">
-            <div class="card shadow border-left-primary py-2">
-                <div class="card-body">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col mr-2">
-                            <div class="text-uppercase text-primary font-weight-bold text-xs mb-1"><span>Earnings
-                                    (monthly)</span></div>
-                            <div class="text-dark font-weight-bold h5 mb-0"><span>$40,000</span></div>
-                        </div>
-                        <div class="col-auto"><i class="fas fa-calendar fa-2x text-gray-300"></i></div>
-                    </div>
-                </div>
-            </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Client" icon="user" number="2"></app-card>
         </div>
-        <div class="col-md-6 col-xl-3 mb-4">
-            <div class="card shadow border-left-success py-2">
-                <div class="card-body">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col mr-2">
-                            <div class="text-uppercase text-success font-weight-bold text-xs mb-1"><span>Earnings
-                                    (annual)</span></div>
-                            <div class="text-dark font-weight-bold h5 mb-0"><span>$215,000</span></div>
-                        </div>
-                        <div class="col-auto"><i class="fas fa-dollar-sign fa-2x text-gray-300"></i></div>
-                    </div>
-                </div>
-            </div>
+
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Guards" icon="user-secret" number="3"></app-card>
         </div>
-        <div class="col-md-6 col-xl-3 mb-4">
-            <div class="card shadow border-left-info py-2">
-                <div class="card-body">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col mr-2">
-                            <div class="text-uppercase text-info font-weight-bold text-xs mb-1"><span>Tasks</span></div>
-                            <div class="row no-gutters align-items-center">
-                                <div class="col-auto">
-                                    <div class="text-dark font-weight-bold h5 mb-0 mr-3"><span>50%</span></div>
-                                </div>
-                                <div class="col">
-                                    <div class="progress progress-sm">
-                                        <div class="progress-bar bg-info" aria-valuenow="50" aria-valuemin="0"
-                                            aria-valuemax="100" style="width: 50%;"><span class="sr-only">50%</span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-auto"><i class="fas fa-clipboard-list fa-2x text-gray-300"></i></div>
-                    </div>
-                </div>
-            </div>
+
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Posts Sites" icon="building-o" number="4"></app-card>
         </div>
-        <div class="col-md-6 col-xl-3 mb-4">
-            <div class="card shadow border-left-warning py-2">
-                <div class="card-body">
-                    <div class="row align-items-center no-gutters">
-                        <div class="col mr-2">
-                            <div class="text-uppercase text-warning font-weight-bold text-xs mb-1"><span>Pending
-                                    Requests</span></div>
-                            <div class="text-dark font-weight-bold h5 mb-0"><span>18</span></div>
-                        </div>
-                        <div class="col-auto"><i class="fas fa-comments fa-2x text-gray-300"></i></div>
-                    </div>
-                </div>
-            </div>
+
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Dispatch" icon="exclamation" number="5"></app-card>
         </div>
+
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Incident" icon="exclamation-triangle" number="6"></app-card>
+        </div>
+
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Message" icon="envelope" number="7"></app-card>
+        </div>
+
+    </div>
+
+    <div class="row">
+
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Clocked-In" icon="clock-o" number="7" subtitle="Guard" sub="(Today)"></app-card>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Unconfirm " icon="calendar" number="7" subtitle="Shift" sub="(Last 7 days)"></app-card>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="No Show" icon="calendar" number="7" subtitle="Shift" sub="(Last 7 days)"></app-card>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Late Show" icon="calendar" number="7" subtitle="Shift" sub="(Last 7 days)"></app-card>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Idle Alerts" icon="signal" number="7" subtitle="Shift" sub="(Last 7 days)"></app-card>
+        </div>
+        <div class="col-xl-2 col-lg-6 col-md-12 col-sm-12 mb-4">
+            <app-card title="Reports" icon="line-chart" number="7" sub="(Last 7 days)"></app-card>
+        </div>
+
+
     </div>
     <div class="row">
         <div class="col-lg-7 col-xl-8">

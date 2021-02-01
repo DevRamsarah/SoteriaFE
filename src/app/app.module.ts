@@ -27,6 +27,7 @@ import { RegisterComponent } from './register/register.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { CustomMaterialModule } from './material.module';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CardComponent } from './dashboard/card/card.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -48,7 +49,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     InvoiceComponent,
     ProfileComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    CardComponent,
 
   ],
   imports: [
