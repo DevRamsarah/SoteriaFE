@@ -17,6 +17,7 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { TrackerComponent } from './tracker/tracker.component';
 import { MessengerComponent } from './messenger/messenger.component';
 import { SchedulerComponent } from './scheduler/scheduler.component';
+import { NewClientComponent } from './client/new-client/new-client/new-client.component';
 
 
 const routes: Routes = [
@@ -30,6 +31,12 @@ const routes: Routes = [
   },
   {
     path: 'Clients', component: ClientComponent,
+
+
+  },
+  {
+    path: 'Clients/New-client', component: NewClientComponent,
+
 
   }, {
     path: 'Location', component: LocationComponent,
