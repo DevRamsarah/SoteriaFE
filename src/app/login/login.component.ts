@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { FirebaseService } from 'src/services/firebase.service';
 
 @Component({
   selector: 'app-login',
@@ -8,17 +9,11 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 export class LoginComponent implements OnInit {
   InOut = true;
   @Output() log: EventEmitter<any> = new EventEmitter();
-  constructor() { }
-
+  constructor(public firebaseService: FirebaseService) { }
   ngOnInit(): void {
   }
-  enterWebsite() {
-    this.log.emit();
-
-
+  async onSignin(email: string, password: string) {
+    await this.firebaseService.signin(email, password)
+    window.location.href = "/Dashboard"
   }
-  clickEvent() {
-    this.InOut = !this.InOut;
-  }
-
 }

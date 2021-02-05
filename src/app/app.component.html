@@ -1,13 +1,10 @@
-<app-login *ngIf="false" (log)="enterWebsite($event)"></app-login>
+<app-login *ngIf="!logIn"></app-login>
 
-<div *ngIf="true">
+<div *ngIf="logIn">
     <app-header class="header"></app-header>
     <div class=" d-flex ">
 
     <app-sidebar class="sidebar"></app-sidebar>
-
-
-
         <!-- Page Content  -->
         <div id="content" class="  pt-3">
 

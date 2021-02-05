@@ -5,13 +5,13 @@
                 <h2 class="title">Sign in</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username" />
+                    <input type="text" #email placeholder="Username" />
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" />
+                    <input type="password" #password placeholder="Password" />
                 </div>
-                <input type="submit" value="Login" class="btn solid" (click)="enterWebsite()" />
+                <input type="button" value="Login" class="btn solid" (click)="onSignin(email.value,password.value)" />
             </form>
             <form action="#" class="sign-up-form">
                 <h2 class="title">Sign up</h2>

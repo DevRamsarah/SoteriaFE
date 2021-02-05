@@ -9,7 +9,7 @@ import { FirebaseService } from 'src/services/firebase.service';
 export class AppComponent implements OnInit {
   title = 'SoteriaFE';
   isSignIn = false;
-  logIn = false;
+  logIn = (localStorage.getItem('userid') !== null ? true : false);
   constructor(public firebaseService: FirebaseService) { }
   ngOnInit() {
     console.log(this.logIn);
@@ -19,11 +19,7 @@ export class AppComponent implements OnInit {
     else
       this.isSignIn = false
   }
-  enterWebsite($event) {
-    this.logIn = !this.logIn
 
-
-  }
 
   async onSignup(email: string, name: string, age: number, address: string, tel: string, password: string) {
     await this.firebaseService.signup(email, name, age, address, tel, password)
