@@ -107,6 +107,8 @@ const routes: Routes = [
     path: 'Invoicer', component: InvoiceComponent,
 
   },
+  { path: '**', redirectTo: 'Dashboard', pathMatch: 'full' },
+
 ];
 
 @NgModule({
