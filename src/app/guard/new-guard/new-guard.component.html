@@ -1,1 +1,25 @@
-<p>new-guard works!</p>
+<div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
+    <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+    <a class="text-dark font-weight-bold h6  " style="text-decoration: none;">Guards</a>    
+    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Guards</a>
+</div>
+
+<div class="container-fluid d">
+<div class="form-group"><input type="text" [(ngModel)]="EmployeeName" class="form-control"
+        placeholder="Enter Guard Name"></div>
+<div class="form-group"><input type="number" [(ngModel)]="EmployeeAge" class="form-control"
+        placeholder="Enter Guard Age"></div>
+<div class="form-group"><input type="text" [(ngModel)]="EmployeeAddress" class="form-control"
+        placeholder="Enter Guard Address"></div>
+<div class="form-group"><input type="text" [(ngModel)]="EmployeeCity" class="form-control"
+        placeholder="Enter Guard City"></div>
+<div class="form-group"><button class="btn btn-primary" (click)="createEmployee()"
+        [disabled]="!EmployeeName || !EmployeeAge || !EmployeeAddress || !EmployeeCity">Create
+        Employee</button>
+</div>
+<div class="form-group">
+    <h4>{{message}}</h4>
+</div>
+</div>
