@@ -19,6 +19,7 @@ import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatRippleModule } from '@angular/material/core';
 // add imported modules here
 const importedComponents = [
   MatSelectModule,
@@ -40,7 +41,8 @@ const importedComponents = [
   MatListModule,
   MatButtonToggleModule,
   MatCheckboxModule,
-  MatTabsModule
+  MatTabsModule,
+  MatRippleModule
 ];
 
 @NgModule({
