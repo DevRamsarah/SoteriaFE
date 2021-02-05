@@ -18,6 +18,8 @@ import { TrackerComponent } from './tracker/tracker.component';
 import { MessengerComponent } from './messenger/messenger.component';
 import { SchedulerComponent } from './scheduler/scheduler.component';
 import { NewClientComponent } from './client/new-client/new-client/new-client.component';
+import { NewGuardComponent } from './guard/new-guard/new-guard.component';
+import { NewDispatcherComponent } from './dispatcher/new-dispatcher/new-dispatcher.component';
 
 
 const routes: Routes = [
@@ -38,7 +40,18 @@ const routes: Routes = [
     path: 'Clients/New-client', component: NewClientComponent,
 
 
-  }, {
+  },
+  {
+    path: 'Guards/New-guard', component: NewGuardComponent,
+
+
+  },
+  {
+    path: 'Dispatcher/New-dispatcher', component: NewDispatcherComponent,
+
+
+  },
+  {
     path: 'Location', component: LocationComponent,
 
   },

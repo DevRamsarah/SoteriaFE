@@ -1,0 +1,16 @@
+.mat-button-toggle-group{ 
+    width: 50%;
+  }
+    
+  .mat-button-toggle{
+    background-color: white; width: 100%; 
+    color: black;
+  }
+  .mat-button-toggle-checked{
+    background-color: #47c5ff!important;
+    color: white;
+  }
+  table {
+    width: 100%;
+  }
+            

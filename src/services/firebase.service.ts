@@ -38,5 +38,8 @@ export class FirebaseService {
   createNewEmployee(records) {
     return this.firebaseCrud.collection('employees').add(records)
   }
+  getClient() {
+    return this.firebaseCrud.collection('employees').valueChanges()
+  }
 }
 
