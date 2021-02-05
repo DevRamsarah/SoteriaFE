@@ -1,4 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { FirebaseService } from 'src/services/firebase.service';
 
 @Component({
@@ -8,12 +9,26 @@ import { FirebaseService } from 'src/services/firebase.service';
 })
 export class LoginComponent implements OnInit {
   InOut = true;
+  loading = false;
   @Output() log: EventEmitter<any> = new EventEmitter();
-  constructor(public firebaseService: FirebaseService) { }
+  constructor(public firebaseService: FirebaseService, private router: Router) { }
   ngOnInit(): void {
   }
-  async onSignin(email: string, password: string) {
-    await this.firebaseService.signin(email, password)
-    window.location.href = "/Dashboard"
+  onSignin(email: string, password: string) {
+    this.loading = true;
+
+
+    this.firebaseService.signin(email, password).then(() => {
+      // this.router.navigate(['/Dashboard'])
+      window.location.href = "Dashboard"
+    }).catch(err => {
+      console.log(err);
+      this.loading = false;
+
+    })
+    this.loading = true;
+  }
+  clickEvent() {
+    this.InOut = !this.InOut;
   }
 }

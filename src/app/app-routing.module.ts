@@ -60,7 +60,7 @@ const routes: Routes = [
 
   },
   {
-    path: 'Login', component: LoginComponent,
+    path: '', component: LoginComponent,
 
   },
   {
@@ -107,7 +107,7 @@ const routes: Routes = [
     path: 'Invoicer', component: InvoiceComponent,
 
   },
-  { path: '**', redirectTo: 'Dashboard', pathMatch: 'full' },
+  { path: '**', redirectTo: '', pathMatch: 'full' },
 
 ];
 
