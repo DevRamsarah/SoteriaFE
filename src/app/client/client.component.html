@@ -1,92 +1,134 @@
 <div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
-    <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
-    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
-    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Client</a>
+  <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+  <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+  <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Client</a>
 </div>
 
 <div class="container">
-    <div class="row d-flex justify-content-center" style="margin: 3% 0 2% 0;">
-      <mat-button-toggle-group appearance="legacy">
-        <mat-button-toggle checked >
-          <b>Active</b>
-        </mat-button-toggle>
-        <mat-button-toggle >
-          <b>Archived</b>
-        </mat-button-toggle>
+  <div class="row d-flex justify-content-center" style="margin: 3% 0 2% 0;">
+    <mat-button-toggle-group appearance="legacy">
+      <mat-button-toggle checked (click)="active=true">
+        <b>Active</b>
+      </mat-button-toggle>
+      <mat-button-toggle (click)="active=false">
+        <b>Archived</b>
+      </mat-button-toggle>
+    </mat-button-toggle-group>
+  </div>
+  <div class=" p-4" style="background: white;">
+    <div class="row">
+      <div class="col-6">
+        <mat-form-field style="width: 100%;">
+          <mat-label>Filter</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+        </mat-form-field>
+      </div>
+      <div class="row col-6 justify-content-end">
 
-      </mat-button-toggle-group>
+        <button mat-raised-button class="btn-primary" title="Generate Report" style="height: 70%; width: 50%;"
+          (click)="newClient()">
+          New Client</button>
+      </div>
     </div>
-    <div class=" p-4" style="background: white;">
-        <div class="row">
-        <div class="col-6">
-            <mat-form-field style="width: 100%;">
-                <mat-label>Filter</mat-label>
-                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
-            </mat-form-field>
-        </div>
-        <div class="row col-6 justify-content-end">
-            
-            <button mat-raised-button class="btn-primary" title="Generate Report" style="height: 70%; width: 50%;"
-            (click)="newClient()">
-                New Client</button>
-        </div>
-        </div>
 
-    <div class="mat-elevation-z8" >
-    <table mat-table [dataSource]="dataSource">
+    <div class="mat-elevation-z8"  >
+      <table mat-table [dataSource]="dataSource" *ngIf="active">
 
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox (change)="$event ? masterToggle() : null"
-                          [checked]="selection.hasValue() && isAllSelected()"
-                          [indeterminate]="selection.hasValue() && !isAllSelected()"
-                          [aria-label]="checkboxLabel()">
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
             </mat-checkbox>
           </th>
           <td mat-cell *matCellDef="let row">
-            <mat-checkbox (click)="$event.stopPropagation()"
-                          (change)="$event ? selection.toggle(row) : null"
-                          [checked]="selection.isSelected(row)"
-                          [aria-label]="checkboxLabel(row)">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
             </mat-checkbox>
           </td>
         </ng-container>
-      
+
         <!-- Position Column -->
         <ng-container matColumnDef="position">
           <th mat-header-cell *matHeaderCellDef> ID </th>
           <td mat-cell *matCellDef="let element"> {{element.position}} </td>
         </ng-container>
-      
+
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Client Name </th>
           <td mat-cell *matCellDef="let element"> {{element.name}} </td>
         </ng-container>
-      
+
         <!-- Weight Column -->
         <ng-container matColumnDef="weight">
           <th mat-header-cell *matHeaderCellDef> Phone Number </th>
           <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
         </ng-container>
-      
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="symbol">
-            <th mat-header-cell *matHeaderCellDef> Email </th>
-            <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-          </ng-container>
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
 
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-            (click)="selection.toggle(row)">
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
         </tr>
         <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">No data matching the filter</td>
-          </tr>
+          <td class="mat-cell" colspan="4">No record found</td>
+        </tr>
+      </table>
+      <table mat-table [dataSource]="dataSource2" *ngIf="!active">
+
+        <!-- Checkbox Column -->
+        <ng-container matColumnDef="select">
+          <th mat-header-cell *matHeaderCellDef>
+            <mat-checkbox (change)="$event ? masterToggle() : null" [checked]="selection.hasValue() && isAllSelected()"
+              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+            </mat-checkbox>
+          </th>
+          <td mat-cell *matCellDef="let row">
+            <mat-checkbox (click)="$event.stopPropagation()" (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)" [aria-label]="checkboxLabel(row)">
+            </mat-checkbox>
+          </td>
+        </ng-container>
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="position">
+          <th mat-header-cell *matHeaderCellDef> ID </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell *matHeaderCellDef>Client Name </th>
+          <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+        </ng-container>
+
+        <!-- Weight Column -->
+        <ng-container matColumnDef="weight">
+          <th mat-header-cell *matHeaderCellDef> Phone Number </th>
+          <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="symbol">
+          <th mat-header-cell *matHeaderCellDef> Email </th>
+          <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
+        </ng-container>
+
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;" (click)="selection.toggle(row)">
+        </tr>
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No record found</td>
+        </tr>
       </table>
       <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
     </div>
-</div>
   </div>
+</div>

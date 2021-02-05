@@ -22,13 +22,16 @@ const ELEMENT_DATA: PeriodicElement[] = [
   { position: 9, name: 'Fluorine', weight: "18.9984", status: "1", symbol: 'F' },
   { position: 10, name: 'Neon', weight: "20.1797", status: "1", symbol: 'Ne' },
 ];
+const ELEMENT_DATA2: PeriodicElement[] = [
+
+];
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
   styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements AfterViewInit {
-
+  active = true;
   constructor() { }
 
   ngAfterViewInit() {
@@ -36,6 +39,7 @@ export class ClientComponent implements AfterViewInit {
   }
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSource2 = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA2);
   selection = new SelectionModel<PeriodicElement>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   applyFilter(event: Event) {

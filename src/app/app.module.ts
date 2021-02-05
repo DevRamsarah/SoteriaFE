@@ -30,6 +30,10 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CardComponent } from './dashboard/card/card.component';
 import { PostSiteComponent } from './post-site/post-site.component';
 import { NewClientComponent } from './client/new-client/new-client/new-client.component';
+import { NewGuardComponent } from './guard/new-guard/new-guard.component';
+import { NewPostSiteComponent } from './post-site/new-post-site/new-post-site.component';
+import { NewDispatcherComponent } from './dispatcher/new-dispatcher/new-dispatcher.component';
+import { NewVisitorComponent } from './visitors/new-visitor/new-visitor.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,6 +59,10 @@ import { NewClientComponent } from './client/new-client/new-client/new-client.co
     CardComponent,
     PostSiteComponent,
     NewClientComponent,
+    NewGuardComponent,
+    NewPostSiteComponent,
+    NewDispatcherComponent,
+    NewVisitorComponent,
 
   ],
   imports: [
