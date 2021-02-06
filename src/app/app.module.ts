@@ -9,6 +9,7 @@ import { ClientComponent } from './client/client.component';
 import { LocationComponent } from './location/location.component';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { HeaderComponent } from './shared/header/header.component';
+import { SpinnerComponent } from './shared/spinner/spinner.component';
 import { FormsModule } from '@angular/forms';
 import { DispatcherComponent } from './dispatcher/dispatcher.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
@@ -42,6 +43,7 @@ import { NewVisitorComponent } from './visitors/new-visitor/new-visitor.componen
     LocationComponent,
     SidebarComponent,
     HeaderComponent,
+    SpinnerComponent,
     DispatcherComponent,
     DashboardComponent,
     GuardComponent,

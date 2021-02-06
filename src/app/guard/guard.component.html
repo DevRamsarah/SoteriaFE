@@ -86,9 +86,7 @@
                 
                 <td class="mat-cell" colspan="6" *ngIf="!loading">No record found</td>
                 <td class="mat-cell text-center" colspan="6">
-                  <div class="spinner-border text-primary" role="status" *ngIf="loading">
-                    <span class="visually-hidden"></span>
-                  </div>
+                  <spinner *ngIf="loading"></spinner>
                 </td>
               </tr>
             </table>
