@@ -41,36 +41,48 @@ const ELEMENT_DATA2: PeriodicElement[] = [
   styleUrls: ['./guard.component.css']
 })
 export class GuardComponent implements AfterViewInit, OnInit {
-
-  active = true;
-
+  loading = true;
+  active = false;
+  data: any;
+  data2: any;
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  displayedColumns2: string[] = ['fname', 'lname', 'email', 'position', 'nid'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  displayedColumns2: string[] = ['select', 'fname', 'lname', 'email', 'position', 'nid'];
   dataSource2 = new MatTableDataSource<Client>();
-  selection = new SelectionModel<PeriodicElement>(true, []);
+  selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public firebaseCrud: FirebaseService) { }
   ngOnInit(): void {
+
+
     this.firebaseCrud.getClient().subscribe((Clients: any) => {
       console.log(Clients);
-      const newData = (this.dataSource2 = new MatTableDataSource<Client>(Clients));
+      this.data = Clients.filter((client) => client.position === 'Employee');
+      this.data2 = Clients.filter((client) => client.position === 'Admin');
 
+      this.loading = false;
+
+      this.dataSource2 = new MatTableDataSource<Client>(this.data2);
+
+      this.dataSource2.paginator = this.paginator;
     })
+
+
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
+    this.dataSource2.paginator = this.paginator;
   }
-
+  active2(x) {
+    this.dataSource2.data = x;
+  }
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
+    this.dataSource2.filter = filterValue.trim().toLowerCase();
   }
   /** Whether the number of selected elements matches the total number of rows. */
   isAllSelected() {
     const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
+    const numRows = this.dataSource2.data.length;
     return numSelected === numRows;
   }
   newGuard() {
@@ -79,11 +91,11 @@ export class GuardComponent implements AfterViewInit, OnInit {
   masterToggle() {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.dataSource2.data.forEach(row => this.selection.select(row));
   }
 
   /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: PeriodicElement): string {
+  checkboxLabel(row?: Client): string {
     if (!row) {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
