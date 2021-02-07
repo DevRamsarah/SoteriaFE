@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AngularFireModule } from '@angular/fire';
 import { AngularFireAuth } from '@angular/fire/auth';
-import { from } from 'rxjs';
 import { AngularFirestore } from '@angular/fire/firestore'
 
 @Injectable({
@@ -38,6 +36,9 @@ export class FirebaseService {
         localStorage.setItem('user', JSON.stringify(res.user))
       })
   }
+
+
+
   logout() {
     this.firebaseAuth.signOut()
     localStorage.removeItem('user')
