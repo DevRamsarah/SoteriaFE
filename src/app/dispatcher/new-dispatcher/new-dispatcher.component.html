@@ -19,7 +19,7 @@
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="ClientID"><strong>ClientID</strong></label>
-                                    <input class="form-control" list="client" placeholder="Client ID" required
+                                    <input class="form-control" list="client" placeholder="Select" required
                                         formControlName="ClientID">
                                     <datalist id="client">
                                         <option *ngFor="let cli of client" [value]="cli.Name">
@@ -29,38 +29,109 @@
                                 </div>
                             </div>
                             <div class="col">
-                                <div class="form-group"><label for="Email"><strong>Email Address</strong></label><input
-                                        class="form-control" type="email" placeholder="user@example.com" required
-                                        formControlName="ClientID">
+                                <div class="form-group"><label for="PostSite"><strong>Post Site</strong></label>
+                                    <input class="form-control" list="PostSiteL" placeholder="Select" required
+                                        formControlName="PostSite">
+                                    <datalist id="PostSiteL">
+                                        <option *ngFor="let post of PostSiteL" [value]="post.Name">
+                                            {{post.ID}}
+                                        </option>
+                                    </datalist>
                                 </div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
-                                <div class="form-group"><label for="Contact Name"><strong>Contact
-                                            Name</strong></label><input class="form-control" type="text"
-                                        placeholder="John" required formControlName="ClientID"></div>
+                                <div class="form-group"><label for="Assign to Guard"><strong>Assign to Guard
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        formControlName="Guard">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div>
                             </div>
                             <div class="col">
-                                <div class="form-group"><label for="Mobile Number"><strong>Mobile
-                                            Number</strong></label><input class="form-control" type="text"
-                                        placeholder="Doe" required formControlName="ClientID"></div>
+                                <div class="form-group"><label for="Priority"><strong>Priority
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        formControlName="Priority">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div>
                             </div>
                         </div>
-                        <div class="form-group"><label for="address"><strong>Address</strong></label><input
-                                class="form-control" type="text" placeholder="Sunset Blvd, 38" required
-                                formControlName="ClientID"></div>
                         <div class="form-row">
                             <div class="col">
-                                <div class="form-group"><label for="city"><strong>City</strong></label><input
-                                        class="form-control" type="text" placeholder="Los Angeles" required
-                                        formControlName="ClientID"></div>
+                                <div class="form-group"><label for="Caller"><strong>Caller
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        formControlName="Caller">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div>
                             </div>
                             <div class="col">
-                                <div class="form-group"><label for="country"><strong>Country</strong></label><input
-                                        class="form-control" type="text" placeholder="USA" required
-                                        formControlName="ClientID"></div>
+                                <div class="form-group"><label for="CallerName"><strong>Caller Name
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        formControlName="CallerName">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div>
                             </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="Incident"><strong>Incident
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        formControlName="Incident">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group"><label for="IncidentDate"><strong>Incident Date/Time
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        formControlName="IncidentDate">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"><label for="IncidentDetail"><strong>Incident Detail</strong></label>
+                            <textarea class="form-control" type="text" required
+                                formControlName="IncidentDetail">
+                            </textarea>
+                        </div>
+                        <div class="form-group"><label for="ActionTaken"><strong>Action Taken</strong></label>
+                            <textarea class="form-control" type="text" required
+                                formControlName="ActionTaken">
+                            </textarea>
+                        </div>
+                        <div class="form-group"><label for="InternalNotes"><strong>Internal Notes</strong></label>
+                            <textarea class="form-control" type="text" required
+                                formControlName="InternalNotes">
+                            </textarea>
                         </div>
                         <button mat-raised-button class="text-primary" type="submit" style="margin-right: 2%;">
                             Submit
@@ -71,14 +142,3 @@
         </div>
     </div>
 
-
-    <div class="container-fluid">
-        <form [formGroup]="New" ngNativeValidate (ngSubmit)="submit()">
-
-            <input class="mat-elevation-z2" type="text" placeholder="Client ID" required formControlName="ClientID" />
-
-            <button mat-raised-button class="text-primary" type="submit" style="margin-right: 2%;">
-                Submit
-            </button>
-        </form>
-    </div>
