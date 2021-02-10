@@ -4,12 +4,14 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
 import { Dispatcher } from 'src/model/dispatcher/dispatcher.model';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-dispatcher',
   templateUrl: './dispatcher.component.html',
   styleUrls: ['./dispatcher.component.css']
 })
 export class DispatcherComponent implements OnInit {
+
   edit = false;
   editE = null;
   loading = true;
@@ -17,10 +19,14 @@ export class DispatcherComponent implements OnInit {
   data: any;
   data2: any;
   displayedColumns2: string[] = ['DispatcherID', 'Date', 'ClientID', 'PostSite', 'CallerType', 'IncidentType', 'Status', 'action'];
+
+
   dataSource2 = new MatTableDataSource<Dispatcher>();
   selection = new SelectionModel<Dispatcher>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(public firebaseCrud: DispatcherService) { }
+
+
+  constructor(public firebaseCrud: DispatcherService, public router: Router) { }
   ngOnInit(): void {
 
 
@@ -59,8 +65,8 @@ export class DispatcherComponent implements OnInit {
     const numRows = this.dataSource2.data.length;
     return numSelected === numRows;
   }
-  newGuard() {
-    window.location.href = "Guards/New-guard"
+  new() {
+    this.router.navigate(["/Dispatcher/New-dispatcher"]);
   }
 
 
