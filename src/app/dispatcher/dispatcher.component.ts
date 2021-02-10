@@ -2,15 +2,9 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { FirebaseService } from 'src/services/firebase.service';
+import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: string;
-  symbol: string;
-  status: string
-}
+
 
 export interface Client {
   fname: string;
@@ -20,21 +14,6 @@ export interface Client {
   nid: string;
 }
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Erika Schmidt', weight: "683 - 2221", status: "1", symbol: 'luettgen.frances@yahoo.com' },
-  { position: 2, name: 'Roel Murray MD', weight: "885 - 7127", status: "1", symbol: 'emilia68@gmail.com' },
-  { position: 3, name: 'Abbey Streich ', weight: "835 - 2507", status: "1", symbol: 'carli32@reilly.com' },
-  { position: 4, name: 'Rocio Kilback', weight: "443 - 4854", status: "1", symbol: 'tgrant@gmail.com' },
-  { position: 5, name: 'Oswald Hickle', weight: "401 - 4539", status: "1", symbol: 'boehm.dannie@windler.com' },
-  { position: 6, name: 'Carbon', weight: "12.0107", status: "1", symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: "14.0067", status: "1", symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: "15.9994", status: "1", symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: "18.9984", status: "1", symbol: 'F' },
-  { position: 10, name: 'Neon', weight: "20.1797", status: "1", symbol: 'Ne' },
-];
-const ELEMENT_DATA2: PeriodicElement[] = [
-
-];
 
 @Component({
   selector: 'app-dispatcher',
@@ -48,25 +27,24 @@ export class DispatcherComponent implements OnInit {
   active = false;
   data: any;
   data2: any;
-  displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
   displayedColumns2: string[] = ['fname', 'lname', 'email', 'position', 'nid', 'action'];
   dataSource2 = new MatTableDataSource<Client>();
   selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(public firebaseCrud: FirebaseService) { }
+  constructor(public firebaseCrud: DispatcherService) { }
   ngOnInit(): void {
 
 
-    this.firebaseCrud.getClient().subscribe((Clients: any) => {
-      console.log(Clients);
-      this.data = Clients.filter((client) => client.position === 'Employee');
-      this.data2 = Clients.filter((client) => client.position === 'Admin');
+    this.firebaseCrud.getDispatch().subscribe((Dispatches: any) => {
+      console.log(Dispatches);
+      // this.data = Dispatch.filter((client) => client.position === 'Employee');
+      // this.data2 = Dispatch.filter((client) => client.position === 'Admin');
 
-      this.loading = false;
+      // this.loading = false;
 
-      this.dataSource2 = new MatTableDataSource<Client>(this.data2);
+      // this.dataSource2 = new MatTableDataSource<Client>(this.data2);
 
-      this.dataSource2.paginator = this.paginator;
+      // this.dataSource2.paginator = this.paginator;
     })
 
 
