@@ -49,7 +49,7 @@ export class DispatcherComponent implements OnInit {
   data: any;
   data2: any;
   displayedColumns: string[] = ['select', 'position', 'name', 'weight', 'symbol'];
-  displayedColumns2: string[] = ['select', 'fname', 'lname', 'email', 'position', 'nid', 'action'];
+  displayedColumns2: string[] = ['fname', 'lname', 'email', 'position', 'nid', 'action'];
   dataSource2 = new MatTableDataSource<Client>();
   selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
