@@ -80,8 +80,8 @@
                     <th mat-header-cell *matHeaderCellDef> Action </th>
                     <td mat-cell *matCellDef="let element">
                         <button mat-raised-button class="btn btn-success" (click)="change(element.DispatcherID)"
-                            *ngIf="editE != element.DispatcherID">Update</button>
-                        <button mat-raised-button class="btn btn-alert" *ngIf="editE == element.DispatcherID"
+                            *ngIf="editE == element.DispatcherID">Update</button>
+                        <button mat-raised-button class="btn btn-alert" *ngIf="editE != element.DispatcherID"
                             (click)="change(element.DispatcherID)">Cancel</button>
 
                         <button mat-raised-button class=" btn btn-danger">Delete</button>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
 
 @Component({
   selector: 'app-new-dispatcher',
@@ -38,7 +40,7 @@ export class NewDispatcherComponent implements OnInit {
     ID: '67',
     Name: 'rerg',
   }];
-  constructor() { }
+  constructor(public firebaseCrud: DispatcherService, public router: Router) { }
 
   ngOnInit(): void {
     this.New = new FormGroup({
@@ -59,5 +61,6 @@ export class NewDispatcherComponent implements OnInit {
   }
   submit() {
     console.log(this.New.value)
+    this.firebaseCrud.createNewDispatchTicket(this.New.value)
   }
 }
