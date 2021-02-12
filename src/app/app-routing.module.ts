@@ -65,10 +65,7 @@ const routes: Routes = [
     path: 'Dispatcher', component: DispatcherComponent,
 
   },
-  {
-    path: '', component: LoginComponent,
 
-  },
   {
     path: 'Register', component: RegisterComponent,
 
@@ -113,7 +110,7 @@ const routes: Routes = [
     path: 'Invoicer', component: InvoiceComponent,
 
   },
-  { path: '**', redirectTo: '', pathMatch: 'full' },
+  { path: '**', redirectTo: 'Dashboard', pathMatch: 'full' },
 
 ];
 
