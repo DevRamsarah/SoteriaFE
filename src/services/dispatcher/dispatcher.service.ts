@@ -11,6 +11,7 @@ export class DispatcherService {
     return this.firebaseCrud.collection('dispatcher').add(records)
   }
   getDispatch() {
-    return this.firebaseCrud.collection('dispatcher').valueChanges()
+    return this.firebaseCrud.collection('dispatcher').valueChanges({ idField: 'DispatcherID' })
+
   }
 }
