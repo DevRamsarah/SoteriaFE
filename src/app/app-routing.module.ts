@@ -20,6 +20,7 @@ import { SchedulerComponent } from './scheduler/scheduler.component';
 import { NewClientComponent } from './client/new-client/new-client/new-client.component';
 import { NewGuardComponent } from './guard/new-guard/new-guard.component';
 import { NewDispatcherComponent } from './dispatcher/new-dispatcher/new-dispatcher.component';
+import { NewPostSiteComponent } from './post-site/new-post-site/new-post-site.component';
 
 
 const routes: Routes = [
@@ -48,6 +49,11 @@ const routes: Routes = [
   },
   {
     path: 'Dispatcher/New-dispatcher', component: NewDispatcherComponent,
+
+
+  },
+  {
+    path: 'PostSite/New-PostSite', component: NewPostSiteComponent,
 
 
   },

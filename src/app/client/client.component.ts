@@ -2,6 +2,7 @@ import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
+import { Router } from '@angular/router';
 export interface PeriodicElement {
   name: string;
   position: number;
@@ -32,7 +33,7 @@ const ELEMENT_DATA2: PeriodicElement[] = [
 })
 export class ClientComponent implements AfterViewInit {
   active = true;
-  constructor() { }
+  constructor(public router: Router) { }
 
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
@@ -53,7 +54,8 @@ export class ClientComponent implements AfterViewInit {
     return numSelected === numRows;
   }
   newClient() {
-    window.location.href = "Clients/New-client"
+    this.router.navigate(["Clients/New-client"]);
+
   }  /** Selects all rows if they are not all selected; otherwise clear selection. */
   masterToggle() {
     this.isAllSelected() ?

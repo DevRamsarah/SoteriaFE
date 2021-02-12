@@ -36,6 +36,9 @@ import { NewGuardComponent } from './guard/new-guard/new-guard.component';
 import { NewPostSiteComponent } from './post-site/new-post-site/new-post-site.component';
 import { NewDispatcherComponent } from './dispatcher/new-dispatcher/new-dispatcher.component';
 import { NewVisitorComponent } from './visitors/new-visitor/new-visitor.component';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 @NgModule({
   declarations: [
     AppComponent,
@@ -84,7 +87,9 @@ import { NewVisitorComponent } from './visitors/new-visitor/new-visitor.componen
     }),
     BrowserAnimationsModule,
     FlexLayoutModule,
-    CustomMaterialModule
+    CustomMaterialModule,
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    NgbModule
   ],
   providers: [FirebaseService],
   bootstrap: [AppComponent]
