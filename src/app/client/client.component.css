@@ -1,3 +1,4 @@
+
 .mat-button-toggle-group{ 
   width: 50%;
 }
@@ -11,6 +12,17 @@
   color: white;
 }
 table {
+  margin-top: 10px;
   width: 100%;
 }
-          
+::ng-deep .mat-header-cell {
+text-align: center!important;
+}
+th, td {
+  overflow: hidden;
+  width: 200px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  text-align: center;
+  border-left: 1px solid rgba(158, 158, 158, 0.63);
+}

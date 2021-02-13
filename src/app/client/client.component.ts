@@ -19,7 +19,7 @@ export class ClientComponent implements AfterViewInit {
   active = false;
   data: any;
   data2: any;
-  displayedColumns2: string[] = ['ClientID', 'ContactName', 'MobileNum', 'ClientEmail'];
+  displayedColumns2: string[] = ['ClientID', 'ContactName', 'MobileNum', 'ClientEmail', 'action'];
 
 
   dataSource2 = new MatTableDataSource<Client>();
