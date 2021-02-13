@@ -11,7 +11,14 @@ export class ClientService {
     return this.firebaseCrud.collection('clients').add(records)
   }
   getClient() {
-    return this.firebaseCrud.collection('clients').valueChanges({ idField: 'DispatcherID' })
+    return this.firebaseCrud.collection('clients').valueChanges({ idField: 'ClientID' })
 
+  }
+  updateClient(id, data) {
+    return this.firebaseCrud.collection('Clients').doc(id).set(data);
+  }
+
+  deleteClient(id) {
+    return this.firebaseCrud.collection('Clients').doc(id).delete();
   }
 }
