@@ -2,8 +2,8 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
-import { Dispatcher } from 'src/model/dispatcher/dispatcher.model';
+import { ClientService } from 'src/services/client/client.service';
+import { Client } from 'src/model/client/client.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -19,26 +19,26 @@ export class ClientComponent implements AfterViewInit {
   active = false;
   data: any;
   data2: any;
-  displayedColumns2: string[] = ['DispatcherID', 'Date', 'ClientID', 'PostSite', 'CallerType', 'IncidentType', 'Status', 'action'];
+  displayedColumns2: string[] = ['ClientID', 'ContactName', 'MobileNum', 'ClientEmail'];
 
 
-  dataSource2 = new MatTableDataSource<Dispatcher>();
-  selection = new SelectionModel<Dispatcher>(true, []);
+  dataSource2 = new MatTableDataSource<Client>();
+  selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: DispatcherService, public router: Router) { }
+  constructor(public firebaseCrud: ClientService, public router: Router) { }
   ngOnInit(): void {
 
 
-    this.firebaseCrud.getDispatch().subscribe((Dispatches: any) => {
+    this.firebaseCrud.getClient().subscribe((Dispatches: any) => {
       console.log(Dispatches);
       // this.data = Dispatch.filter((client) => client.position === 'Employee');
       this.data2 = Dispatches;
 
       this.loading = false;
 
-      this.dataSource2 = new MatTableDataSource<Dispatcher>(this.data2);
+      this.dataSource2 = new MatTableDataSource<Client>(this.data2);
 
       this.dataSource2.paginator = this.paginator;
     })

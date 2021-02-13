@@ -27,7 +27,7 @@
 
               <button mat-raised-button class="btn-primary" title="New Dispatcher" style="height: 70%; width: 50%;"
                   (click)="new()">
-                  New Dispatcher</button>
+                  New Client</button>
           </div>
       </div>
 
@@ -35,44 +35,24 @@
 
           <table mat-table [dataSource]="dataSource2">
 
-              <ng-container matColumnDef="DispatcherID">
-                  <th mat-header-cell *matHeaderCellDef>Dispatcher ID</th>
-                  <td mat-cell *matCellDef="let element"> {{element.DispatcherID}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="Date">
-                  <th mat-header-cell *matHeaderCellDef>Date/Time</th>
-                  <td mat-cell *matCellDef="let element"> {{element.Date}} </td>
-              </ng-container>
-
               <ng-container matColumnDef="ClientID">
                   <th mat-header-cell *matHeaderCellDef>Client ID</th>
-                  <td mat-cell *matCellDef="let element"> {{element.ClientID.id}} </td>
+                  <td mat-cell *matCellDef="let element"> {{element.ClientID}} </td>
               </ng-container>
 
-              <ng-container matColumnDef="PostSite">
-                  <th mat-header-cell *matHeaderCellDef>Post Site</th>
-                  <td mat-cell *matCellDef="let element"> {{element.PostSite}} </td>
+              <ng-container matColumnDef="ContactName">
+                  <th mat-header-cell *matHeaderCellDef>Contact Name/Time</th>
+                  <td mat-cell *matCellDef="let element"> {{element.ContactName}} </td>
               </ng-container>
 
-              <ng-container matColumnDef="CallerType">
-                  <th mat-header-cell *matHeaderCellDef>Caller Type</th>
-                  <td mat-cell *matCellDef="let element">
-                      <p *ngIf="editE != element.DispatcherID">
-                          {{element.CallerType}}
-                      </p>
-                      <input type="text" [value]="element.position" *ngIf="editE == element.DispatcherID">
-                  </td>
+              <ng-container matColumnDef="MobileNum">
+                  <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
+                  <td mat-cell *matCellDef="let element"> {{element.MobileNum}} </td>
               </ng-container>
 
-              <ng-container matColumnDef="IncidentType">
-                  <th mat-header-cell *matHeaderCellDef>Incident Type</th>
-                  <td mat-cell *matCellDef="let element"> {{element.IncidentType}} </td>
-              </ng-container>
-
-              <ng-container matColumnDef="Status">
-                  <th mat-header-cell *matHeaderCellDef>Status</th>
-                  <td mat-cell *matCellDef="let element"> {{element.Status}} </td>
+              <ng-container matColumnDef="ClientEmail">
+                  <th mat-header-cell *matHeaderCellDef>Email</th>
+                  <td mat-cell *matCellDef="let element"> {{element.ClientEmail}} </td>
               </ng-container>
 
               <ng-container matColumnDef="action">
@@ -99,7 +79,7 @@
                   </td>
               </tr>
           </table>
-          <mat-paginator [pageSizeOptions]="[2, 10, 20]" showFirstLastButtons></mat-paginator>
+          <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
       </div>
   </div>
 </div>
