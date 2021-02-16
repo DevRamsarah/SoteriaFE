@@ -20,6 +20,8 @@ import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatRippleModule } from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 // add imported modules here
 const importedComponents = [
   MatSelectModule,
@@ -42,7 +44,9 @@ const importedComponents = [
   MatButtonToggleModule,
   MatCheckboxModule,
   MatTabsModule,
-  MatRippleModule
+  MatRippleModule,
+  MatDatepickerModule,
+  MatNativeDateModule
 ];
 
 @NgModule({
