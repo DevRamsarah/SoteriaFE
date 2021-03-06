@@ -18,7 +18,7 @@ export class PostSiteComponent implements OnInit {
   active = false;
   data: any;
   data2: any;
-  displayedColumns2: string[] = ['DispatcherID', 'Date', 'ClientID', 'PostSite', 'CallerType', 'IncidentType', 'Status', 'action'];
+  displayedColumns2: string[] = ['PostSite', 'ClientName', 'ClientMob', 'Email', 'action'];
 
 
   dataSource2 = new MatTableDataSource<Dispatcher>();
