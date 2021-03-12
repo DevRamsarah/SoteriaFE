@@ -9,6 +9,8 @@ import { ClientService } from 'src/services/client/client.service';
   styleUrls: ['./new-client.component.css']
 })
 export class NewClientComponent implements OnInit {
+  loading = false;
+
   New: FormGroup;
   GuardL = [{
     ID: '17',
@@ -37,7 +39,13 @@ export class NewClientComponent implements OnInit {
     });
   }
   submit() {
-    console.log(this.New.value)
-    this.firebaseCrud.createNewClient(this.New.value)
+    // console.log(this.New.value)
+    this.loading = true;
+
+    this.firebaseCrud.createNewClient(this.New.value).then(
+      () => {
+        alert("Client Added")// add sweet alert
+      }
+    )
   }
 }
