@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
+import { PostSiteService } from 'src/services/post-site/post-site.service';
 
 @Component({
   selector: 'app-new-post-site',
@@ -9,6 +9,7 @@ import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
   styleUrls: ['./new-post-site.component.css']
 })
 export class NewPostSiteComponent implements OnInit {
+  loading = false;
 
   New: FormGroup;
   client = [{
@@ -41,7 +42,7 @@ export class NewPostSiteComponent implements OnInit {
     ID: '67',
     Name: 'rerg',
   }];
-  constructor(public firebaseCrud: DispatcherService, public router: Router) { }
+  constructor(public firebaseCrud: PostSiteService, public router: Router) { }
 
   ngOnInit(): void {
     this.New = new FormGroup({
@@ -61,7 +62,13 @@ export class NewPostSiteComponent implements OnInit {
 
   }
   submit() {
-    console.log(this.New.value)
-    this.firebaseCrud.createNewDispatchTicket(this.New.value)
+    // console.log(this.New.value)
+    this.loading = true;
+
+    this.firebaseCrud.createNewPostSite(this.New.value).then(
+      () => {
+        alert("PostSite Added")// add sweet alert
+      }
+    )
   }
 }
