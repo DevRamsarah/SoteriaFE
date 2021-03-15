@@ -33,6 +33,7 @@ export class NewClientComponent implements OnInit {
       MobileNum: new FormControl(null, [Validators.required]),
       PhoneNum: new FormControl(null, [Validators.required]),
       faxNum: new FormControl(null, [Validators.required]),
+      ClientAddress: new FormControl(null, [Validators.required]),
       Category: new FormControl(null, [Validators.required])
 
 

@@ -46,17 +46,16 @@ export class NewPostSiteComponent implements OnInit {
 
   ngOnInit(): void {
     this.New = new FormGroup({
-      ClientID: new FormControl(null, [Validators.required]),
+      ClientName: new FormControl(null, [Validators.required]),
       PostSite: new FormControl(null, [Validators.required]),
-      Guard: new FormControl(null, [Validators.required]),
-      Priority: new FormControl(null, [Validators.required]),
-      Caller: new FormControl(null, [Validators.required]),
-      CallerName: new FormControl(null, [Validators.required]),
-      Incident: new FormControl(null, [Validators.required]),
-      IncidentDate: new FormControl(null, [Validators.required]),
-      IncidentDetail: new FormControl(null, [Validators.required]),
-      ActionTaken: new FormControl(null, [Validators.required]),
-      InternalNotes: new FormControl(null, [Validators.required]),
+      ContactName: new FormControl(null, [Validators.required]),
+      MobileNum: new FormControl(null, [Validators.required]),
+      PhoneNum: new FormControl(null, [Validators.required]),
+      faxNum: new FormControl(null, [Validators.required]),
+      Category: new FormControl(null, [Validators.required]),
+      ClientEmail: new FormControl(null, [Validators.required]),
+      ClientAddress: new FormControl(null, [Validators.required]),
+
 
     });
 
