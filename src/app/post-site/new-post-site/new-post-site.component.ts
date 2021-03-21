@@ -12,6 +12,7 @@ export class NewPostSiteComponent implements OnInit {
   loading = false;
 
   New: FormGroup;
+  clientD = [];
   client = [{
     ID: '1',
     Name: 'a',
@@ -55,11 +56,28 @@ export class NewPostSiteComponent implements OnInit {
       Category: new FormControl(null, [Validators.required]),
       ClientEmail: new FormControl(null, [Validators.required]),
       ClientAddress: new FormControl(null, [Validators.required]),
-
-
     });
 
+
+    this.firebaseCrud.getClient().subscribe((clients: any) => {
+      clients.forEach(client => {
+        let clientData: any = {};
+        clientData.id = client.ClientID;
+        clientData.Name = client.ClientName;
+        this.clientD.push(clientData);
+
+
+
+      });
+      console.log(this.clientD);
+
+    })
+
+
+
   }
+
+
   submit() {
     // console.log(this.New.value)
     this.loading = true;
@@ -70,4 +88,7 @@ export class NewPostSiteComponent implements OnInit {
       }
     )
   }
+
+
+
 }

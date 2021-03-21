@@ -1,25 +1,152 @@
 <div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
-    <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
-    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
-    <a class="text-dark font-weight-bold h6  " style="text-decoration: none;">Guards</a>    
-    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
-    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Guards</a>
+        <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+        <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+        <a class="text-muted h6 px-2 " [routerLink]="['/Guards']">Guard</a>
+        <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+        <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">New Guard</a>
 </div>
 
-<div class="container-fluid d">
-<div class="form-group"><input type="text" [(ngModel)]="EmployeeName" class="form-control"
-        placeholder="Enter Guard Name"></div>
-<div class="form-group"><input type="number" [(ngModel)]="EmployeeAge" class="form-control"
-        placeholder="Enter Guard Age"></div>
-<div class="form-group"><input type="text" [(ngModel)]="EmployeeAddress" class="form-control"
-        placeholder="Enter Guard Address"></div>
-<div class="form-group"><input type="text" [(ngModel)]="EmployeeCity" class="form-control"
-        placeholder="Enter Guard City"></div>
-<div class="form-group"><button class="btn btn-primary" (click)="createEmployee()"
-        [disabled]="!EmployeeName || !EmployeeAge || !EmployeeAddress || !EmployeeCity">Create
-        Employee</button>
-</div>
-<div class="form-group">
-    <h4>{{message}}</h4>
-</div>
-</div>
+<div class="container">
+        <div class="row">
+                <div class="col">
+                        <div class="card shadow mb-3">
+                                <div class="card-header py-3">
+                                        <p class="text-primary m-0 font-weight-bold">New Guard</p>
+                                </div>
+                                <div class="card-body">
+                                        <form [formGroup]="New" ngNativeValidate (ngSubmit)="submit()">
+                                                <div class="form-row">
+                                                        <div class="col">
+                                                                <div class="form-group"><label
+                                                                                for="First Name"><strong>First Name</strong></label><input
+                                                                                class="form-control" type="text"
+                                                                                placeholder="First Name" required
+                                                                                formControlName="ClientName"></div>
+                                                        </div>
+                                                        <div class="col">
+                                                                <div class="form-group"><label for="Last Name"><strong>Last Name</strong></label><input
+                                                                                class="form-control" type="text"
+                                                                                placeholder="Last Name" required
+                                                                                formControlName="ClientEmail">
+                                                                </div>
+                                                        </div>
+                                                </div>
+                                                <div class="form-row">
+                                                        <div class="col">
+                                                                <div class="form-group">
+                                                                        <label class="d-flex flex-row"
+                                                                                for="address"><strong>Gender</strong></label>
+                                                                                <div class="form-check">
+                                                                                        <input class="form-check-input" type="radio" name="flexRadioDefault" required>
+                                                                                        <label class="form-check-label" for="flexRadioDefault1">
+                                                                                          Male
+                                                                                        </label>
+                                                                                        <input class="form-check-input ml-4" type="radio" name="flexRadioDefault" required>
+                                                                                        <label class="form-check-label  ml-4 pl-3" for="flexRadioDefault2">
+                                                                                          Female
+                                                                                        </label>
+                                                                                      </div>
+                                                                              
+                                                                </div>
+                                                        </div>
+                                                        <div class="col">
+                                                                <div class="form-group"><label for="DOB"><strong>Date Of
+                                                                                        Birth
+                                                                                </strong></label><input
+                                                                                class="form-control" type="date"
+                                                                                 required  max="{{datePickerId}}"
+                                                                                formControlName="faxNum"></div>
+                                                        </div>
+                                                </div>
+                                                <div class="form-row">
+                                                        
+                                                        <div class="col">
+                                                                <div class="form-group"><label
+                                                                                for="Mobile Number"><strong>Mobile
+                                                                                        Number</strong></label><input
+                                                                                class="form-control" type="text"
+                                                                                placeholder="555-5555-5555" required
+                                                                                formControlName="MobileNum"></div>
+                                                        </div>
+                                                        <div class="col">
+                                                                <div class="form-group"><label
+                                                                                for="Mobile Number"><strong>Phone
+                                                                                        Number</strong></label><input
+                                                                                class="form-control" type="text"
+                                                                                placeholder="555-5555-5555" required
+                                                                                formControlName="PhoneNum"></div>
+                                                        </div>
+                                                </div>
+                                                <div class="form-row">
+                                           
+                                                        <div class="col">
+                                                                <div class="form-group"><label for="Email"><strong>Email
+                                                                                        Address</strong></label><input
+                                                                                class="form-control" type="email"
+                                                                                placeholder="user@example.com" required
+                                                                                formControlName="ClientEmail">
+                                                                </div>
+                                                        </div>
+                                                        <div class="col">
+                                                                <div class="form-group"><label for="NIC"><strong>NIC
+                                                                                        Number</strong>
+                                                                        </label><input class="form-control" type="text"
+                                                                                placeholder="Nic" required
+                                                                                formControlName="ContactName"></div>
+                                                        </div>
+                                                       
+                                                </div>
+                                                
+                                                <div class="form-row">
+
+                                                        <div class="col">
+                                                                <div class="form-group">
+                                                                        <label
+                                                                                for="address"><strong>Address</strong></label><input
+                                                                                class="form-control" type="text"
+                                                                                placeholder="Address" required
+                                                                                formControlName="ClientAddress">
+                                                                </div>
+                                                        </div>
+                                                        <div class="col-2 mt-4 pt-2">
+                                                                <mat-slide-toggle
+                                                                [(ngModel)]="isChecked"
+                                                                [color]="color"
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                >
+                                                              Add coordinate
+                                                            </mat-slide-toggle>
+                                                        </div>
+                                                </div>
+                                                <div class="form-row" *ngIf="isChecked">
+                                                        <fieldset class="scheduler-border d-flex flex-row row">
+                                                                <legend class="scheduler-border">Coordinate</legend>
+                                                  
+                                                         
+                                                                        <label
+                                                                                for="Lat" class="mt-2 mr-4"><strong>Latitude</strong></label><input
+                                                                                class="form-control col-4" type="text"
+                                                                                placeholder="Latitude" required
+                                                                                formControlName="Latitude">
+                                                           <div class="col-lg-2 col-md-0 col-sm-0"></div>
+                                                                        <label
+                                                                                for="Long" class="mt-2 mr-4"><strong>Longitude</strong></label><input
+                                                                                class="form-control col-4" type="text"
+                                                                                placeholder="Longitude" required
+                                                                                formControlName="Longitude">
+                                                       
+                                                </fieldset>
+                                                </div>
+                                                <div class="form-group">
+                                                        <button class="btn btn-primary btn-sm" type="submit"
+                                                                *ngIf="!loading">Submit</button>
+                                                        <div class="spinner-border text-primary" role="status"
+                                                                *ngIf="loading">
+                                                                <span class="visually-hidden"></span>
+                                                        </div>
+                                                </div>
+                                        </form>
+                                </div>
+                        </div>
+                </div>
+        </div>

@@ -21,4 +21,8 @@ export class PostSiteService {
   deletePostSite(id) {
     return this.firebaseCrud.collection('postSite').doc(id).delete();
   }
+
+  getClient() {
+    return this.firebaseCrud.collection('clients').valueChanges({ idField: 'ClientID' })
+  }
 }

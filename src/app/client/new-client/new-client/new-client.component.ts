@@ -48,5 +48,7 @@ export class NewClientComponent implements OnInit {
         alert("Client Added")// add sweet alert
       }
     )
+    this.router.navigate(["Clients"]);
+
   }
 }

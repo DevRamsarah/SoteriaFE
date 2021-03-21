@@ -18,9 +18,14 @@
                     <form [formGroup]="New" ngNativeValidate (ngSubmit)="submit()">
                         <div class="form-row">
                             <div class="col">
-                                <div class="form-group"><label for="Client"><strong>Client</strong></label><input
-                                        class="form-control" type="text" placeholder="Client Name" required
-                                        formControlName="ClientName"></div>
+                                <div class="form-group"><label for="Client"><strong>Client</strong></label>
+                                    <select
+                                        class="form-control" formControlName="ClientName">
+                                        <option [value]="country.id" *ngFor="let country of clientD">
+                                            {{country.Name}}
+                                        </option>
+                                    </select>
+                                    </div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="PostSite"><strong>Post Site</strong></label><input
@@ -72,11 +77,11 @@
                             <div class="col-6">
                                 <div class="form-group"><label for="Category"><strong>Category
                                         </strong></label>
-                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                    <input class="form-control" list="clientD" placeholder="Select" required
                                         formControlName="Category">
-                                    <datalist id="GuardL">
-                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
-                                            {{gua.ID}}
+                                    <datalist id="clientD">
+                                        <option *ngFor="let gua of clientD" [value]="gua.Name">
+                                            {{gua.id}}
                                         </option>
                                     </datalist>
                                 </div>
