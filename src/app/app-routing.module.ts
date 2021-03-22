@@ -21,6 +21,7 @@ import { NewClientComponent } from './client/new-client/new-client/new-client.co
 import { NewGuardComponent } from './guard/new-guard/new-guard.component';
 import { NewDispatcherComponent } from './dispatcher/new-dispatcher/new-dispatcher.component';
 import { NewPostSiteComponent } from './post-site/new-post-site/new-post-site.component';
+import { ZoneComponent } from './zone/zone.component';
 
 
 const routes: Routes = [
@@ -72,6 +73,10 @@ const routes: Routes = [
   },
   {
     path: 'Home', component: HomeComponent,
+
+  },
+  {
+    path: 'Zone', component: ZoneComponent,
 
   },
   {

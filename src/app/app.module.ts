@@ -39,6 +39,9 @@ import { NewVisitorComponent } from './visitors/new-visitor/new-visitor.componen
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { ZoneComponent } from './zone/zone.component';
+// for AngularFireDatabase
+import { AngularFireDatabaseModule } from 'angularfire2/database';
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,6 +72,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     NewPostSiteComponent,
     NewDispatcherComponent,
     NewVisitorComponent,
+    ZoneComponent,
 
   ],
   imports: [
@@ -85,6 +89,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
       messagingSenderId: "176754222221",
       appId: "1:176754222221:web:797017e545d6794ff6eec4"
     }),
+    AngularFireDatabaseModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     CustomMaterialModule,

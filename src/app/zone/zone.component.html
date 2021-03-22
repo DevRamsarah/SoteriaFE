@@ -1,0 +1,34 @@
+<div class="container-fluid">
+    <h4 class="text-left text-dark mb-4" style="font-size: 24px;font-family: Arbutus, cursive;">Add A New Zone&nbsp;</h4>
+    <div class="card shadow">
+        <div class="card-header py-3">
+            <p class="text-primary m-0 font-weight-bold">Add New Zone Detail</p>
+        </div>
+        <div class="card-body">
+            <form>
+                
+                <div class="form-row">
+                    <div class="col-md-6" >
+                        <div class="form-group" style="padding: 5px;"><label for="zonename"><strong>Zone ID</strong></label>
+                        <input class="form-control" type="text" placeholder="Zone ID" name="ZoneId" require></div>
+                    </div>
+                    <div class="col-md-6" >
+                        <div class="form-group" style="padding: 5px;"><label for="zonename"><strong>Zone Name</strong></label>
+                        <input class="form-control" type="text" placeholder="Zone Name" name="ZoneName" require></div>
+
+                    </div>
+                    <div class="col" id="zone"></div>
+                </div>
+                <input type="text" [(ngModel)]="message"  [ngModelOptions]="{standalone: true}" placeholder="your message..">
+                <h1>Markers</h1>
+               <div *ngFor="let marker of markers | async">
+                   <button (click)="flyTo(marker)">{{marker.properties.message}}</button>
+                   <button (click)="removeMarker(marker)">Delete</button>
+               </div>
+              
+                <div id="map"></div>
+                <div class="form-group"><button class="btn btn-primary btn-sm" type="submit" name="saveZone" style="margin-top: 10px;">Save Settings</button></div>
+            </form>
+        </div>
+    </div>
+</div>
