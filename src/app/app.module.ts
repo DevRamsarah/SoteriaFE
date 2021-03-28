@@ -89,7 +89,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
       messagingSenderId: "176754222221",
       appId: "1:176754222221:web:797017e545d6794ff6eec4"
     }),
-    AngularFireDatabaseModule,
+    // AngularFireDatabaseModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     CustomMaterialModule,

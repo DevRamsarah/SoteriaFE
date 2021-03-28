@@ -23,8 +23,7 @@ export class ZoneComponent implements OnInit {
   source: any;
   New: FormGroup;
   markers: any;
-  zoneA: any
-  dropdown: any = ["All"]
+  dropdown: any = []
 
   constructor(private mapService: MapService) { }
 
@@ -35,10 +34,11 @@ export class ZoneComponent implements OnInit {
 
     this.mapService.getAllZone().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-
-        (this.dropdown.includes(doc.data().region)) ? null : this.dropdown.push(doc.data().region)
+        // console.log(doc.data());
+        this.dropdown.push(doc.data())
       });
       console.log(this.dropdown);
+      console.log(this.dropdown[1]);
 
     })
       .catch((error) => {
@@ -46,10 +46,6 @@ export class ZoneComponent implements OnInit {
       });
 
     this.initializeMap()
-  }
-
-
-  private initializeMap() {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(position => {
 
@@ -60,6 +56,21 @@ export class ZoneComponent implements OnInit {
         })
       })
     }
+
+  }
+
+
+  private initializeMap() {
+    // if (navigator.geolocation) {
+    //   navigator.geolocation.getCurrentPosition(position => {
+
+    //     this.lat = position.coords.latitude;
+    //     this.lng = position.coords.longitude;
+    //     this.map.flyTo({
+    //       center: [this.lng, this.lat]
+    //     })
+    //   })
+    // }
 
 
     this.buildMap()
@@ -92,16 +103,20 @@ export class ZoneComponent implements OnInit {
     this.map.addControl(draw);
 
 
-    //add marker to map and database
-    this.map.on('click', (event) => {
-      const coordinates = [event.lngLat.lng, event.lngLat.lat]
-      const newMarker = new GeoJson(coordinates, { message: this.message })
 
-    })
 
     // load map event
 
     this.map.on('load', (event) => {
+
+      this.dropdown.forEach(zoneS => {
+
+        this.displayZone(zoneS.region, zoneS.coords)
+        console.log(zoneS);
+
+      });
+
+
       var marker1 = new mapboxgl.Marker()
         .setLngLat([this.lng, this.lat])
         .addTo(this.map);
@@ -115,43 +130,6 @@ export class ZoneComponent implements OnInit {
 
         console.log(JSON.stringify(point));
         sessionStorage.setItem("Zone", JSON.stringify(point));
-        // this.zoneA = JSON.stringify(point)
-
-        // this.zoneA = point
-        point.forEach(element => {
-
-          // this.mapService.createZone("coords").then(
-          //   () => {
-          //     console.log("Add coords");
-
-          //   }
-          // )
-
-          // this.zoneA.push(element)
-          // console.log(element[0][0]);
-          // this.mapService.createZone(element[0][0]).then(
-          //   () => {
-          //     console.log("Add coords");
-
-          //   }
-          // )
-          // console.log(element[1]);
-          // console.log(element[2]);
-          // console.log(element[3]);
-          element.forEach(data => {
-            // console.log(data);
-
-
-            data.forEach(coords => {
-
-              // this.zoneA.push(coords)
-              // console.log(coords);
-
-            });
-
-          });
-
-        });
 
       });
 
@@ -169,18 +147,85 @@ export class ZoneComponent implements OnInit {
 
     })
   }
+
+
+  add_markers(coordinates) {
+
+    var geojson =
+      // add markers to map
+      geojson.forEach(function (marker) {
+
+
+        var el = document.createElement('div');
+        el.id = 'marker';
+        // console.log(marker);
+        // make a marker for each feature and add to the map
+        new mapboxgl.Marker()
+          .setLngLat(marker)
+          .addTo(this.map);
+      });
+
+
+  }
+  // getZone(lat, lng) {
+  //  let zone = turf.polygon([this.dropdown]);
+  //   var a = turf.booleanPointInPolygon(pt, zone);
+  //   if (a === true) {
+
+
+  //   }
+  // }
+
   submit() {
-    // console.log(JSON.parse(sessionStorage.getItem("Zone")))
-    // this.loading = true;
-    // console.log(this.New.value);
+
 
     this.mapService.createZone(sessionStorage.getItem("Zone"), this.New.value.ZoneName).then(
       () => {
         alert("Zone Added")// add sweet alert
       }
     )
-    // this.router.navigate(["Clients"]);
     sessionStorage.removeItem('Zone');
 
   }
+  displayZone(name, saved_markers) {
+    this.map.addSource(name, {
+      'type': 'geojson',
+      'data': {
+        'type': 'Feature',
+        'geometry': {
+          'type': 'Polygon',
+          'coordinates': JSON.parse(saved_markers)
+        }
+      }
+
+    });
+    this.map.addLayer({
+      'id': name + 1,
+      'type': 'fill',
+      'source': name,
+      'layout': {},
+      'paint': {
+        'fill-color': get_rand_color(),
+        'fill-opacity': 0.5
+      }
+    });
+    this.map.addLayer({
+      'id': name,
+      'type': 'symbol',
+      'source': name,
+      'layout': {
+        'text-field': name,
+        'text-font': ['DIN Offc Pro Italic', 'Arial Unicode MS Bold'],
+        'icon-size': 3
+      }
+    });
+
+    function get_rand_color() {
+      var color = Math.floor(Math.random() * Math.pow(256, 3)).toString(16);
+      while (color.length < 6) {
+        color = "0" + color;
+      }
+      return "#" + color;
+    }
+  };
 }
