@@ -24,10 +24,21 @@ export class ZoneComponent implements OnInit {
   New: FormGroup;
   markers: any;
   dropdown: any = []
-
+  marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(position => {
+        console.log(position.coords.latitude, position.coords.longitude);
+
+        this.lat = position.coords.latitude;
+        this.lng = position.coords.longitude;
+        this.map.flyTo({
+          center: [this.lng, this.lat]
+        })
+      })
+    }
     this.New = new FormGroup({
       ZoneName: new FormControl(null, [Validators.required])
     })
@@ -46,16 +57,7 @@ export class ZoneComponent implements OnInit {
       });
 
     this.initializeMap()
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
 
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        this.map.flyTo({
-          center: [this.lng, this.lat]
-        })
-      })
-    }
 
   }
 
@@ -103,10 +105,34 @@ export class ZoneComponent implements OnInit {
     this.map.addControl(draw);
 
 
+    this.map.on('click', (event) => {
+      this.marker1.remove();
+      const coordinates = [event.lngLat.lng, event.lngLat.lat]
+      const newMarker = new GeoJson(coordinates, { message: this.message })
+      // this.mapService.createMarker(newMarker)
+      this.marker1.setLngLat(coordinates)
+        .addTo(this.map);
+      this.checkZone(event.lngLat.lng, event.lngLat.lat)
+    })
 
 
-    // load map event
 
+    // function addMarker(ltlng, event) {
+    //   let user_location;
+    //   if (event === 'click') {
+    //     user_location = ltlng;
+    //   }
+    //   this.marker = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
+    //     .setLngLat(user_location)
+    //     .addTo(this.map)
+    //     .on('dragend', onDragEnd);
+    // }
+    // function onDragEnd() {
+    //   var lngLat = this.marker.getLngLat();
+    //   // document.getElementById("lat").value = lngLat.lat;
+    //   // document.getElementById("lng").value = lngLat.lng;
+
+    // }
     this.map.on('load', (event) => {
 
       this.dropdown.forEach(zoneS => {
@@ -117,8 +143,7 @@ export class ZoneComponent implements OnInit {
       });
 
 
-      var marker1 = new mapboxgl.Marker()
-        .setLngLat([this.lng, this.lat])
+      this.marker1.setLngLat([this.lng, this.lat])
         .addTo(this.map);
 
 
@@ -149,35 +174,22 @@ export class ZoneComponent implements OnInit {
   }
 
 
-  add_markers(coordinates) {
-
-    var geojson =
-      // add markers to map
-      geojson.forEach(function (marker) {
 
 
-        var el = document.createElement('div');
-        el.id = 'marker';
-        // console.log(marker);
-        // make a marker for each feature and add to the map
-        new mapboxgl.Marker()
-          .setLngLat(marker)
-          .addTo(this.map);
-      });
 
+  checkZone(lng, lat) {
+    this.dropdown.forEach(zoneS => {
+      var pt = turf.point([lng, lat]);
+      var poly = turf.polygon(JSON.parse(zoneS.coords));
+      if (turf.booleanPointInPolygon(pt, poly)) {
+        console.log(zoneS.region);
+        // console.log(turf.booleanPointInPolygon(pt, poly));
+      }
+    });
 
   }
-  // getZone(lat, lng) {
-  //  let zone = turf.polygon([this.dropdown]);
-  //   var a = turf.booleanPointInPolygon(pt, zone);
-  //   if (a === true) {
-
-
-  //   }
-  // }
 
   submit() {
-
 
     this.mapService.createZone(sessionStorage.getItem("Zone"), this.New.value.ZoneName).then(
       () => {
