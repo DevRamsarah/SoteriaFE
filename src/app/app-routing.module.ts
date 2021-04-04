@@ -22,6 +22,7 @@ import { NewGuardComponent } from './guard/new-guard/new-guard.component';
 import { NewDispatcherComponent } from './dispatcher/new-dispatcher/new-dispatcher.component';
 import { NewPostSiteComponent } from './post-site/new-post-site/new-post-site.component';
 import { ZoneComponent } from './zone/zone.component';
+import { AddZoneComponent } from './zone/add-zone/add-zone.component';
 
 
 const routes: Routes = [
@@ -77,6 +78,10 @@ const routes: Routes = [
   },
   {
     path: 'Zone', component: ZoneComponent,
+
+  },
+  {
+    path: 'Zone/New-Zone', component: AddZoneComponent,
 
   },
   {

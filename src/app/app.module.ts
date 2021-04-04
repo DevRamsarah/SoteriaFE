@@ -42,6 +42,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { ZoneComponent } from './zone/zone.component';
 // for AngularFireDatabase
 import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AddZoneComponent } from './zone/add-zone/add-zone.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -73,6 +74,7 @@ import { AngularFireDatabaseModule } from 'angularfire2/database';
     NewDispatcherComponent,
     NewVisitorComponent,
     ZoneComponent,
+    AddZoneComponent,
 
   ],
   imports: [

@@ -1,16 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MapService } from '../../services/map/map.service';
-import { GeoJson, FeatureCollection } from '../../model/map/map'
+import { MapService } from '../../../services/map/map.service';
+import { GeoJson, FeatureCollection } from '../../../model/map/map'
 import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
 import * as turf from '@turf/turf';
 @Component({
-  selector: 'app-zone',
-  templateUrl: './zone.component.html',
-  styleUrls: ['./zone.component.css']
+  selector: 'app-add-zone',
+  templateUrl: './add-zone.component.html',
+  styleUrls: ['./add-zone.component.css']
 })
-export class ZoneComponent implements OnInit {
+export class AddZoneComponent implements OnInit {
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/outdoors-v9';
   lat = -20.23930295803079;
@@ -28,17 +28,7 @@ export class ZoneComponent implements OnInit {
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        console.log(position.coords.latitude, position.coords.longitude);
 
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        this.map.flyTo({
-          center: [this.lng, this.lat]
-        })
-      })
-    }
     this.New = new FormGroup({
       ZoneName: new FormControl(null, [Validators.required])
     })
@@ -49,30 +39,24 @@ export class ZoneComponent implements OnInit {
         this.dropdown.push(doc.data())
       });
       console.log(this.dropdown);
-      // console.log(this.dropdown[1]);
+      console.log(this.dropdown[1]);
 
     })
       .catch((error) => {
         console.log("Error getting documents: ", error);
       });
 
-    this.initializeMap()
 
 
   }
 
+  ngAfterViewInit(): void {
+    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
+    //Add 'implements AfterViewInit' to the class.
+    this.initializeMap()
 
+  }
   private initializeMap() {
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(position => {
-
-    //     this.lat = position.coords.latitude;
-    //     this.lng = position.coords.longitude;
-    //     this.map.flyTo({
-    //       center: [this.lng, this.lat]
-    //     })
-    //   })
-    // }
 
 
     this.buildMap()
@@ -105,60 +89,9 @@ export class ZoneComponent implements OnInit {
     this.map.addControl(draw);
 
 
-    this.map.on('click', (event) => {
-      this.marker1.remove();
-      const coordinates = [event.lngLat.lng, event.lngLat.lat]
-      const newMarker = new GeoJson(coordinates, { message: this.message })
-      // this.mapService.createMarker(newMarker)
-      this.marker1.setLngLat(coordinates)
-        .addTo(this.map);
-      this.checkZone(event.lngLat.lng, event.lngLat.lat)
-    })
 
 
 
-    // function addMarker(ltlng, event) {
-    //   let user_location;
-    //   if (event === 'click') {
-    //     user_location = ltlng;
-    //   }
-    //   this.marker = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
-    //     .setLngLat(user_location)
-    //     .addTo(this.map)
-    //     .on('dragend', onDragEnd);
-    // }
-    // function onDragEnd() {
-    //   var lngLat = this.marker.getLngLat();
-    //   // document.getElementById("lat").value = lngLat.lat;
-    //   // document.getElementById("lng").value = lngLat.lng;
-
-    // }
-    this.map.on('load', (event) => {
-
-      this.dropdown.forEach(zoneS => {
-
-        this.displayZone(zoneS.region, zoneS.coords)
-        console.log(zoneS);
-
-      });
-
-
-      this.marker1.setLngLat([this.lng, this.lat])
-        .addTo(this.map);
-
-
-
-      this.map.on('draw.create', function (e) {
-
-        var userPolygon = e.features[0];
-        let point = turf.getCoords(userPolygon);
-
-        console.log(JSON.stringify(point));
-        sessionStorage.setItem("Zone", JSON.stringify(point));
-
-      });
-
-    })
 
   }
 
