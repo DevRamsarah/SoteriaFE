@@ -19,13 +19,13 @@
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="Client"><strong>Client</strong></label>
-                                    <select
-                                        class="form-control" formControlName="ClientName">
+                                    <select class="form-control" formControlName="ClientName" autofocus>
+
                                         <option [value]="country.id" *ngFor="let country of clientD">
                                             {{country.Name}}
                                         </option>
                                     </select>
-                                    </div>
+                                </div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="PostSite"><strong>Post Site</strong></label><input
@@ -54,17 +54,17 @@
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Fax
-                                        </strong></label><input class="form-control" type="text"
-                                        placeholder="5555-5555" required formControlName="faxNum"></div>
+                                        </strong></label><input class="form-control" type="text" placeholder="5555-5555"
+                                        required formControlName="faxNum"></div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
-                            
-                                    <div class="form-group"><label for="Email"><strong>Email Address</strong></label><input
-                                            class="form-control" type="email" placeholder="user@example.com" required
-                                            formControlName="ClientEmail">
-                                    </div>
+
+                                <div class="form-group"><label for="Email"><strong>Email Address</strong></label><input
+                                        class="form-control" type="email" placeholder="user@example.com" required
+                                        formControlName="ClientEmail">
+                                </div>
                             </div>
                             <div class="col">
                                 <div class="form-group">
@@ -86,13 +86,13 @@
                                     </datalist>
                                 </div>
                             </div>
-                            
+
                         </div>
                         <div class="form-group">
                             <button class="btn btn-primary btn-sm" type="submit" *ngIf="!loading">Submit</button>
                             <div class="spinner-border text-primary" role="status" *ngIf="loading">
                                 <span class="visually-hidden"></span>
-                              </div>
+                            </div>
                         </div>
                     </form>
                 </div>

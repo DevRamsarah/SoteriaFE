@@ -39,29 +39,36 @@
                         <div class="col-md-6">
                             <address>
                                 <strong>Billed To:</strong><br>
-                                Twitter, Inc.<br>
-                                795 Folsom Ave, Suite 600<br>
-                                San Francisco, CA 94107<br>
-                                <abbr title="Phone">P:</abbr> (63) 456-7890
+                                <select class="form-control" required>
+                                    <option selected disabled>Choose Client</option>
+                                    <option [value]="country.id" *ngFor="let country of clientD">
+                                        {{country.Name}}
+                                    </option>
+                                </select>
+                                <br>
+                                <select class="form-control" required>
+                                    <option selected disabled>Choose Post-Site</option>
+                                    <option [value]="country.id" *ngFor="let country of clientD">
+                                        {{country.Name}}
+                                    </option>
+                                </select>
                             </address>
                         </div>
-
-                        <div class="col-md-6 row">
-                            <div class="col-md-6">
-
-                                <address>
-                                    <strong>Order Date:</strong><br>
-                                    17/06/14
-                                </address>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-4">
+                            <div class="">
+                                <strong>Invoice Number</strong><br>
+                                <input class="form-control" type="text" required>
+                            </div>
+                            <div class="">
+                                <strong>Invoice Date:</strong><br>
+                                <input class="form-control" type="date" required>
+                            </div>
+                            <div class="">
+                                <strong>Payment Due:</strong><br>
+                                <input class="form-control" type="date" required>
                             </div>
 
-                            <div class="col-md-6">
-                                <address>
-                                    <strong>Payment Method:</strong><br>
-                                    Visa ending **** 1234<br>
-                                    h.elaine@gmail.com<br>
-                                </address>
-                            </div>
                         </div>
 
                         <div class="row">
@@ -71,10 +78,10 @@
                                     <thead>
                                         <tr class="line">
                                             <td><strong>#</strong></td>
-                                            <td class="text-center"><strong>PROJECT</strong></td>
-                                            <td class="text-center"><strong>HRS</strong></td>
-                                            <td class="text-right"><strong>RATE</strong></td>
-                                            <td class="text-right"><strong>SUBTOTAL</strong></td>
+                                            <td class="text-center"><strong>Service</strong></td>
+                                            <td class="text-center"><strong>Hours</strong></td>
+                                            <td class="text-right"><strong>Rate/Hour </strong></td>
+                                            <td class="text-right"><strong>Amount</strong></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -126,8 +133,8 @@
                             </div>
                         </div>
                         <div class="row">
-                            <div class="col-md-12 text-right identity">
-                                <p>Designer identity<br><strong>Jeffrey Williams</strong></p>
+                            <div class="col-md-12 text-center">
+                                <textarea style="width: 67vw;" class="form-control" placeholder="Note..."></textarea>
                             </div>
                         </div>
                     </div>
