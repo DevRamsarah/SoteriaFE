@@ -43,6 +43,7 @@ import { ZoneComponent } from './zone/zone.component';
 // for AngularFireDatabase
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AddZoneComponent } from './zone/add-zone/add-zone.component';
+import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -75,6 +76,7 @@ import { AddZoneComponent } from './zone/add-zone/add-zone.component';
     NewVisitorComponent,
     ZoneComponent,
     AddZoneComponent,
+    AddInvoiceComponent,
 
   ],
   imports: [

@@ -23,6 +23,7 @@ import { NewDispatcherComponent } from './dispatcher/new-dispatcher/new-dispatch
 import { NewPostSiteComponent } from './post-site/new-post-site/new-post-site.component';
 import { ZoneComponent } from './zone/zone.component';
 import { AddZoneComponent } from './zone/add-zone/add-zone.component';
+import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
 
 
 const routes: Routes = [
@@ -118,6 +119,10 @@ const routes: Routes = [
   },
   {
     path: 'Invoicer', component: InvoiceComponent,
+
+  },
+  {
+    path: 'Invoicer/New-invoice', component: AddInvoiceComponent,
 
   },
   { path: '**', redirectTo: 'Dashboard', pathMatch: 'full' },

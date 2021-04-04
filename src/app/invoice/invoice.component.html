@@ -1,6 +1,91 @@
 <div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
     <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
     <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
-    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Invoice</a>
+    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Invoicer</a>
 </div>
-<p>invoice works!</p>
+
+
+<div class="container">
+    <div class="row d-flex justify-content-center" style="margin: 3% 0 2% 0;">
+        <mat-button-toggle-group appearance="legacy">
+            <mat-button-toggle checked (click)="active2(data2)">
+                <b>Active</b>
+            </mat-button-toggle>
+            <mat-button-toggle (click)="active2(data)">
+                <b>Archived</b>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </div>
+    <div class=" p-4">
+        <div class="row">
+            <div class="col-6">
+                <mat-form-field style="width: 100%;">
+                    <mat-label>Filter</mat-label>
+                    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+                </mat-form-field>
+            </div>
+            <div class="row col-6 justify-content-end">
+
+                <button mat-raised-button class="btn-primary" title="New Invoice" style="height: 70%; width: 50%;"
+                    (click)="new()">
+                    New Invoice</button>
+            </div>
+        </div>
+
+        <div class="mat-elevation-z8">
+
+            <table mat-table [dataSource]="dataSource2">
+
+                <ng-container matColumnDef="ClientID">
+                    <th mat-header-cell *matHeaderCellDef>Client</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ClientName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ContactName">
+                    <th mat-header-cell *matHeaderCellDef>Contact Name</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ContactName}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="MobileNum">
+                    <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
+                    <td mat-cell *matCellDef="let element"> {{element.MobileNum}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="ClientEmail">
+                    <th mat-header-cell *matHeaderCellDef>Email</th>
+                    <td mat-cell *matCellDef="let element"> {{element.ClientEmail}} </td>
+                </ng-container>
+
+                <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef> Action </th>
+                    <td mat-cell *matCellDef="let element">
+
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+
+                            <span>Action</span>
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item (click)="change(element.ClientID)">Update</button>
+                            <button mat-menu-item>Archived</button>
+
+                        </mat-menu>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns2;">
+                </tr>
+
+                <tr class="mat-row" *matNoDataRow>
+
+                    <td class="mat-cell" colspan="6" *ngIf="!loading">No record found</td>
+                    <td class="mat-cell text-center" colspan="6">
+                        <spinner *ngIf="loading"></spinner>
+                    </td>
+                </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+        </div>
+    </div>
+</div>
