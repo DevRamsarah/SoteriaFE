@@ -11,7 +11,7 @@
         <!-- BEGIN INVOICE -->
         <div class="col-md-12">
             <div class="grid invoice">
-                <div class="grid-body">
+                <div class="grid-body" id="print">
                     <div class="invoice-title">
                         <div class="row">
                             <div class="col-md-3">
@@ -71,10 +71,10 @@
 
                         </div>
 
-                        <div class="row">
+                        <div class="row" style="margin-left: 3vw;">
                             <div class="col-md-12">
                                 <h3>ORDER SUMMARY</h3>
-                                <table class="table table-striped">
+                                <table class="table table-striped  " style=" width: 33vw;">
                                     <thead>
                                         <tr class="line">
                                             <td><strong>#</strong></td>
@@ -87,32 +87,21 @@
                                     <tbody>
                                         <tr>
                                             <td>1</td>
-                                            <td><strong>Template Design</strong><br>A website template is a pre-designed
-                                                webpage, or set of webpages, that anyone can modify with their own
-                                                content
-                                                and images to setup a website.</td>
+                                            <td><strong>Template Design</strong><br></td>
                                             <td class="text-center">15</td>
                                             <td class="text-center">$75</td>
                                             <td class="text-right">$1,125.00</td>
                                         </tr>
                                         <tr>
                                             <td>2</td>
-                                            <td><strong>Template Development</strong><br>Web development is a broad term
-                                                for
-                                                the work involved in developing a web site for the Internet (World Wide
-                                                Web)
-                                                or an intranet (a private network).</td>
+                                            <td><strong>Template Development</strong><br></td>
                                             <td class="text-center">15</td>
                                             <td class="text-center">$75</td>
                                             <td class="text-right">$1,125.00</td>
                                         </tr>
                                         <tr class="line">
                                             <td>3</td>
-                                            <td><strong>Testing</strong><br>Take measures to check the quality,
-                                                performance,
-                                                or reliability of (something), especially before putting it into
-                                                widespread
-                                                use or practice.</td>
+                                            <td><strong>Testing</strong><br></td>
                                             <td class="text-center">2</td>
                                             <td class="text-center">$75</td>
                                             <td class="text-right">$150.00</td>
@@ -134,11 +123,12 @@
                         </div>
                         <div class="row">
                             <div class="col-md-12 text-center">
-                                <textarea style="width: 67vw;" class="form-control" placeholder="Note..."></textarea>
+                                <textarea style="width: 40vw;" class="form-control" placeholder="Note..."></textarea>
                             </div>
                         </div>
                     </div>
                 </div>
+                <button (click)="download">PDF</button>
             </div>
             <!-- END INVOICE -->
         </div>

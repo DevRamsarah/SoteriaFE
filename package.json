@@ -36,6 +36,7 @@
     "firebase": "^7.24.0",
     "font-awesome": "^4.7.0",
     "geofirestore": "^4.4.1",
+    "html2pdf.js": "^0.9.2",
     "jquery": "^3.5.1",
     "mapbox-gl": "^2.1.1",
     "popper.js": "^1.16.1",
