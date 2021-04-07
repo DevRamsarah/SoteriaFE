@@ -39,8 +39,8 @@ export class AddInvoiceComponent implements OnInit {
       margin: 1,
       filename: 'invoice.pdf',
       image: { type: 'jpeg', quality: 0.98 },
-      html2canvas: { scale: 2 },
-      jsPDF: { unit: 'in', orientation: 'portrait' }
+      html2canvas: { scale: 1 },
+      jsPDF: { orientation: 'portrait' }
     };
 
     // New Promise-based usage:
