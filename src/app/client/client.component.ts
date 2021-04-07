@@ -69,7 +69,10 @@ export class ClientComponent implements AfterViewInit {
   new() {
     this.router.navigate(["Clients/New-client"]);
   }
-
+  editData(id) {
+    // alert(id)
+    location.href = "Clients/New-client/?edit=" + id;
+  }
 
 }
 
