@@ -14,6 +14,10 @@ export class DispatcherService {
     return this.firebaseCrud.collection('dispatcher').valueChanges({ idField: 'DispatcherID' })
 
   }
+  getOneDispatch(id) {
+    return this.firebaseCrud.collection('dispatcher').doc(id).valueChanges();
+
+  }
   updateDispatch(id, data) {
     return this.firebaseCrud.collection('dispatcher').doc(id).set(data);
   }

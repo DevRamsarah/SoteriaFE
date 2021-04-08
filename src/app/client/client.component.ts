@@ -70,10 +70,15 @@ export class ClientComponent implements AfterViewInit {
     this.router.navigate(["Clients/New-client"]);
   }
   editData(id) {
-    // alert(id)
     location.href = "Clients/New-client/?edit=" + id;
   }
-
+  deleteData(id) {
+    this.firebaseCrud.deleteClient(id).then(
+      () => {
+        alert("Client removed")// add sweet alert
+      }
+    )
+  }
 }
 
 

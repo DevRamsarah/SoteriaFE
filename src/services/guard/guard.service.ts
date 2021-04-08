@@ -14,6 +14,10 @@ export class GuardService {
     return this.firebaseCrud.collection('employees').valueChanges({ idField: 'GuardID' })
 
   }
+  getOneGuard(id) {
+    return this.firebaseCrud.collection('employees').doc(id).valueChanges();
+
+  }
   updateGuard(id, data) {
     return this.firebaseCrud.collection('employees').doc(id).set(data);
   }

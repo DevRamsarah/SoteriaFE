@@ -49,7 +49,7 @@ export class NewClientComponent implements OnInit {
           MobileNumData: client.MobileNum,
           PhoneNumData: client.PhoneNum,
           faxNumData: client.faxNum,
-          ClientAddressData: "Address"
+          ClientAddressData: client.ClientAddress
 
         }
         console.log(client);

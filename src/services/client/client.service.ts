@@ -19,8 +19,6 @@ export class ClientService {
 
   }
   updateClient(id, data) {
-    console.log(id, data);
-
     return this.firebaseCrud.collection('clients').doc(id).set(data);
   }
 

@@ -67,7 +67,8 @@
                       <mat-menu #menu="matMenu">
                           <button mat-menu-item (click)="editData(element.ClientID)"
                         >Edit</button>
-                      <button mat-menu-item>Archived</button>
+                      <button mat-menu-item (click)="deleteData(element.ClientID)"
+                      >Delete</button>
 
                       </mat-menu>
                   </td>
