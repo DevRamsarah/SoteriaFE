@@ -17,12 +17,18 @@
                         <input class="form-control" type="text" placeholder="Zone Name" formControlName="ZoneName" required></div>
 
                     </div>
+                    <div class="col-md-6" >
+                        <div class="form-group" style="padding: 5px;"><label for="zonename"><strong>Zone Name</strong></label>
+                        <input class="form-control" type="text" placeholder="Zone Name"  [(ngModel)]="Zone"
+                        [ngModelOptions]="{standalone: true}"></div>
+
+                    </div>
                     <div class="col" id="zone"></div>
                 </div>
                 <!-- <input type="text" [(ngModel)]="message"  [ngModelOptions]="{standalone: true}" placeholder="your message.."> -->
-                <select class="dropdown">Region
+                <!-- <select class="dropdown">Region
                     <option *ngFor="let v of dropdown"> {{v}}</option>
-                 </select>
+                 </select> -->
                 <h1>Markers</h1>
                <div *ngFor="let marker of markers | async">
                    <button (click)="flyTo(marker)">{{marker.properties.message}}</button>

@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { FirebaseService } from 'src/services/firebase.service';
+import { GuardService } from 'src/services/guard/guard.service';
 
 export interface PeriodicElement {
   name: string;
@@ -35,11 +35,11 @@ export class GuardComponent implements AfterViewInit, OnInit {
   dataSource2 = new MatTableDataSource<Client>();
   selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(public firebaseCrud: FirebaseService) { }
+  constructor(public firebaseCrud: GuardService) { }
   ngOnInit(): void {
 
 
-    this.firebaseCrud.getClient().subscribe((Clients: any) => {
+    this.firebaseCrud.getGuard().subscribe((Clients: any) => {
       console.log(Clients);
       // this.data = Clients.filter((client) => client.position === 'Employee');
       this.data2 = Clients;
@@ -85,6 +85,17 @@ export class GuardComponent implements AfterViewInit, OnInit {
       return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
+  }
+
+  editData(id) {
+    location.href = "Guard/New-guard/?edit=" + id;
+  }
+  deleteData(id) {
+    this.firebaseCrud.deleteGuard(id).then(
+      () => {
+        alert("Guard removed")// add sweet alert
+      }
+    )
   }
 }
 

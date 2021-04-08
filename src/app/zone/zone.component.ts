@@ -11,6 +11,7 @@ import * as turf from '@turf/turf';
   styleUrls: ['./zone.component.css']
 })
 export class ZoneComponent implements OnInit {
+  Zone = null
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/outdoors-v9';
   lat = -20.23930295803079;
@@ -183,6 +184,7 @@ export class ZoneComponent implements OnInit {
       var poly = turf.polygon(JSON.parse(zoneS.coords));
       if (turf.booleanPointInPolygon(pt, poly)) {
         console.log(zoneS.region);
+        this.Zone = zoneS.region
         // console.log(turf.booleanPointInPolygon(pt, poly));
       }
     });
