@@ -13,7 +13,7 @@ export class NewClientComponent implements OnInit {
   loading = false;
   loadingEdit = true;
   clientObject = {
-    CategoryData: "null",
+    CategoryData: null,
     ClientEmailData: null,
     ClientNameData: null,
     ContactNameData: null,
@@ -52,9 +52,6 @@ export class NewClientComponent implements OnInit {
           ClientAddressData: client.ClientAddress
 
         }
-        console.log(client);
-        console.log(this.clientObject);
-
       })
     } else {
       this.status = "New Client"

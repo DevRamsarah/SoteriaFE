@@ -88,7 +88,9 @@ export class GuardComponent implements AfterViewInit, OnInit {
   }
 
   editData(id) {
-    location.href = "Guard/New-guard/?edit=" + id;
+    // console.log(id);
+
+    location.href = "Guards/New-guard/?edit=" + id;
   }
   deleteData(id) {
     this.firebaseCrud.deleteGuard(id).then(

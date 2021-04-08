@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ThemePalette } from '@angular/material/core';
 import { Router } from '@angular/router';
-import { ClientService } from 'src/services/client/client.service';
+import { GuardService } from 'src/services/guard/guard.service';
 import { FirebaseService } from 'src/services/firebase.service';
 
 @Component({
@@ -11,6 +11,8 @@ import { FirebaseService } from 'src/services/firebase.service';
   styleUrls: ['./new-guard.component.css']
 })
 export class NewGuardComponent implements OnInit {
+  loadingEdit = true;
+  status = null
   color: ThemePalette = 'primary';
   isChecked = false
   loading = false;
@@ -26,21 +28,71 @@ export class NewGuardComponent implements OnInit {
     ID: '67',
     Name: 'rerg',
   }];
+  guardObject = {
+    ClientNameData: null,
+    ClientEmailData: null,
+    ContactNameData: null,
+    MobileNumData: null,
+    PhoneNumData: null,
+    faxNumData: null,
+    ClientAddressData: null,
+    LatitudeData: null,
+    LongitudeData: null,
+    CategoryData: null
 
-  constructor(public firebaseCrud: ClientService, public router: Router) { }
+  }
+  constructor(public firebaseCrud: GuardService, public router: Router) { }
 
   ngOnInit(): void {
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      this.status = "Edit Guard"
+      this.firebaseCrud.getOneGuard(new URLSearchParams(window.location.search).get("edit")).subscribe((client: any) => {
+        this.guardObject = {
+          CategoryData: client.Category,
+          ClientEmailData: client.ClientEmail,
+          ClientNameData: client.ClientName,
+          ContactNameData: client.ContactName,
+          MobileNumData: client.MobileNum,
+          PhoneNumData: client.PhoneNum,
+          faxNumData: client.faxNum,
+          ClientAddressData: client.ClientAddress,
+          LatitudeData: client.Latitude,
+          LongitudeData: client.Longitude,
+
+        }
+      })
+    } else {
+      this.status = "New Guard"
+    }
+
+    setTimeout(() => {
+
+      this.New = new FormGroup({
+        ClientName: new FormControl(this.guardObject.ClientNameData, [Validators.required]),
+        ClientEmail: new FormControl(this.guardObject.ClientEmailData, [Validators.required]),
+        ContactName: new FormControl(this.guardObject.ContactNameData, [Validators.required]),
+        MobileNum: new FormControl(this.guardObject.MobileNumData, [Validators.required]),
+        PhoneNum: new FormControl(this.guardObject.PhoneNumData, [Validators.required]),
+        faxNum: new FormControl(this.guardObject.faxNumData, [Validators.required]),
+        ClientAddress: new FormControl(this.guardObject.ClientAddressData, [Validators.required]),
+        Category: new FormControl(this.guardObject.CategoryData, [Validators.required]),
+        Longitude: new FormControl(this.guardObject.LongitudeData, [Validators.required]),
+        Latitude: new FormControl(this.guardObject.LatitudeData, [Validators.required])
+
+      });
+      this.loadingEdit = false
+    }, 5100);
     this.New = new FormGroup({
-      ClientName: new FormControl(null, [Validators.required]),
-      ClientEmail: new FormControl(null, [Validators.required]),
-      ContactName: new FormControl(null, [Validators.required]),
-      MobileNum: new FormControl(null, [Validators.required]),
-      PhoneNum: new FormControl(null, [Validators.required]),
-      faxNum: new FormControl(null, [Validators.required]),
-      ClientAddress: new FormControl(null, [Validators.required]),
-      Latitude: new FormControl(null, [Validators.required]),
-      Longitude: new FormControl(null, [Validators.required]),
-      Category: new FormControl(null, [Validators.required])
+      ClientName: new FormControl(this.guardObject.ClientNameData, [Validators.required]),
+      ClientEmail: new FormControl(this.guardObject.ClientEmailData, [Validators.required]),
+      ContactName: new FormControl(this.guardObject.ContactNameData, [Validators.required]),
+      MobileNum: new FormControl(this.guardObject.MobileNumData, [Validators.required]),
+      PhoneNum: new FormControl(this.guardObject.PhoneNumData, [Validators.required]),
+      faxNum: new FormControl(this.guardObject.faxNumData, [Validators.required]),
+      ClientAddress: new FormControl(this.guardObject.ClientAddressData, [Validators.required]),
+      Category: new FormControl(this.guardObject.CategoryData, [Validators.required]),
+      Longitude: new FormControl(this.guardObject.LongitudeData, [Validators.required]),
+      Latitude: new FormControl(this.guardObject.LatitudeData, [Validators.required])
 
 
     });
@@ -49,12 +101,20 @@ export class NewGuardComponent implements OnInit {
     // console.log(this.New.value)
     this.loading = true;
 
-    this.firebaseCrud.createNewClient(this.New.value).then(
-      () => {
-        alert("Client Added")// add sweet alert
-      }
-    )
-    this.router.navigate(["Clients"]);
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      this.firebaseCrud.updateGuard(new URLSearchParams(window.location.search).get("edit"), this.New.value).then(
+        () => {
+          alert("Guard Edit")// add sweet alert
+        }
+      )
+    } else {
+      this.firebaseCrud.createNewGuard(this.New.value).then(
+        () => {
+          alert("Guard Added")// add sweet alert
+        }
+      )
+    }
+    this.router.navigate(["Guards"]);
 
   }
 }
