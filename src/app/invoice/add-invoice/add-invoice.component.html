@@ -70,60 +70,76 @@
                             </div>
 
                         </div>
+                        <table class="table table-striped table-bordered m-2 text-center">
+                            <thead>
+                                <tr>
+                                    <th>Service</th>
+                                    <th>Hours</th>
+                                    <th>Rate/Hour</th>
+                                    <th>Quantity</th>
+                                    <th>Amount(Rs)</th>
+                                    <th>Action</th>
 
-                        <div class="row" style="margin-left: 3vw;">
-                            <div class="col-md-12">
-                                <h3>ORDER SUMMARY</h3>
-                                <table class="table table-striped  " style=" width: 33vw;">
-                                    <thead>
-                                        <tr class="line">
-                                            <td><strong>#</strong></td>
-                                            <td class="text-center"><strong>Service</strong></td>
-                                            <td class="text-center"><strong>Hours</strong></td>
-                                            <td class="text-right"><strong>Rate/Hour </strong></td>
-                                            <td class="text-right"><strong>Amount</strong></td>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td>1</td>
-                                            <td><strong>Template Design</strong><br></td>
-                                            <td class="text-center">15</td>
-                                            <td class="text-center">$75</td>
-                                            <td class="text-right">$1,125.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td>2</td>
-                                            <td><strong>Template Development</strong><br></td>
-                                            <td class="text-center">15</td>
-                                            <td class="text-center">$75</td>
-                                            <td class="text-right">$1,125.00</td>
-                                        </tr>
-                                        <tr class="line">
-                                            <td>3</td>
-                                            <td><strong>Testing</strong><br></td>
-                                            <td class="text-center">2</td>
-                                            <td class="text-center">$75</td>
-                                            <td class="text-right">$150.00</td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3"></td>
-                                            <td class="text-right"><strong>Taxes</strong></td>
-                                            <td class="text-right"><strong>N/A</strong></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="3">
-                                            </td>
-                                            <td class="text-right"><strong>Total</strong></td>
-                                            <td class="text-right"><strong>$2,400.00</strong></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="row">
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let field of fieldArray; let i = index">
+                                    <td>
+                                        <mat-form-field appearance="fill" class="example-form-field">
+                                            <mat-label>Enter a date range</mat-label>
+                                            <mat-date-range-input [rangePicker]="rangePicker" >
+                                              <input matStartDate [(ngModel)]="field.start"  placeholder="Start date">
+                                              <input matEndDate [(ngModel)]="field.end" (ngModelChange)="getChange($event,i)" placeholder="End date">
+                                            </mat-date-range-input>
+                                            <mat-datepicker-toggle matSuffix [for]="rangePicker"></mat-datepicker-toggle>
+                                            <mat-date-range-picker #rangePicker>
+                                              <mat-date-range-picker-actions>
+                                                <button mat-button matDateRangePickerCancel>Cancel</button>
+                                                <button mat-raised-button color="primary" matDateRangePickerApply>Apply</button>
+                                              </mat-date-range-picker-actions>
+                                            </mat-date-range-picker>
+                                            <mat-error *ngIf="range.controls.start.hasError('matStartDateInvalid')">Invalid start date</mat-error>
+                                            <mat-error *ngIf="range.controls.end.hasError('matEndDateInvalid')">Invalid end date</mat-error>
+                                          </mat-form-field>   
+                                          
+                                         </td>
+                                    <td>
+                                        <input [(ngModel)]="field.hours"  class="form-control" type="text" name="{{field.hours}}" readonly />
+                                    </td>
+                                    <td>
+                                        <input [(ngModel)]="field.rate"  class="form-control" type="number" name="{{field.rate}}" />
+                                    </td>
+                                    <td>
+                                        <input [(ngModel)]="field.quatity"  class="form-control" type="number"  (ngModelChange)="getAmount($event,i)"  name="{{field.quatity}}" />
+                                    </td>
+                                    <td >
+                                        <input [(ngModel)]="field.amount" class="form-control" type="number" name="{{field.amount}}"  />
+                                    </td>
+                                    <td>
+                                        <button class="btn btn-danger"  type="button" (click)="deleteFieldValue(i)"><i class="fas fa-minus-square"></i></button>
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                  
+                                    <td colspan="6" class="text-center">
+                                        <button class="btn btn-primary" type="button" (click)="addFieldValue()">Add</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+     
+                        <div class="row m-4">
                             <div class="col-md-12 text-center">
                                 <textarea style="width: 40vw;" class="form-control" placeholder="Note..."></textarea>
+                            </div>
+                        </div>
+                        <div class="row m-4">
+                            <div class="col-md-12 text-center">
+                            
+                                    <strong>Total Amount(Rs)</strong><br>
+                                    <input class="form-control"  [(ngModel)]="total"  type="text" readonly>
+                                                   
                             </div>
                         </div>
                     </div>

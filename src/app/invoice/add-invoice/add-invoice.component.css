@@ -1,7 +1,7 @@
 body{margin-top:20px;
     background:#eee;
     }
-    input[type=text] { text-align:right }
+    input[type=text], input[type=number] { text-align:center }
 
     .invoice {
         padding: 30px;

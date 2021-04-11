@@ -25,4 +25,8 @@ export class ClientService {
   deleteClient(id) {
     return this.firebaseCrud.collection('clients').doc(id).delete();
   }
+  getStats(dateFrom, dateTo) {
+
+    return this.firebaseCrud.collection('clients').valueChanges({ idField: 'ClientID' })
+  }
 }
