@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
+import { PostSiteService } from 'src/services/post-site/post-site.service';
 import { Dispatcher } from 'src/model/dispatcher/dispatcher.model';
 import { Router } from '@angular/router';
 @Component({
@@ -21,16 +21,16 @@ export class PostSiteComponent implements OnInit {
   displayedColumns2: string[] = ['PostSite', 'ClientName', 'ClientMob', 'Email', 'action'];
 
 
-  dataSource2 = new MatTableDataSource<Dispatcher>();
-  selection = new SelectionModel<Dispatcher>(true, []);
+  dataSource2 = new MatTableDataSource();
+  selection = new SelectionModel(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: DispatcherService, public router: Router) { }
+  constructor(public firebaseCrud: PostSiteService, public router: Router) { }
   ngOnInit(): void {
 
 
-    this.firebaseCrud.getDispatch().subscribe((Dispatches: any) => {
+    this.firebaseCrud.getPostSite().subscribe((Dispatches: any) => {
       console.log(Dispatches);
       // this.data = Dispatch.filter((client) => client.position === 'Employee');
       this.data2 = Dispatches;
