@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { PostSiteService } from 'src/services/post-site/post-site.service';
+import { InvoiceService } from 'src/services/invoice/invoice.service';
 import * as html2pdf from 'html2pdf.js'
 import { FormControl, FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-add-invoice',
@@ -10,11 +12,22 @@ import { AngularFirestore } from '@angular/fire/firestore';
   styleUrls: ['./add-invoice.component.css']
 })
 export class AddInvoiceComponent implements OnInit {
+  loading = false;
   minDate: Date;
   maxDate: Date;
   invoice = {
     Title: "",
-    Summary: ""
+    Summary: "",
+    number: "",
+    Currentdate: null,
+    dueDate: null,
+    arrayDes: [],
+    total: 0,
+    note: "",
+    Clientid: "",
+    PostSiteid: "",
+
+
   }
   field = {}
   clientD = [];
@@ -27,11 +40,11 @@ export class AddInvoiceComponent implements OnInit {
     end: new FormControl(),
 
   });
-  total = 0
+
   ClientDrop;
   PostSiteDrop;
   pdf = true
-  constructor(public firebaseCrud: PostSiteService, public fire: AngularFirestore) {
+  constructor(public firebaseCrud: PostSiteService, public fire: AngularFirestore, public invoiceCRUD: InvoiceService, public router: Router) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date();
     this.maxDate = new Date();
@@ -60,7 +73,7 @@ export class AddInvoiceComponent implements OnInit {
     var element = document.getElementById('print');
     var opt = {
       margin: 1,
-      filename: 'invoice.pdf',
+      filename: this.invoice.Title + '.pdf',
       image: { type: 'jpeg', quality: 0.98 },
       html2canvas: { scale: 1 },
       jsPDF: { orientation: 'portrait' }
@@ -87,7 +100,7 @@ export class AddInvoiceComponent implements OnInit {
   }
 
   deleteFieldValue(index) {
-    this.total = this.total - this.fieldArray[index].amount
+    this.invoice.total = this.invoice.total - this.fieldArray[index].amount
     this.fieldArray.splice(index, 1);
   }
   getChange(event, i) {
@@ -97,10 +110,10 @@ export class AddInvoiceComponent implements OnInit {
   }
   getAmount(event, i) {
     this.fieldArray[i].amount = this.fieldArray[i].hours * this.fieldArray[i].rate * this.fieldArray[i].quatity;
-    this.total += this.fieldArray[i].amount
+    this.invoice.total += this.fieldArray[i].amount
   }
   getClientDrop($event) {
-    // console.log(this.ClientDrop);
+
 
     this.PostSiteD = []
 
@@ -121,5 +134,29 @@ export class AddInvoiceComponent implements OnInit {
 
 
 
+  }
+
+  generate() {
+    this.invoice.arrayDes = this.fieldArray
+    this.invoice.Clientid = this.ClientDrop
+    this.invoice.PostSiteid = this.PostSiteDrop
+    console.log(this.invoice);
+
+    // this.loading = true;
+    //   if (new URLSearchParams(window.location.search).has("edit")) {
+    //     this.invoiceCRUD.updateInvoice(new URLSearchParams(window.location.search).get("edit"), this.invoice).then(
+    //       () => {
+    //         alert("Invoice Edit")// add sweet alert
+    //       }
+    //     )
+    //   } else {
+
+    this.invoiceCRUD.createNewInvoice(this.invoice).then(
+      () => {
+        alert("Invoice Added")// add sweet alert
+      }
+    )
+    // }
+    this.router.navigate(["Invoicer"]);
   }
 }

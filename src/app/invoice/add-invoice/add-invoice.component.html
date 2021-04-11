@@ -46,7 +46,7 @@
                                     </option>
                                 </select>
                                 <br>
-                                <select class="form-control " required *ngIf="ClientDrop != null">
+                                <select class="form-control " required [(ngModel)]="PostSiteDrop" *ngIf="ClientDrop != null">
                                     <option selected disabled>Choose Post-Site</option>
                                     <option [value]="country.id" *ngFor="let country of PostSiteD">
                                         {{country.Name}}
@@ -59,15 +59,15 @@
                         <div class="col-md-4">
                             <div class="">
                                 <strong>Invoice Number</strong><br>
-                                <input class="form-control" type="text" required>
+                                <input class="form-control" type="text" [(ngModel)]="invoice.number" required>
                             </div>
                             <div class="">
                                 <strong>Invoice Date:</strong><br>
-                                <input class="form-control" type="date" required>
+                                <input class="form-control" type="date" [(ngModel)]="invoice.Currentdate" required>
                             </div>
                             <div class="">
                                 <strong>Payment Due:</strong><br>
-                                <input class="form-control" type="date" required>
+                                <input class="form-control" type="date" [(ngModel)]="invoice.dueDate" required>
                             </div>
 
                         </div>
@@ -132,20 +132,21 @@
      
                         <div class="row m-4">
                             <div class="col-md-12 text-center">
-                                <textarea style="width: 40vw;" class="form-control" placeholder="Note..."></textarea>
+                                <textarea style="width: 40vw;" [(ngModel)]="invoice.note" class="form-control" placeholder="Note..."></textarea>
                             </div>
                         </div>
                         <div class="row m-4">
                             <div class="col-md-12 text-center">
                             
                                     <strong>Total Amount(Rs)</strong><br>
-                                    <input class="form-control"  [(ngModel)]="total"  type="text" readonly>
+                                    <input class="form-control"  [(ngModel)]="invoice.total"  type="text" readonly>
                                                    
                             </div>
                         </div>
                     </div>
                 </div>
-                <button (click)="download()">PDF</button>
+                <button class="btn btn-primary" (click)="download()">Download as PDF</button>
+                <button class="btn btn-success ml-4" (click)="generate()">Save</button>
             </div>
             <!-- END INVOICE -->
         </div>
