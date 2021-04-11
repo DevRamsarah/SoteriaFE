@@ -2,7 +2,7 @@ import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
-import { ClientService } from 'src/services/client/client.service';
+import { InvoiceService } from 'src/services/invoice/invoice.service';
 import { Client } from 'src/model/client/client.model';
 import { Router } from '@angular/router';
 
@@ -19,7 +19,7 @@ export class InvoiceComponent implements OnInit {
   active = false;
   data: any;
   data2: any;
-  displayedColumns2: string[] = ['ClientID', 'ContactName', 'MobileNum', 'ClientEmail', 'action'];
+  displayedColumns2: string[] = ['number', 'ClientName', 'PostSiteName', 'Currentdate', 'action'];
 
 
   dataSource2 = new MatTableDataSource<Client>();
@@ -27,11 +27,11 @@ export class InvoiceComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: ClientService, public router: Router) { }
+  constructor(public firebaseCrud: InvoiceService, public router: Router) { }
   ngOnInit(): void {
 
 
-    this.firebaseCrud.getClient().subscribe((Dispatches: any) => {
+    this.firebaseCrud.getInvoice().subscribe((Dispatches: any) => {
       console.log(Dispatches);
       // this.data = Dispatch.filter((client) => client.position === 'Employee');
       this.data2 = Dispatches;

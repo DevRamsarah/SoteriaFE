@@ -14,6 +14,10 @@ export class PostSiteService {
     return this.firebaseCrud.collection('postSite').valueChanges({ idField: 'PostSiteID' })
 
   }
+  getOnePostSite(id) {
+    return this.firebaseCrud.collection('postSite').doc(id).valueChanges();
+
+  }
   updatePostSite(id, data) {
     return this.firebaseCrud.collection('postSite').doc(id).set(data);
   }
@@ -25,4 +29,5 @@ export class PostSiteService {
   getClient() {
     return this.firebaseCrud.collection('clients').valueChanges({ idField: 'ClientID' })
   }
+
 }

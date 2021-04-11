@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostSiteService } from 'src/services/post-site/post-site.service';
 import { InvoiceService } from 'src/services/invoice/invoice.service';
+import { ClientService } from 'src/services/client/client.service';
 import * as html2pdf from 'html2pdf.js'
 import { FormControl, FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
@@ -26,6 +27,8 @@ export class AddInvoiceComponent implements OnInit {
     note: "",
     Clientid: "",
     PostSiteid: "",
+    ClientName: "",
+    PostSiteName: "",
 
 
   }
@@ -44,7 +47,8 @@ export class AddInvoiceComponent implements OnInit {
   ClientDrop;
   PostSiteDrop;
   pdf = true
-  constructor(public firebaseCrud: PostSiteService, public fire: AngularFirestore, public invoiceCRUD: InvoiceService, public router: Router) {
+  constructor(public firebaseCrud: PostSiteService, public fire: AngularFirestore,
+    public invoiceCRUD: InvoiceService, public router: Router, public cli: ClientService) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date();
     this.maxDate = new Date();
@@ -140,6 +144,17 @@ export class AddInvoiceComponent implements OnInit {
     this.invoice.arrayDes = this.fieldArray
     this.invoice.Clientid = this.ClientDrop
     this.invoice.PostSiteid = this.PostSiteDrop
+    this.cli.getOneClient(this.ClientDrop).subscribe((client: any) => {
+      this.invoice.ClientName = client.ClientName
+    })
+    this.firebaseCrud.getOnePostSite(this.PostSiteDrop).subscribe((ps: any) => {
+      this.invoice.PostSiteName = ps.PostSite
+    })
+
+
+
+
+
     console.log(this.invoice);
 
     // this.loading = true;
@@ -150,13 +165,16 @@ export class AddInvoiceComponent implements OnInit {
     //       }
     //     )
     //   } else {
+    setTimeout(() => {
 
-    this.invoiceCRUD.createNewInvoice(this.invoice).then(
-      () => {
-        alert("Invoice Added")// add sweet alert
-      }
-    )
-    // }
-    this.router.navigate(["Invoicer"]);
+      this.invoiceCRUD.createNewInvoice(this.invoice).then(
+        () => {
+          alert("Invoice Added")// add sweet alert
+        }
+      )
+      // }
+      this.router.navigate(["Invoicer"]);
+    }, 6000);
   }
+
 }
