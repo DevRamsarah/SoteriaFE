@@ -64,24 +64,29 @@ export class NewGuardComponent implements OnInit {
     } else {
       this.status = "New Guard"
     }
+    if (new URLSearchParams(window.location.search).has("edit")) {
 
-    setTimeout(() => {
+      setTimeout(() => {
 
-      this.New = new FormGroup({
-        ClientName: new FormControl(this.guardObject.ClientNameData, [Validators.required]),
-        ClientEmail: new FormControl(this.guardObject.ClientEmailData, [Validators.required]),
-        ContactName: new FormControl(this.guardObject.ContactNameData, [Validators.required]),
-        MobileNum: new FormControl(this.guardObject.MobileNumData, [Validators.required]),
-        PhoneNum: new FormControl(this.guardObject.PhoneNumData, [Validators.required]),
-        faxNum: new FormControl(this.guardObject.faxNumData, [Validators.required]),
-        ClientAddress: new FormControl(this.guardObject.ClientAddressData, [Validators.required]),
-        Category: new FormControl(this.guardObject.CategoryData, [Validators.required]),
-        Longitude: new FormControl(this.guardObject.LongitudeData, [Validators.required]),
-        Latitude: new FormControl(this.guardObject.LatitudeData, [Validators.required])
+        this.New = new FormGroup({
+          ClientName: new FormControl(this.guardObject.ClientNameData, [Validators.required]),
+          ClientEmail: new FormControl(this.guardObject.ClientEmailData, [Validators.required]),
+          ContactName: new FormControl(this.guardObject.ContactNameData, [Validators.required]),
+          MobileNum: new FormControl(this.guardObject.MobileNumData, [Validators.required]),
+          PhoneNum: new FormControl(this.guardObject.PhoneNumData, [Validators.required]),
+          faxNum: new FormControl(this.guardObject.faxNumData, [Validators.required]),
+          ClientAddress: new FormControl(this.guardObject.ClientAddressData, [Validators.required]),
+          Category: new FormControl(this.guardObject.CategoryData, [Validators.required]),
+          Longitude: new FormControl(this.guardObject.LongitudeData, [Validators.required]),
+          Latitude: new FormControl(this.guardObject.LatitudeData, [Validators.required])
 
-      });
+        });
+        this.loadingEdit = false
+      }, 5100);
+    } else {
       this.loadingEdit = false
-    }, 5100);
+
+    }
     this.New = new FormGroup({
       ClientName: new FormControl(this.guardObject.ClientNameData, [Validators.required]),
       ClientEmail: new FormControl(this.guardObject.ClientEmailData, [Validators.required]),

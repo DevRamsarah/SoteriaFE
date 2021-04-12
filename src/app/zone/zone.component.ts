@@ -118,22 +118,7 @@ export class ZoneComponent implements OnInit {
 
 
 
-    // function addMarker(ltlng, event) {
-    //   let user_location;
-    //   if (event === 'click') {
-    //     user_location = ltlng;
-    //   }
-    //   this.marker = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
-    //     .setLngLat(user_location)
-    //     .addTo(this.map)
-    //     .on('dragend', onDragEnd);
-    // }
-    // function onDragEnd() {
-    //   var lngLat = this.marker.getLngLat();
-    //   // document.getElementById("lat").value = lngLat.lat;
-    //   // document.getElementById("lng").value = lngLat.lng;
 
-    // }
     this.map.on('load', (event) => {
 
       this.dropdown.forEach(zoneS => {
