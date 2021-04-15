@@ -8,10 +8,7 @@
             <form [formGroup]="New" ngNativeValidate (ngSubmit)="submit()">
                 
                 <div class="form-row">
-                    <!-- <div class="col-md-6" >
-                        <div class="form-group" style="padding: 5px;"><label for="zonename"><strong>Zone ID</strong></label>
-                        <input class="form-control" type="text" placeholder="Zone ID" name="ZoneId" require></div>
-                    </div> -->
+
                     <div class="col-md-6" >
                         <div class="form-group" style="padding: 5px;"><label for="zonename"><strong>Zone Name</strong></label>
                         <input class="form-control" type="text" placeholder="Zone Name" formControlName="ZoneName" required></div>
