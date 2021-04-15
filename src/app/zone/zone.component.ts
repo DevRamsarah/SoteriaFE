@@ -11,6 +11,7 @@ import * as turf from '@turf/turf';
   styleUrls: ['./zone.component.css']
 })
 export class ZoneComponent implements OnInit {
+  loading = true
   Zone = null
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/outdoors-v9';
@@ -25,21 +26,11 @@ export class ZoneComponent implements OnInit {
   New: FormGroup;
   markers: any;
   dropdown: any = []
-  marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
+  marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(position => {
-        console.log(position.coords.latitude, position.coords.longitude);
-
-        this.lat = position.coords.latitude;
-        this.lng = position.coords.longitude;
-        this.map.flyTo({
-          center: [this.lng, this.lat]
-        })
-      })
-    }
+    
     this.New = new FormGroup({
       ZoneName: new FormControl(null, [Validators.required])
     })
@@ -57,32 +48,20 @@ export class ZoneComponent implements OnInit {
         console.log("Error getting documents: ", error);
       });
 
-    this.initializeMap()
+      setTimeout(() => {
+        this.loading = false
+        this.initializeMap()
+      }, 3000);
 
 
   }
 
 
-  private initializeMap() {
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition(position => {
-
-    //     this.lat = position.coords.latitude;
-    //     this.lng = position.coords.longitude;
-    //     this.map.flyTo({
-    //       center: [this.lng, this.lat]
-    //     })
-    //   })
-    // }
-
-
-    this.buildMap()
-  }
 
 
 
 
-  buildMap() {
+  initializeMap() {
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
@@ -127,11 +106,6 @@ export class ZoneComponent implements OnInit {
         console.log(zoneS);
 
       });
-
-
-      this.marker1.setLngLat([this.lng, this.lat])
-        .addTo(this.map);
-
 
 
       this.map.on('draw.create', function (e) {
