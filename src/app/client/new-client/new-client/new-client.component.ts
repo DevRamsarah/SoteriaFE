@@ -4,9 +4,8 @@ import { Router } from '@angular/router';
 import { ClientService } from 'src/services/client/client.service';
 import * as mapboxgl from "mapbox-gl";
 import { MapService } from '../../../../services/map/map.service';
-import { GeoJson, FeatureCollection } from '../../../../model/map/map'
-import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
-import * as turf from '@turf/turf';
+import { GeoJson } from '../../../../model/map/map'
+
 @Component({
   selector: 'app-new-client',
   templateUrl: './new-client.component.html',
@@ -120,8 +119,6 @@ export class NewClientComponent implements OnInit {
 
   }
   ngAfterViewInit(): void {
-    //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
-    //Add 'implements AfterViewInit' to the class.
     this.initializeMap()
 
   }

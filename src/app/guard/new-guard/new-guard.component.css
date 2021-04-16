@@ -14,3 +14,7 @@ legend.scheduler-border {
     font-weight: bold !important;
     text-align: left !important;
 }
+#map{
+    height: 600px;
+    width: 1100px;
+}

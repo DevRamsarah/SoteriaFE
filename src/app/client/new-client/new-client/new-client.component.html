@@ -19,12 +19,11 @@
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="Client"><strong>Client</strong></label><input
-                                    class="form-control" type="text"
-                                    placeholder="Latitude" required
-                                    [ngClass]="this.clientObject.ClientName == '' ? 'is-invalid' : 'is-valid'"
-                                    [(ngModel)]="this.clientObject.ClientName"
-                                    [ngModelOptions]="{standalone: true}">
-                                  </div>
+                                        class="form-control" type="text" placeholder="Latitude" required
+                                        [ngClass]="this.clientObject.ClientName == '' ? 'is-invalid' : 'is-valid'"
+                                        [(ngModel)]="this.clientObject.ClientName"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Email"><strong>Email Address</strong></label><input
@@ -41,19 +40,19 @@
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Mobile
-                                            Number</strong></label><input class="form-control" type="text" 
+                                            Number</strong></label><input class="form-control" type="text"
                                         placeholder="555-5555-5555" required formControlName="MobileNum"></div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Phone
-                                            Number</strong></label><input class="form-control" type="text" 
+                                            Number</strong></label><input class="form-control" type="text"
                                         placeholder="555-5555-5555" required formControlName="PhoneNum"></div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Fax
-                                        </strong></label><input class="form-control" type="text" 
+                                        </strong></label><input class="form-control" type="text"
                                         placeholder="555-5555-5555" required formControlName="faxNum"></div>
                             </div>
                         </div>
@@ -68,68 +67,57 @@
                                             {{gua.ID}}
                                         </option>
                                     </datalist>
+                                </div>
                             </div>
-                        </div>
-                                <div class="col">
-                                    <div class="form-group"*ngIf="isChecked">
-                                        <label for="PostSite " ><strong>Post Site Name</strong></label>
-                                        <input
-                                        class="form-control" type="text" placeholder="Location" 
-                                        [ngClass]="this.clientObject.PsLocation == '' ? 'is-invalid' : 'is-valid'" required
-                                        [(ngModel)]="this.clientObject.PsLocation"
+                            <div class="col">
+                                <div class="form-group" *ngIf="isChecked">
+                                    <label for="PostSite "><strong>Post Site Name</strong></label>
+                                    <input class="form-control" type="text" placeholder="Location"
+                                        [ngClass]="this.clientObject.PsLocation == '' ? 'is-invalid' : 'is-valid'"
+                                        required [(ngModel)]="this.clientObject.PsLocation"
                                         [ngModelOptions]="{standalone: true}">
                                 </div>
-                                </div>
+                            </div>
                         </div>
                         <div class="form-row">
 
                             <div class="col">
-                                    <div class="form-group">
-                                            <label
-                                                    for="address"><strong>Address</strong></label><input
-                                                    class="form-control" type="text"
-                                                    placeholder="Address" required
-                                                    formControlName="ClientAddress">
-                                    </div>
+                                <div class="form-group">
+                                    <label for="address"><strong>Address</strong></label><input class="form-control"
+                                        type="text" placeholder="Address" required formControlName="ClientAddress">
+                                </div>
                             </div>
                             <div class="col-2 mt-4 pt-2">
-                                    <mat-slide-toggle [(ngModel)]="isChecked"
-                                            [color]="color"
-                                            [ngModelOptions]="{standalone: true}">
-                                            Add coordinate
-                                    </mat-slide-toggle>
+                                <mat-slide-toggle [(ngModel)]="isChecked" [color]="color"
+                                    [ngModelOptions]="{standalone: true}">
+                                    Add coordinate
+                                </mat-slide-toggle>
                             </div>
-                    </div>
-                    <div class="form-row" *ngIf="isChecked">
+                        </div>
+                        <div class="form-row" *ngIf="isChecked">
                             <fieldset class="scheduler-border d-flex flex-row row">
-                                    <legend class="scheduler-border">Coordinate</legend>
+                                <legend class="scheduler-border">Coordinate</legend>
 
 
-                                    <label for="Lat"
-                                            class="mt-2 mr-4"><strong>Latitude</strong></label><input
-                                            class="form-control col-4" type="text"
-                                            placeholder="Latitude" required
-                                            [ngClass]="this.clientObject.Latitude == '' ? 'is-invalid' : 'is-valid'"
-                                            [(ngModel)]="this.clientObject.Latitude"
-                                            [ngModelOptions]="{standalone: true}">
-                                    <div class="col-lg-2 col-md-0 col-sm-0"></div>
-                                    <label for="Long"
-                                            class="mt-2 mr-4"><strong>Longitude</strong></label><input
-                                            class="form-control col-4" type="text"
-                                            placeholder="Longitude" required
-                                            [(ngModel)]="this.clientObject.Longitude"
-                                            [ngModelOptions]="{standalone: true}">
-                                        </fieldset>
-                                    </div>
-                                    <div id="map" class="col-12 " [ngClass]="isChecked ? '' : 'd-none'" ></div>
-                   
+                                <label for="Lat" class="mt-2 mr-4"><strong>Latitude</strong></label><input
+                                    class="form-control col-4" type="text" placeholder="Latitude" required
+                                    [ngClass]="this.clientObject.Latitude == '' ? 'is-invalid' : 'is-valid'"
+                                    [(ngModel)]="this.clientObject.Latitude" [ngModelOptions]="{standalone: true}">
+                                <div class="col-lg-2 col-md-0 col-sm-0"></div>
+                                <label for="Long" class="mt-2 mr-4"><strong>Longitude</strong></label><input
+                                    class="form-control col-4" type="text" placeholder="Longitude" required
+                                    [(ngModel)]="this.clientObject.Longitude" [ngModelOptions]="{standalone: true}">
+                            </fieldset>
+                        </div>
+                        <div id="map" class="col-12 " [ngClass]="isChecked ? '' : 'd-none'"></div>
 
-                            <div class="form-group">
-                                <button class="btn btn-primary btn-sm" type="submit" *ngIf="!loading">Submit</button>
-                                <div class="spinner-border text-primary" role="status" *ngIf="loading">
-                                    <span class="visually-hidden"></span>
-                                  </div>
+
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-sm" type="submit" *ngIf="!loading">Submit</button>
+                            <div class="spinner-border text-primary" role="status" *ngIf="loading">
+                                <span class="visually-hidden"></span>
                             </div>
+                        </div>
                     </form>
                 </div>
             </div>

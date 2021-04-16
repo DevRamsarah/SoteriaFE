@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { PostSiteService } from 'src/services/post-site/post-site.service';
+import * as mapboxgl from "mapbox-gl";
+import { MapService } from '../../../services/map/map.service';
+import { GeoJson } from '../../../model/map/map'
+import { ThemePalette } from '@angular/material/core';
 
 @Component({
   selector: 'app-new-post-site',
@@ -9,7 +13,18 @@ import { PostSiteService } from 'src/services/post-site/post-site.service';
   styleUrls: ['./new-post-site.component.css']
 })
 export class NewPostSiteComponent implements OnInit {
+  status = null
   loading = false;
+  isChecked = true
+  loadingEdit = true;
+
+
+  clientObject = {
+
+    Latitude: '',
+    Longitude: '',
+    PsLocation: ''
+  }
 
   New: FormGroup;
   clientD = [];
@@ -43,7 +58,23 @@ export class NewPostSiteComponent implements OnInit {
     ID: '67',
     Name: 'rerg',
   }];
-  constructor(public firebaseCrud: PostSiteService, public router: Router) { }
+
+  map: mapboxgl.Map;
+  style = 'mapbox://styles/mapbox/outdoors-v9';
+  lat = -20.23930295803079;
+  lng = 57.57140179981943;
+  message = 'Hello World';
+  bounds = [
+    [56.71206514379577, -20.702642368289588], // Southwest coordinates
+    [58.47918717931003, -19.6383333967767] // Northeast coordinates
+  ];
+  source: any;
+  color: ThemePalette = 'primary';
+
+  markers: any;
+  dropdown: any = []
+  marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
+  constructor(public firebaseCrud: PostSiteService, public router: Router,  private mapService: MapService) { }
 
   ngOnInit(): void {
     this.New = new FormGroup({
@@ -75,6 +106,51 @@ export class NewPostSiteComponent implements OnInit {
 
 
 
+  }
+  ngAfterViewInit(): void {
+    this.initializeMap()
+
+  }
+
+
+  initializeMap() {
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: this.style,
+      minZoom: 2,
+      zoom: 9,
+      center: [this.lng, this.lat],
+      maxBounds: this.bounds
+
+
+    })
+    //add navigation control to map 
+
+
+    this.map.on('click', (event) => {
+      this.marker1.remove();
+      const coordinates = [event.lngLat.lng, event.lngLat.lat]
+      const newMarker = new GeoJson(coordinates, { message: this.message })
+      this.marker1.setLngLat(coordinates)
+        .addTo(this.map);
+      this.clientObject.Latitude = event.lngLat.lat.toFixed(6)
+      this.clientObject.Longitude = event.lngLat.lng.toFixed(6)
+    })
+
+
+
+
+  }
+
+  removeMarker(marker) {
+    this.mapService.removeMarker(marker.$key)
+  }
+
+  flyTo(data: GeoJson) {
+    this.map.flyTo({
+      center: data.geometry.coordinates
+
+    })
   }
 
 
