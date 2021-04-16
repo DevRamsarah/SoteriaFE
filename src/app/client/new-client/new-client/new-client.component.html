@@ -15,11 +15,11 @@
                 </div>
                 <div class="card-body">
                     <spinner *ngIf="loadingEdit"></spinner>
-                    <form [formGroup]="New" ngNativeValidate (ngSubmit)="submit()" *ngIf="!loadingEdit">
+                    <form  ngNativeValidate (ngSubmit)="submit()" *ngIf="!loadingEdit">
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="Client"><strong>Client</strong></label><input
-                                        class="form-control" type="text" placeholder="Latitude" required
+                                        class="form-control" type="text" placeholder="Company Name" required
                                         [ngClass]="this.clientObject.ClientName == '' ? 'is-invalid' : 'is-valid'"
                                         [(ngModel)]="this.clientObject.ClientName"
                                         [ngModelOptions]="{standalone: true}">
@@ -28,7 +28,7 @@
                             <div class="col">
                                 <div class="form-group"><label for="Email"><strong>Email Address</strong></label><input
                                         class="form-control" type="email" placeholder="user@example.com" required
-                                        formControlName="ClientEmail">
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.ClientEmail">
                                 </div>
                             </div>
                         </div>
@@ -36,24 +36,24 @@
                             <div class="col">
                                 <div class="form-group"><label for="Contact Name"><strong>Contact
                                             Name</strong></label><input class="form-control" type="text"
-                                        placeholder="Contact Name" required formControlName="ContactName"></div>
+                                        placeholder="Contact Name" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.ContactName"></div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Mobile
                                             Number</strong></label><input class="form-control" type="text"
-                                        placeholder="555-5555-5555" required formControlName="MobileNum"></div>
+                                        placeholder="555-5555-5555" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.MobileNum"></div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Phone
                                             Number</strong></label><input class="form-control" type="text"
-                                        placeholder="555-5555-5555" required formControlName="PhoneNum"></div>
+                                        placeholder="555-5555-5555" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.PhoneNum"></div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Fax
                                         </strong></label><input class="form-control" type="text"
-                                        placeholder="555-5555-5555" required formControlName="faxNum"></div>
+                                        placeholder="555-5555-5555" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.faxNum"></div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -61,7 +61,7 @@
                                 <div class="form-group"><label for="Category"><strong>Category
                                         </strong></label>
                                     <input class="form-control" list="GuardL" placeholder="Select" required
-                                        formControlName="Category">
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.Category">
                                     <datalist id="GuardL">
                                         <option *ngFor="let gua of GuardL" [value]="gua.Name">
                                             {{gua.ID}}
@@ -74,7 +74,7 @@
                                     <label for="PostSite "><strong>Post Site Name</strong></label>
                                     <input class="form-control" type="text" placeholder="Location"
                                         [ngClass]="this.clientObject.PsLocation == '' ? 'is-invalid' : 'is-valid'"
-                                        required [(ngModel)]="this.clientObject.PsLocation"
+                                        required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.PsLocation"
                                         [ngModelOptions]="{standalone: true}">
                                 </div>
                             </div>
@@ -84,11 +84,11 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="address"><strong>Address</strong></label><input class="form-control"
-                                        type="text" placeholder="Address" required formControlName="ClientAddress">
+                                        type="text" placeholder="Address" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.ClientAddress">
                                 </div>
                             </div>
                             <div class="col-2 mt-4 pt-2">
-                                <mat-slide-toggle [(ngModel)]="isChecked" [color]="color"
+                                <mat-slide-toggle  [(ngModel)]="isChecked" [color]="color"
                                     [ngModelOptions]="{standalone: true}">
                                     Add coordinate
                                 </mat-slide-toggle>

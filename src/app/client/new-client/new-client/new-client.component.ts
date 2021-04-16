@@ -5,6 +5,7 @@ import { ClientService } from 'src/services/client/client.service';
 import * as mapboxgl from "mapbox-gl";
 import { MapService } from '../../../../services/map/map.service';
 import { GeoJson } from '../../../../model/map/map'
+import * as turf from '@turf/turf';
 
 @Component({
   selector: 'app-new-client',
@@ -29,7 +30,8 @@ export class NewClientComponent implements OnInit {
     ClientAddress: null,
     Latitude: '',
     Longitude: '',
-    PsLocation: ''
+    PsLocation: '',
+    Zone: null
   }
   New: FormGroup;
   GuardL = [{
@@ -61,6 +63,8 @@ export class NewClientComponent implements OnInit {
   constructor(public firebaseCrud: ClientService, public router: Router, private mapService: MapService) { }
 
   ngOnInit(): void {
+  this.loadingEdit = true
+
     if (new URLSearchParams(window.location.search).has("edit")) {
       this.status = "Edit Client"
       this.firebaseCrud.getOneClient(new URLSearchParams(window.location.search).get("edit")).subscribe((client: any) => {
@@ -77,60 +81,44 @@ export class NewClientComponent implements OnInit {
           Latitude: client.Latitude,
           Longitude: client.Longitude,
           PsLocation: client.PsLocation,
+    Zone: null
+
 
         }
       })
+      
     } else {
       this.status = "New Client"
-    }
-    if (new URLSearchParams(window.location.search).has("edit")) {
-      setTimeout(() => {
-        this.New = new FormGroup({
-          ClientName: new FormControl(this.clientObject.ClientName, [Validators.required]),
-          ClientEmail: new FormControl(this.clientObject.ClientEmail, [Validators.required]),
-          ContactName: new FormControl(this.clientObject.ContactName, [Validators.required]),
-          MobileNum: new FormControl(this.clientObject.MobileNum, [Validators.required]),
-          PhoneNum: new FormControl(this.clientObject.PhoneNum, [Validators.required]),
-          faxNum: new FormControl(this.clientObject.faxNum, [Validators.required]),
-          ClientAddress: new FormControl(this.clientObject.ClientAddress, [Validators.required]),
-          Category: new FormControl(this.clientObject.Category, [Validators.required])
-
-
-        });
-        this.loadingEdit = false
-      }, 5100);
-    } else {
-      this.loadingEdit = false
 
     }
-    this.New = new FormGroup({
-      ClientName: new FormControl(this.clientObject.ClientName, [Validators.required]),
-      ClientEmail: new FormControl(this.clientObject.ClientEmail, [Validators.required]),
-      ContactName: new FormControl(this.clientObject.ContactName, [Validators.required]),
-      MobileNum: new FormControl(this.clientObject.MobileNum, [Validators.required]),
-      PhoneNum: new FormControl(this.clientObject.PhoneNum, [Validators.required]),
-      faxNum: new FormControl(this.clientObject.faxNum, [Validators.required]),
-      ClientAddress: new FormControl(this.clientObject.ClientAddress, [Validators.required]),
-      Category: new FormControl(this.clientObject.Category, [Validators.required])
+    setTimeout(() => {
+  this.loadingEdit = false
+      
+    }, 3500);
+setTimeout(() => {
+  this.initializeMap()
+  
+}, 4000);
 
+this.mapService.getAllZone().then((querySnapshot) => {
+  querySnapshot.forEach((doc) => {
+    // console.log(doc.data());
+    this.dropdown.push(doc.data())
+  });
+  console.log(this.dropdown);
+  // console.log(this.dropdown[1]);
 
-    });
-    console.log(this.clientObject);
-
-  }
-  ngAfterViewInit(): void {
-    this.initializeMap()
-
-  }
-  private initializeMap() {
-
-
-    this.buildMap()
+})
+  .catch((error) => {
+    console.log("Error getting documents: ", error);
+  });
   }
 
 
 
-  buildMap() {
+
+  initializeMap() {
+
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
@@ -150,13 +138,18 @@ export class NewClientComponent implements OnInit {
       const newMarker = new GeoJson(coordinates, { message: this.message })
       this.marker1.setLngLat(coordinates)
         .addTo(this.map);
-      this.clientObject.Latitude = event.lngLat.lat.toFixed(6)
-      this.clientObject.Longitude = event.lngLat.lng.toFixed(6)
+        
+        this.clientObject.Latitude = event.lngLat.lat.toFixed(6)
+        this.clientObject.Longitude = event.lngLat.lng.toFixed(6)
+        this.checkZone(this.clientObject.Longitude, this.clientObject.Latitude)
     })
 
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      this.marker1.setLngLat([this.clientObject.Longitude, this.clientObject.Latitude])
+        .addTo(this.map);
+    }
 
-
-
+    this.checkZone(this.clientObject.Longitude, this.clientObject.Latitude)
   }
 
   removeMarker(marker) {
@@ -170,25 +163,40 @@ export class NewClientComponent implements OnInit {
     })
   }
 
+  checkZone(lng, lat) {
+    var pt = turf.point([lng, lat]);
+    this.dropdown.forEach(zoneS => {
+      var poly = turf.polygon(JSON.parse(zoneS.coords));
+      if (turf.booleanPointInPolygon(pt, poly)) {
+        // console.log(zoneS.region);
+        this.clientObject.Zone = zoneS.region
+        // console.log(turf.booleanPointInPolygon(pt, poly));
+      }
+    });
 
+  }
 
   submit() {
+    
     this.loading = true;
     if (new URLSearchParams(window.location.search).has("edit")) {
-      this.firebaseCrud.updateClient(new URLSearchParams(window.location.search).get("edit"), this.New.value).then(
+      this.firebaseCrud.updateClient(new URLSearchParams(window.location.search).get("edit"), this.clientObject).then(
         () => {
           alert("Client Edit")// add sweet alert
         }
       )
     } else {
 
-      this.firebaseCrud.createNewClient(this.New.value).then(
+      this.firebaseCrud.createNewClient(this.clientObject).then(
         () => {
           alert("Client Added")// add sweet alert
         }
       )
     }
     this.router.navigate(["Clients"]);
+
+    // console.log(this.clientObject);
+    
   }
   getURL() {
 
