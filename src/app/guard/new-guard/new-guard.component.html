@@ -15,8 +15,7 @@
                                 </div>
                                 <div class="card-body">
                                         <spinner *ngIf="loadingEdit"></spinner>
-                                        <form [formGroup]="New" ngNativeValidate (ngSubmit)="submit()"
-                                                *ngIf="!loadingEdit">
+                                        <form ngNativeValidate (ngSubmit)="submit()" *ngIf="!loadingEdit">
                                                 <div class="form-row">
                                                         <div class="col">
                                                                 <div class="form-group"><label
@@ -24,7 +23,9 @@
                                                                                         Name</strong></label><input
                                                                                 class="form-control" type="text"
                                                                                 placeholder="First Name" required
-                                                                                formControlName="ClientName"></div>
+                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                [(ngModel)]="this.guardObject.ClientName">
+                                                                </div>
                                                         </div>
                                                         <div class="col">
                                                                 <div class="form-group"><label
@@ -32,7 +33,8 @@
                                                                                         Name</strong></label><input
                                                                                 class="form-control" type="text"
                                                                                 placeholder="Last Name" required
-                                                                                formControlName="ClientEmail">
+                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                [(ngModel)]="this.guardObject.ClientEmail">
                                                                 </div>
                                                         </div>
                                                 </div>
@@ -44,7 +46,8 @@
                                                                         <div class="form-check">
                                                                                 <input class="form-check-input"
                                                                                         type="radio"
-                                                                                        formControlName="Category"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        [(ngModel)]="this.guardObject.Category"
                                                                                         value="Male" required>
                                                                                 <label class="form-check-label"
                                                                                         for="flexRadioDefault1">
@@ -52,7 +55,8 @@
                                                                                 </label>
                                                                                 <input class="form-check-input ml-4"
                                                                                         type="radio"
-                                                                                        formControlName="Category"
+                                                                                        [ngModelOptions]="{standalone: true}"
+                                                                                        [(ngModel)]="this.guardObject.Category"
                                                                                         value="Female" required>
                                                                                 <label class="form-check-label  ml-4 pl-3"
                                                                                         for="flexRadioDefault2">
@@ -68,7 +72,9 @@
                                                                                 </strong></label><input
                                                                                 class="form-control" type="date"
                                                                                 required max="{{datePickerId}}"
-                                                                                formControlName="faxNum"></div>
+                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                [(ngModel)]="this.guardObject.faxNum">
+                                                                </div>
                                                         </div>
                                                 </div>
                                                 <div class="form-row">
@@ -79,7 +85,9 @@
                                                                                         Number</strong></label><input
                                                                                 class="form-control" type="text"
                                                                                 placeholder="555-5555-5555" required
-                                                                                formControlName="MobileNum"></div>
+                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                [(ngModel)]="this.guardObject.MobileNum">
+                                                                </div>
                                                         </div>
                                                         <div class="col">
                                                                 <div class="form-group"><label
@@ -87,7 +95,9 @@
                                                                                         Number</strong></label><input
                                                                                 class="form-control" type="text"
                                                                                 placeholder="555-5555-5555" required
-                                                                                formControlName="PhoneNum"></div>
+                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                [(ngModel)]="this.guardObject.PhoneNum">
+                                                                </div>
                                                         </div>
                                                 </div>
                                                 <div class="form-row">
@@ -97,7 +107,8 @@
                                                                                         Address</strong></label><input
                                                                                 class="form-control" type="email"
                                                                                 placeholder="user@example.com" required
-                                                                                formControlName="ClientEmail">
+                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                [(ngModel)]="this.guardObject.ClientEmail">
                                                                 </div>
                                                         </div>
                                                         <div class="col">
@@ -105,7 +116,9 @@
                                                                                         Number</strong>
                                                                         </label><input class="form-control" type="text"
                                                                                 placeholder="Nic" required
-                                                                                formControlName="ContactName"></div>
+                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                [(ngModel)]="this.guardObject.ContactName">
+                                                                </div>
                                                         </div>
 
                                                 </div>
@@ -113,36 +126,52 @@
                                                 <div class="form-row">
 
                                                         <div class="col">
-                                                            <div class="form-group">
-                                                                <label for="address"><strong>Address</strong></label><input class="form-control"
-                                                                    type="text" placeholder="Address" required formControlName="ClientAddress">
-                                                            </div>
+                                                                <div class="form-group">
+                                                                        <label
+                                                                                for="address"><strong>Address</strong></label><input
+                                                                                class="form-control"
+                                                                                [ngModelOptions]="{standalone: true}"
+                                                                                type="text" placeholder="Address"
+                                                                                required
+                                                                                [(ngModel)]="this.guardObject.ClientAddress">
+                                                                </div>
                                                         </div>
                                                         <div class="col-2 mt-4 pt-2">
-                                                            <mat-slide-toggle [(ngModel)]="isChecked" [color]="color"
-                                                                [ngModelOptions]="{standalone: true}">
-                                                                Add coordinate
-                                                            </mat-slide-toggle>
+                                                                <mat-slide-toggle
+                                                                        [(ngModel)]="this.guardObject.isChecked"
+                                                                        [color]="color"
+                                                                        [ngModelOptions]="{standalone: true}">
+                                                                        Add coordinate
+                                                                </mat-slide-toggle>
                                                         </div>
-                                                    </div>
-                                                    <div class="form-row" *ngIf="isChecked">
+                                                </div>
+                                                <div class="form-row" *ngIf="isChecked">
                                                         <fieldset class="scheduler-border d-flex flex-row row">
-                                                            <legend class="scheduler-border">Coordinate</legend>
-                            
-                            
-                                                            <label for="Lat" class="mt-2 mr-4"><strong>Latitude</strong></label><input
-                                                                class="form-control col-4" type="text" placeholder="Latitude" required
-                                                                [ngClass]="this.clientObject.Latitude == '' ? 'is-invalid' : 'is-valid'"
-                                                                [(ngModel)]="this.clientObject.Latitude" [ngModelOptions]="{standalone: true}">
-                                                            <div class="col-lg-2 col-md-0 col-sm-0"></div>
-                                                            <label for="Long" class="mt-2 mr-4"><strong>Longitude</strong></label><input
-                                                                class="form-control col-4" type="text" placeholder="Longitude" required
-                                                                [(ngModel)]="this.clientObject.Longitude" [ngModelOptions]="{standalone: true}">
+                                                                <legend class="scheduler-border">Coordinate</legend>
+
+
+                                                                <label for="Lat"
+                                                                        class="mt-2 mr-4"><strong>Latitude</strong></label><input
+                                                                        class="form-control col-4" type="text"
+                                                                        placeholder="Latitude" required
+                                                                        [ngClass]="this.guardObject.Latitude == '' ? 'is-invalid' : 'is-valid'"
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        [(ngModel)]="this.guardObject.Latitude"
+                                                                       >
+                                                                <div class="col-lg-2 col-md-0 col-sm-0"></div>
+                                                                <label for="Long"
+                                                                        class="mt-2 mr-4"><strong>Longitude</strong></label><input
+                                                                        class="form-control col-4" type="text"
+                                                                        placeholder="Longitude" required
+                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        [(ngModel)]="this.guardObject.Longitude"
+                                                                        >
                                                         </fieldset>
-                                                    </div>
-                                                    <div id="map" class="col-12 " [ngClass]="isChecked ? '' : 'd-none'"></div>
-                            
-                            
+                                                </div>
+                                                <div id="map" class="col-12 " [ngClass]="isChecked ? '' : 'd-none'">
+                                                </div>
+
+
                                                 <div class="form-group">
                                                         <button class="btn btn-primary btn-sm" type="submit"
                                                                 *ngIf="!loading">Submit</button>

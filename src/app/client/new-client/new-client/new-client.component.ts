@@ -81,7 +81,7 @@ export class NewClientComponent implements OnInit {
           Latitude: client.Latitude,
           Longitude: client.Longitude,
           PsLocation: client.PsLocation,
-    Zone: null
+    Zone: client.Zone
 
 
         }
