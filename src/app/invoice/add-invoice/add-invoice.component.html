@@ -41,14 +41,14 @@
                                 <strong>Billed To:</strong><br>
                                 <select class="form-control" required [(ngModel)]="ClientDrop" (ngModelChange)="getClientDrop($event)">
                                     <option selected disabled>Choose Client</option>
-                                    <option [value]="country.id" *ngFor="let country of clientD">
+                                    <option [value]="country.Name" *ngFor="let country of clientD">
                                         {{country.Name}}
                                     </option>
                                 </select>
                                 <br>
-                                <select class="form-control " required [(ngModel)]="PostSiteDrop" *ngIf="ClientDrop != null">
+                                <select class="form-control " required [(ngModel)]="PostSiteDrop" (ngModelChange)="getAddress($event)" *ngIf="ClientDrop != null">
                                     <option selected disabled>Choose Post-Site</option>
-                                    <option [value]="country.id" *ngFor="let country of PostSiteD">
+                                    <option [value]="country.Name" *ngFor="let country of PostSiteD">
                                         {{country.Name}}
                                     </option>
                                 </select>

@@ -19,7 +19,7 @@ export class InvoiceComponent implements OnInit {
   active = false;
   data: any;
   data2: any;
-  displayedColumns2: string[] = ['number', 'ClientName', 'PostSiteName', 'Currentdate', 'action'];
+  displayedColumns2: string[] = ['number', 'Clientid', 'PostSiteid', 'Currentdate','note' , 'action'];
 
 
   dataSource2 = new MatTableDataSource<Client>();
@@ -70,6 +70,18 @@ export class InvoiceComponent implements OnInit {
     this.router.navigate(["Invoicer/New-invoice"]);
   }
 
+  editData(id) {
+    // console.log(id);
+
+    location.href = "Invoicer/New-invoice/?edit=" + id;
+  }
+  deleteData(id) {
+    this.firebaseCrud.deleteInvoice(id).then(
+      () => {
+        alert("Guard removed")// add sweet alert
+      }
+    )
+  }
 
 }
 

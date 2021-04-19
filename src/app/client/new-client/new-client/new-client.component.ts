@@ -89,8 +89,10 @@ export class NewClientComponent implements OnInit {
 
     } else {
       this.status = "New Client"
+      this.loadingEdit = false
 
     }
+    
     setTimeout(() => {
       this.loadingEdit = false
 

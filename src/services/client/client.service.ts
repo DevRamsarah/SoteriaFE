@@ -7,7 +7,9 @@ import { AngularFirestore } from '@angular/fire/firestore';
 export class ClientService {
 
   constructor(public firebaseCrud: AngularFirestore) { }
+
   createNewClient(records) {
+    this.firebaseCrud.collection('postSite').add(records)
     return this.firebaseCrud.collection('clients').add(records)
   }
   getClient() {

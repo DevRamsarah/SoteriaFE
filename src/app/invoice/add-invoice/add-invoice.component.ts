@@ -123,12 +123,14 @@ export class AddInvoiceComponent implements OnInit {
 
     this.fire.collection('postSite', ref => ref.where("ClientName", "==", this.ClientDrop)).valueChanges({ idField: 'PostSiteID' })
       .subscribe((PostSite: any) => {
+        console.log(PostSite);
+        
         PostSite.forEach(ps => {
           let PostSiteData: any = {};
           PostSiteData.id = ps.PostSiteID;
-          PostSiteData.Name = ps.PostSite;
+          PostSiteData.Name = ps.PsLocation;
           this.PostSiteD.push(PostSiteData);
-
+ 
 
 
         });
@@ -139,7 +141,27 @@ export class AddInvoiceComponent implements OnInit {
 
 
   }
+  getAddress($event) {
 
+
+
+
+    this.fire.collection('postSite', ref => ref.where("PsLocation", "==", this.PostSiteDrop)).valueChanges()
+      .subscribe((PostSite: any) => {
+
+        
+  
+
+          this.invoice.Summary = PostSite[0].ClientAddress;
+
+
+        // console.log(this.clientD);
+
+      })
+
+
+
+  }
   generate() {
     this.invoice.arrayDes = this.fieldArray
     this.invoice.Clientid = this.ClientDrop
