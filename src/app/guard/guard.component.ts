@@ -4,19 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { GuardService } from 'src/services/guard/guard.service';
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: string;
-  symbol: string;
-  status: string
-}
+
 
 export interface Client {
   fname: string;
   lname: string;
   email: string;
-  position: string;
   nid: string;
 }
 
@@ -31,7 +24,7 @@ export class GuardComponent implements AfterViewInit, OnInit {
   active = false;
   data: any;
   data2: any;
-  displayedColumns2: string[] = ['fname', 'lname', 'email', 'position', 'nid', 'action'];
+  displayedColumns2: string[] = ['fname', 'lname', 'Email', 'nid', 'action'];
   dataSource2 = new MatTableDataSource<Client>();
   selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -73,19 +66,8 @@ export class GuardComponent implements AfterViewInit, OnInit {
   newGuard() {
     window.location.href = "Guards/New-guard"
   }  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource2.data.forEach(row => this.selection.select(row));
-  }
 
-  /** The label for the checkbox on the passed row */
-  checkboxLabel(row?: Client): string {
-    if (!row) {
-      return `${this.isAllSelected() ? 'select' : 'deselect'} all`;
-    }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.position + 1}`;
-  }
+
 
   editData(id) {
     // console.log(id);

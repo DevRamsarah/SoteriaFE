@@ -15,14 +15,15 @@
                     <p class="text-primary m-0 font-weight-bold">New Post-Site</p>
                 </div>
                 <div class="card-body">
-                    <form [formGroup]="New" ngNativeValidate (ngSubmit)="submit()">
+                    <spinner *ngIf="loadingEdit"></spinner>
+                    <form ngNativeValidate (ngSubmit)="submit()" *ngIf="!loadingEdit">
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="Client"><strong>Client</strong></label>
-                                    <select class="form-control" formControlName="ClientName" autofocus>
+                                    <select class="form-control" [(ngModel)]="this.postSiteObject.ClientName" [ngModelOptions]="{standalone: true}" autofocus>
 
-                                        <option [value]="country.id" *ngFor="let country of clientD">
-                                            {{country.Name}}
+                                        <option [value]="cli.Name" *ngFor="let cli of clientD">
+                                            {{cli.Name}}
                                         </option>
                                     </select>
                                 </div>
@@ -30,7 +31,7 @@
                             <div class="col">
                                 <div class="form-group"><label for="PostSite"><strong>Post Site</strong></label><input
                                         class="form-control" type="text" placeholder="Location" required
-                                        formControlName="PostSite">
+                                        [(ngModel)]="this.postSiteObject.PsLocation" [ngModelOptions]="{standalone: true}">
                                 </div>
                             </div>
                         </div>
@@ -38,24 +39,24 @@
                             <div class="col">
                                 <div class="form-group"><label for="Contact Name"><strong>Contact
                                             Name</strong></label><input class="form-control" type="text"
-                                        placeholder="Contact Name" required formControlName="ContactName"></div>
+                                        placeholder="Contact Name" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.ContactName"></div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Mobile
                                             Number</strong></label><input class="form-control" type="text"
-                                        placeholder="5555-5555" required formControlName="MobileNum"></div>
+                                        placeholder="5555-5555" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.MobileNum"></div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Phone
                                             Number</strong></label><input class="form-control" type="text"
-                                        placeholder="5555-5555" required formControlName="PhoneNum"></div>
+                                        placeholder="5555-5555" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.PhoneNum"></div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Fax
                                         </strong></label><input class="form-control" type="text" placeholder="5555-5555"
-                                        required formControlName="faxNum"></div>
+                                        required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.faxNum"></div>
                             </div>
                         </div>
                         <div class="form-row">
@@ -63,7 +64,7 @@
 
                                 <div class="form-group"><label for="Email"><strong>Email Address</strong></label><input
                                         class="form-control" type="email" placeholder="user@example.com" required
-                                        formControlName="ClientEmail">
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.ClientEmail">
                                 </div>
                             </div>
                             <div class="col">
@@ -71,7 +72,7 @@
                                     <label for="Category"><strong>Category
                                     </strong></label>
                                 <input class="form-control" list="clientD" placeholder="Select" required
-                                    formControlName="Category">
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.Category">
                                 <datalist id="clientD">
                                     <option *ngFor="let gua of clientD" [value]="gua.Name">
                                         {{gua.id}}
@@ -85,15 +86,15 @@
                             <div class="col">
                                 <div class="form-group">
                                     <label for="address"><strong>Address</strong></label><input class="form-control"
-                                        type="text" placeholder="Address" required formControlName="ClientAddress">
+                                        type="text" placeholder="Address" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.ClientAddress">
                                 </div>
                             </div>
-                            <div class="col-2 mt-4 pt-2">
-                                <mat-slide-toggle [(ngModel)]="isChecked" [color]="color"
+                            <!-- <div class="col-2 mt-4 pt-2">
+                                <mat-slide-toggle  [(ngModel)]="this.postSiteObject.isChecked" [color]="color"
                                     [ngModelOptions]="{standalone: true}">
                                     Add coordinate
                                 </mat-slide-toggle>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="form-row" *ngIf="isChecked">
                             <fieldset class="scheduler-border d-flex flex-row row">
@@ -102,12 +103,12 @@
 
                                 <label for="Lat" class="mt-2 mr-4"><strong>Latitude</strong></label><input
                                     class="form-control col-4" type="text" placeholder="Latitude" required
-                                    [ngClass]="this.clientObject.Latitude == '' ? 'is-invalid' : 'is-valid'"
-                                    [(ngModel)]="this.clientObject.Latitude" [ngModelOptions]="{standalone: true}">
+                                    [ngClass]="this.postSiteObject.Latitude == '' ? 'is-invalid' : 'is-valid'"
+                                    [(ngModel)]="this.postSiteObject.Latitude" [ngModelOptions]="{standalone: true}">
                                 <div class="col-lg-2 col-md-0 col-sm-0"></div>
                                 <label for="Long" class="mt-2 mr-4"><strong>Longitude</strong></label><input
                                     class="form-control col-4" type="text" placeholder="Longitude" required
-                                    [(ngModel)]="this.clientObject.Longitude" [ngModelOptions]="{standalone: true}">
+                                    [(ngModel)]="this.postSiteObject.Longitude" [ngModelOptions]="{standalone: true}">
                             </fieldset>
                         </div>
                         <div id="map" class="col-12 " [ngClass]="isChecked ? '' : 'd-none'"></div>

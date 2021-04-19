@@ -69,6 +69,18 @@ export class PostSiteComponent implements OnInit {
     this.router.navigate(["/PostSite/New-PostSite"]);
   }
 
+  editData(id) {
+    // console.log(id);
+
+    location.href = "PostSite/New-PostSite/?edit=" + id;
+  }
+  deleteData(id) {
+    this.firebaseCrud.deletePostSite(id).then(
+      () => {
+        alert("PostSite removed")// add sweet alert
+      }
+    )
+  }
 
 }
 

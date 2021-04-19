@@ -6,7 +6,7 @@ import * as mapboxgl from "mapbox-gl";
 import { MapService } from '../../../services/map/map.service';
 import { GeoJson } from '../../../model/map/map'
 import { ThemePalette } from '@angular/material/core';
-
+import * as turf from '@turf/turf';
 @Component({
   selector: 'app-new-post-site',
   templateUrl: './new-post-site.component.html',
@@ -18,46 +18,30 @@ export class NewPostSiteComponent implements OnInit {
   isChecked = true
   loadingEdit = true;
 
-
-  clientObject = {
-
+  postSiteObject = {
+    
+    ClientName: null,
+    ContactName: null,
+    MobileNum: null,
+    PhoneNum: null,
+    faxNum: null,
+    Category: null,
+    ClientEmail: null,
+    ClientAddress: null,  
     Latitude: '',
     Longitude: '',
-    PsLocation: ''
+    PsLocation: '',
+    Zone: null
+
+ 
+
+
   }
+
 
   New: FormGroup;
   clientD = [];
-  client = [{
-    ID: '1',
-    Name: 'a',
-  }, {
-    ID: '3',
-    Name: 'GasdTX',
-  }, {
-    ID: '6',
-    Name: 'rerg',
-  }];
-  PostSiteL = [{
-    ID: '3',
-    Name: 'a',
-  }, {
-    ID: '33',
-    Name: 'GasdTX',
-  }, {
-    ID: '63',
-    Name: 'rerg',
-  }];
-  GuardL = [{
-    ID: '17',
-    Name: 'a',
-  }, {
-    ID: '37',
-    Name: 'GasdTX',
-  }, {
-    ID: '67',
-    Name: 'rerg',
-  }];
+
 
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/outdoors-v9';
@@ -76,20 +60,44 @@ export class NewPostSiteComponent implements OnInit {
   marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
   constructor(public firebaseCrud: PostSiteService, public router: Router,  private mapService: MapService) { }
 
+
   ngOnInit(): void {
-    this.New = new FormGroup({
-      ClientName: new FormControl(null, [Validators.required]),
-      PostSite: new FormControl(null, [Validators.required]),
-      ContactName: new FormControl(null, [Validators.required]),
-      MobileNum: new FormControl(null, [Validators.required]),
-      PhoneNum: new FormControl(null, [Validators.required]),
-      faxNum: new FormControl(null, [Validators.required]),
-      Category: new FormControl(null, [Validators.required]),
-      ClientEmail: new FormControl(null, [Validators.required]),
-      ClientAddress: new FormControl(null, [Validators.required]),
-    });
+    this.loadingEdit = true
+
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      this.status = "Edit PostSite"
+      this.firebaseCrud.getOnePostSite(new URLSearchParams(window.location.search).get("edit")).subscribe((client: any) => {
+        this.postSiteObject = {
+
+          Category: client.Category,
+          ClientEmail: client.ClientEmail,
+          ClientName: client.ClientName,
+          ContactName: client.ContactName,
+          MobileNum: client.MobileNum,
+          PhoneNum: client.PhoneNum,
+          faxNum: client.faxNum,
+          ClientAddress: client.ClientAddress,
+          Latitude: client.Latitude,
+          Longitude: client.Longitude,
+          PsLocation: client.PsLocation,
+          Zone: client.Zone
 
 
+        }
+      })
+
+    } else {
+      this.status = "New PostSite"
+
+    }
+    setTimeout(() => {
+      this.loadingEdit = false
+
+    }, 3500);
+    setTimeout(() => {
+      this.initializeMap()
+
+    }, 4000);
     this.firebaseCrud.getClient().subscribe((clients: any) => {
       clients.forEach(client => {
         let clientData: any = {};
@@ -103,9 +111,18 @@ export class NewPostSiteComponent implements OnInit {
       console.log(this.clientD);
 
     })
+    this.mapService.getAllZone().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data());
+        this.dropdown.push(doc.data())
+      });
+      console.log(this.dropdown);
+      // console.log(this.dropdown[1]);
 
-
-
+    })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
   }
   ngAfterViewInit(): void {
     this.initializeMap()
@@ -133,15 +150,31 @@ export class NewPostSiteComponent implements OnInit {
       const newMarker = new GeoJson(coordinates, { message: this.message })
       this.marker1.setLngLat(coordinates)
         .addTo(this.map);
-      this.clientObject.Latitude = event.lngLat.lat.toFixed(6)
-      this.clientObject.Longitude = event.lngLat.lng.toFixed(6)
+      this.postSiteObject.Latitude = event.lngLat.lat.toFixed(6)
+      this.postSiteObject.Longitude = event.lngLat.lng.toFixed(6)
+      this.checkZone(this.postSiteObject.Longitude, this.postSiteObject.Latitude)
     })
 
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      this.marker1.setLngLat([this.postSiteObject.Longitude, this.postSiteObject.Latitude])
+        .addTo(this.map);
+    }
 
-
-
+    this.checkZone(this.postSiteObject.Longitude, this.postSiteObject.Latitude)
   }
 
+  checkZone(lng, lat) {
+    var pt = turf.point([lng, lat]);
+    this.dropdown.forEach(zoneS => {
+      var poly = turf.polygon(JSON.parse(zoneS.coords));
+      if (turf.booleanPointInPolygon(pt, poly)) {
+        // console.log(zoneS.region);
+        this.postSiteObject.Zone = zoneS.region
+        // console.log(turf.booleanPointInPolygon(pt, poly));
+      }
+    });
+
+  }
   removeMarker(marker) {
     this.mapService.removeMarker(marker.$key)
   }
@@ -155,14 +188,26 @@ export class NewPostSiteComponent implements OnInit {
 
 
   submit() {
-    // console.log(this.New.value)
+      
     this.loading = true;
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      this.firebaseCrud.updatePostSite(new URLSearchParams(window.location.search).get("edit"), this.postSiteObject).then(
+        () => {
+          alert("PostSite Edit")// add sweet alert
+        }
+      )
+    } else {
 
-    this.firebaseCrud.createNewPostSite(this.New.value).then(
-      () => {
-        alert("PostSite Added")// add sweet alert
-      }
-    )
+      this.firebaseCrud.createNewPostSite(this.postSiteObject).then(
+        () => {
+          alert("PostSite Added")// add sweet alert
+        }
+      )
+    }
+    this.router.navigate(["PostSite"]);
+
+    console.log(this.postSiteObject);
+    
   }
 
 

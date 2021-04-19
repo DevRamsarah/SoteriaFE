@@ -63,7 +63,7 @@ export class NewClientComponent implements OnInit {
   constructor(public firebaseCrud: ClientService, public router: Router, private mapService: MapService) { }
 
   ngOnInit(): void {
-  this.loadingEdit = true
+    this.loadingEdit = true
 
     if (new URLSearchParams(window.location.search).has("edit")) {
       this.status = "Edit Client"
@@ -81,37 +81,37 @@ export class NewClientComponent implements OnInit {
           Latitude: client.Latitude,
           Longitude: client.Longitude,
           PsLocation: client.PsLocation,
-    Zone: client.Zone
+          Zone: client.Zone
 
 
         }
       })
-      
+
     } else {
       this.status = "New Client"
 
     }
     setTimeout(() => {
-  this.loadingEdit = false
-      
+      this.loadingEdit = false
+
     }, 3500);
-setTimeout(() => {
-  this.initializeMap()
-  
-}, 4000);
+    setTimeout(() => {
+      this.initializeMap()
 
-this.mapService.getAllZone().then((querySnapshot) => {
-  querySnapshot.forEach((doc) => {
-    // console.log(doc.data());
-    this.dropdown.push(doc.data())
-  });
-  console.log(this.dropdown);
-  // console.log(this.dropdown[1]);
+    }, 4000);
 
-})
-  .catch((error) => {
-    console.log("Error getting documents: ", error);
-  });
+    this.mapService.getAllZone().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data());
+        this.dropdown.push(doc.data())
+      });
+      console.log(this.dropdown);
+      // console.log(this.dropdown[1]);
+
+    })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
   }
 
 
@@ -138,10 +138,10 @@ this.mapService.getAllZone().then((querySnapshot) => {
       const newMarker = new GeoJson(coordinates, { message: this.message })
       this.marker1.setLngLat(coordinates)
         .addTo(this.map);
-        
-        this.clientObject.Latitude = event.lngLat.lat.toFixed(6)
-        this.clientObject.Longitude = event.lngLat.lng.toFixed(6)
-        this.checkZone(this.clientObject.Longitude, this.clientObject.Latitude)
+
+      this.clientObject.Latitude = event.lngLat.lat.toFixed(6)
+      this.clientObject.Longitude = event.lngLat.lng.toFixed(6)
+      this.checkZone(this.clientObject.Longitude, this.clientObject.Latitude)
     })
 
     if (new URLSearchParams(window.location.search).has("edit")) {
@@ -177,7 +177,7 @@ this.mapService.getAllZone().then((querySnapshot) => {
   }
 
   submit() {
-    
+
     this.loading = true;
     if (new URLSearchParams(window.location.search).has("edit")) {
       this.firebaseCrud.updateClient(new URLSearchParams(window.location.search).get("edit"), this.clientObject).then(
@@ -196,7 +196,7 @@ this.mapService.getAllZone().then((querySnapshot) => {
     this.router.navigate(["Clients"]);
 
     // console.log(this.clientObject);
-    
+
   }
   getURL() {
 

@@ -39,7 +39,7 @@
 
                 <ng-container matColumnDef="PostSite">
                     <th mat-header-cell *matHeaderCellDef>Post Site</th>
-                    <td mat-cell *matCellDef="let element"> {{element.PostSite}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.PsLocation}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="ClientName">
@@ -49,12 +49,12 @@
 
                 <ng-container matColumnDef="ClientMob">
                     <th mat-header-cell *matHeaderCellDef>Mobile Number</th>
-                    <td mat-cell *matCellDef="let element"> {{element.ClientMob}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.MobileNum}} </td>
                 </ng-container>
 
                 <ng-container matColumnDef="Email">
                     <th mat-header-cell *matHeaderCellDef>Email</th>
-                    <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+                    <td mat-cell *matCellDef="let element"> {{element.ClientEmail}} </td>
                 </ng-container>
                 
                 <ng-container matColumnDef="action">
@@ -67,10 +67,11 @@
                           <mat-icon>more_vert</mat-icon>
                         </button>
                         <mat-menu #menu="matMenu">
-                            <button mat-menu-item (click)="change(element.ClientID)"
-                          >Update</button>
-                        <button mat-menu-item>Archived</button>
-  
+                            <button mat-menu-item (click)="editData(element.PostSiteID)"
+                          >Edit</button>
+                        <button mat-menu-item (click)="deleteData(element.PostSiteID)"
+                        >Delete</button>
+      
                         </mat-menu>
                     </td>
                 </ng-container>

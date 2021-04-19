@@ -35,17 +35,18 @@ export class NewGuardComponent implements OnInit {
     Name: 'rerg',
   }];
   guardObject = {
-    ClientName: null,
-    ClientEmail: null,
-    ContactName: null,
+    fname: null,
+    Email: null,
+    lname: null,
     MobileNum: null,
     PhoneNum: null,
     faxNum: null,
-    ClientAddress: null,
+    address: null,
     Latitude: '',
     Longitude: '',
     PsLocation: '',
-    Category: null,
+    nid:null,
+    gender: null,
     Zone: null
 
   }
@@ -72,14 +73,15 @@ export class NewGuardComponent implements OnInit {
       this.status = "Edit Guard"
       this.firebaseCrud.getOneGuard(new URLSearchParams(window.location.search).get("edit")).subscribe((client: any) => {
         this.guardObject = {
-          Category: client.Category,
-          ClientEmail: client.ClientEmail,
-          ClientName: client.ClientName,
-          ContactName: client.ContactName,
+          gender: client.gender,
+          Email: client.Email,
+          fname: client.fname,
+          lname: client.lname,
           MobileNum: client.MobileNum,
           PhoneNum: client.PhoneNum,
           faxNum: client.faxNum,
-          ClientAddress: client.ClientAddress,
+          address: client.address,
+          nid: client.nid,
           Latitude: client.Latitude,
           Longitude: client.Longitude,
           PsLocation: client.PsLocation,

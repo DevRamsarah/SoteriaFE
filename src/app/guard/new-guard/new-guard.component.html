@@ -24,7 +24,7 @@
                                                                                 class="form-control" type="text"
                                                                                 placeholder="First Name" required
                                                                                 [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="this.guardObject.ClientName">
+                                                                                [(ngModel)]="this.guardObject.fname">
                                                                 </div>
                                                         </div>
                                                         <div class="col">
@@ -34,7 +34,7 @@
                                                                                 class="form-control" type="text"
                                                                                 placeholder="Last Name" required
                                                                                 [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="this.guardObject.ClientEmail">
+                                                                                [(ngModel)]="this.guardObject.lname">
                                                                 </div>
                                                         </div>
                                                 </div>
@@ -47,7 +47,7 @@
                                                                                 <input class="form-check-input"
                                                                                         type="radio"
                                                                                         [ngModelOptions]="{standalone: true}"
-                                                                                        [(ngModel)]="this.guardObject.Category"
+                                                                                        [(ngModel)]="this.guardObject.gender"
                                                                                         value="Male" required>
                                                                                 <label class="form-check-label"
                                                                                         for="flexRadioDefault1">
@@ -73,7 +73,7 @@
                                                                                 class="form-control" type="date"
                                                                                 required max="{{datePickerId}}"
                                                                                 [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="this.guardObject.faxNum">
+                                                                                [(ngModel)]="this.guardObject.dob">
                                                                 </div>
                                                         </div>
                                                 </div>
@@ -108,16 +108,16 @@
                                                                                 class="form-control" type="email"
                                                                                 placeholder="user@example.com" required
                                                                                 [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="this.guardObject.ClientEmail">
+                                                                                [(ngModel)]="this.guardObject.Email">
                                                                 </div>
                                                         </div>
                                                         <div class="col">
-                                                                <div class="form-group"><label for="NIC"><strong>NIC
+                                                                <div class="form-group"><label for="NIC"><strong>NID
                                                                                         Number</strong>
                                                                         </label><input class="form-control" type="text"
                                                                                 placeholder="Nic" required
                                                                                 [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="this.guardObject.ContactName">
+                                                                                [(ngModel)]="this.guardObject.nid">
                                                                 </div>
                                                         </div>
 
@@ -133,7 +133,7 @@
                                                                                 [ngModelOptions]="{standalone: true}"
                                                                                 type="text" placeholder="Address"
                                                                                 required
-                                                                                [(ngModel)]="this.guardObject.ClientAddress">
+                                                                                [(ngModel)]="this.guardObject.address">
                                                                 </div>
                                                         </div>
                                                         <div class="col-2 mt-4 pt-2">
