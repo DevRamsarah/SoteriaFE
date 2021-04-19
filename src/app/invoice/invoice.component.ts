@@ -78,7 +78,7 @@ export class InvoiceComponent implements OnInit {
   deleteData(id) {
     this.firebaseCrud.deleteInvoice(id).then(
       () => {
-        alert("Guard removed")// add sweet alert
+        alert("Invoice removed")// add sweet alert
       }
     )
   }

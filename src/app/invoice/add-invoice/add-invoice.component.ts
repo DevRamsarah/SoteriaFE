@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PostSiteService } from 'src/services/post-site/post-site.service';
 import { InvoiceService } from 'src/services/invoice/invoice.service';
+import { SchedulerService } from 'src/services/scheduler/scheduler.service';
 import { ClientService } from 'src/services/client/client.service';
 import * as html2pdf from 'html2pdf.js'
 import { FormControl, FormGroup } from '@angular/forms';
@@ -32,7 +33,10 @@ export class AddInvoiceComponent implements OnInit {
 
 
   }
-  field = {}
+  field = {
+    start:null,
+    end:null
+  }
   clientD = [];
   PostSiteD = []
   postSite = [];
@@ -48,7 +52,8 @@ export class AddInvoiceComponent implements OnInit {
   PostSiteDrop;
   pdf = true
   constructor(public firebaseCrud: PostSiteService, public fire: AngularFirestore,
-    public invoiceCRUD: InvoiceService, public router: Router, public cli: ClientService) {
+    public invoiceCRUD: InvoiceService, public router: Router, public cli: ClientService,
+    public SchedulerCRUD: SchedulerService) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date();
     this.maxDate = new Date();
@@ -166,12 +171,12 @@ export class AddInvoiceComponent implements OnInit {
     this.invoice.arrayDes = this.fieldArray
     this.invoice.Clientid = this.ClientDrop
     this.invoice.PostSiteid = this.PostSiteDrop
-    this.cli.getOneClient(this.ClientDrop).subscribe((client: any) => {
-      this.invoice.ClientName = client.ClientName
-    })
-    this.firebaseCrud.getOnePostSite(this.PostSiteDrop).subscribe((ps: any) => {
-      this.invoice.PostSiteName = ps.PostSite
-    })
+    // this.cli.getOneClient(this.ClientDrop).subscribe((client: any) => {
+    //   // this.invoice.ClientName = client.ClientName
+    // })
+    // this.firebaseCrud.getOnePostSite(this.PostSiteDrop).subscribe((ps: any) => {
+    //   // this.invoice.PostSiteName = ps.PostSite
+    // })
 
 
 
@@ -179,6 +184,26 @@ export class AddInvoiceComponent implements OnInit {
 
     console.log(this.invoice);
 
+    this.SchedulerCRUD.createNewScheduler(
+      {
+       start: this.fieldArray[0].start,
+       end: this.fieldArray[0].end,
+   guard : this.invoice.arrayDes[0].quatity,
+       title :this.invoice.PostSiteid +"/"+ this.invoice.Summary,
+       color: "red",
+   actions: "actions",
+   resizable: {
+     beforeStart: false,
+     afterEnd: false,
+   },
+   draggable: false,
+
+
+
+     }
+
+     
+   )
     // this.loading = true;
     //   if (new URLSearchParams(window.location.search).has("edit")) {
     //     this.invoiceCRUD.updateInvoice(new URLSearchParams(window.location.search).get("edit"), this.invoice).then(
@@ -187,16 +212,18 @@ export class AddInvoiceComponent implements OnInit {
     //       }
     //     )
     //   } else {
-    setTimeout(() => {
+      
+      setTimeout(() => {
 
-      this.invoiceCRUD.createNewInvoice(this.invoice).then(
-        () => {
-          alert("Invoice Added")// add sweet alert
-        }
-      )
-      // }
-      this.router.navigate(["Invoicer"]);
-    }, 6000);
+        this.invoiceCRUD.createNewInvoice(this.invoice).then(
+          () => {
+            alert("Invoice Added")// add sweet alert
+          }
+        )
+        // }
+        this.router.navigate(["Invoicer"]);
+      }, 6000);
+    }
+  
   }
-
-}
+  

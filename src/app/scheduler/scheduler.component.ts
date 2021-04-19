@@ -35,6 +35,7 @@ export class SchedulerComponent implements OnInit {
   modalData: {
     action: string;
     event: CalendarEvent;
+    description: string;
   };
 
   actions: CalendarEventAction[] = [
@@ -123,7 +124,9 @@ export class SchedulerComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event, action };
+    this.modalData = { event,
+                       action,
+                      description : "Dev" };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
