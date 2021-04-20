@@ -140,7 +140,7 @@
     <div class="form-row" *ngFor="let item of modalData.guardArray, let i = index ">
       <div class="col" >
           <div class="form-group"><label for="Client"><strong>Guard {{i+1}}</strong></label>
-              <select class="form-control" [(ngModel)]="modalData.GuardName[i]" [ngModelOptions]="{standalone: true}" autofocus>
+              <select class="form-control" [(ngModel)]="modalData.GuardName[i].name" [ngModelOptions]="{standalone: true}" autofocus>
 
                   <option [value]="cli.Name" *ngFor="let cli of guardD">
                       {{cli.Name}}

@@ -135,7 +135,7 @@ export class SchedulerComponent implements OnInit {
       action,
       description: event.title,
       guardArray : new Array(event.guard),
-      GuardName : []
+      GuardName : event.ArrayGuard
     };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
@@ -174,10 +174,10 @@ export class SchedulerComponent implements OnInit {
       schedule.forEach(doc => {
         let dummyE = new Date(doc.end)
         let dummyS = new Date(doc.start)
-let dummyArr= new Array(doc.guard)
+// let dummyArr= new Array(doc.guard)
         let dummyC = colors.red
         let dummyA = this.actions
-        let data = { ...doc, end: dummyE, start: dummyS, color: dummyC, actions: dummyA,ArrGuard:dummyArr }
+        let data = { ...doc, end: dummyE, start: dummyS, color: dummyC, actions: dummyA }
         this.events.push(data)
         console.log(data);
 
@@ -194,7 +194,7 @@ let dummyArr= new Array(doc.guard)
       Guards.forEach(Guard => {
         let GuardData: any = {};
         GuardData.id = Guard.ClientID;
-        GuardData.Name = Guard.fname +" "+ Guard.fname;
+        GuardData.Name = Guard.fname +" "+ Guard.lname;
         this.guardD.push(GuardData);
 
 

@@ -3,10 +3,12 @@ import { PostSiteService } from 'src/services/post-site/post-site.service';
 import { InvoiceService } from 'src/services/invoice/invoice.service';
 import { SchedulerService } from 'src/services/scheduler/scheduler.service';
 import { ClientService } from 'src/services/client/client.service';
+import { GuardService } from 'src/services/guard/guard.service';
 import * as html2pdf from 'html2pdf.js'
 import { FormControl, FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
+import * as turf from '@turf/turf';
 
 @Component({
   selector: 'app-add-invoice',
@@ -34,9 +36,17 @@ export class AddInvoiceComponent implements OnInit {
 
   }
   field = {
-    start:null,
-    end:null
+    start: null,
+    end: null
   }
+  psCoordinate = {
+    Latitude:null,
+    Longitude:null,
+    Zone:null
+  }
+
+  selectedGuard=[]
+  guardlist=[turf.point([28.973865, 41.011122],{id:'a'})]
   clientD = [];
   PostSiteD = []
   postSite = [];
@@ -53,6 +63,7 @@ export class AddInvoiceComponent implements OnInit {
   pdf = true
   constructor(public firebaseCrud: PostSiteService, public fire: AngularFirestore,
     public invoiceCRUD: InvoiceService, public router: Router, public cli: ClientService,
+    public gua: GuardService,
     public SchedulerCRUD: SchedulerService) {
     const currentYear = new Date().getFullYear();
     this.minDate = new Date();
@@ -74,6 +85,7 @@ export class AddInvoiceComponent implements OnInit {
       // console.log(this.clientD);
 
     })
+   
   }
 
   download() {
@@ -129,13 +141,13 @@ export class AddInvoiceComponent implements OnInit {
     this.fire.collection('postSite', ref => ref.where("ClientName", "==", this.ClientDrop)).valueChanges({ idField: 'PostSiteID' })
       .subscribe((PostSite: any) => {
         console.log(PostSite);
-        
+
         PostSite.forEach(ps => {
           let PostSiteData: any = {};
           PostSiteData.id = ps.PostSiteID;
           PostSiteData.Name = ps.PsLocation;
           this.PostSiteD.push(PostSiteData);
- 
+
 
 
         });
@@ -154,76 +166,88 @@ export class AddInvoiceComponent implements OnInit {
     this.fire.collection('postSite', ref => ref.where("PsLocation", "==", this.PostSiteDrop)).valueChanges()
       .subscribe((PostSite: any) => {
 
-        
-  
+      this.psCoordinate.Latitude=  PostSite[0].Latitude
+      this.psCoordinate.Longitude=  PostSite[0].Longitude
+      this.psCoordinate.Zone=  PostSite[0].Zone
+      
 
-          this.invoice.Summary = PostSite[0].ClientAddress;
+
+        this.invoice.Summary = PostSite[0].ClientAddress;
 
 
         // console.log(this.clientD);
 
       })
 
+      this.gua.getGuard().subscribe((guards: any) => {
+      
+        guards.forEach(guard => {
 
+     if (guard.Zone == this.psCoordinate.Zone){
+       this.guardlist.push(turf.point([parseFloat(guard.Longitude), parseFloat(guard.Latitude)],
+        {id:guard.GuardID,  
+          name:guard.fname+' '+guard.lname,
+        Zone:guard.Zone})
+       )
+      }
+      })
+        
+      })
 
   }
   generate() {
+        
     this.invoice.arrayDes = this.fieldArray
     this.invoice.Clientid = this.ClientDrop
     this.invoice.PostSiteid = this.PostSiteDrop
-    // this.cli.getOneClient(this.ClientDrop).subscribe((client: any) => {
-    //   // this.invoice.ClientName = client.ClientName
-    // })
-    // this.firebaseCrud.getOnePostSite(this.PostSiteDrop).subscribe((ps: any) => {
-    //   // this.invoice.PostSiteName = ps.PostSite
-    // })
+
+    
+      var targetPoint = turf.point([parseFloat(this.psCoordinate.Longitude), parseFloat(this.psCoordinate.Latitude)]);
+      for (let index = 0; index < this.invoice.arrayDes[0].quatity; index++) {       
+        var points = turf.featureCollection(this.guardlist);
+        
+        var nearest = turf.nearestPoint(targetPoint, points);
+        this.selectedGuard.push(nearest.properties)
+        this.guardlist.splice(nearest.properties.featureIndex,1)
+
+
+      }
+   
+console.log(this.selectedGuard);
 
 
 
-
-
-    console.log(this.invoice);
+    // console.log(this.invoice);
 
     this.SchedulerCRUD.createNewScheduler(
       {
-       start: (this.fieldArray[0].start).toString(),
-       end: (this.fieldArray[0].end).toString(),
-   guard : this.invoice.arrayDes[0].quatity,
-       title :this.invoice.PostSiteid +"/"+ this.invoice.Summary,
-       color: "red",
-   actions: "actions",
-   resizable: {
-     beforeStart: false,
-     afterEnd: false,
-   },
-   draggable: false,
+        start: (this.fieldArray[0].start).toString(),
+        end: (this.fieldArray[0].end).toString(),
+        guard: this.invoice.arrayDes[0].quatity,
+        ArrayGuard: this.selectedGuard,
+        title: this.invoice.PostSiteid + "/" + this.invoice.Summary,
+        color: "red",
+        actions: "actions",
+        resizable: {
+          beforeStart: false,
+          afterEnd: false,
+        },
+        draggable: false,
+      }
 
 
+    )
 
-     }
+    setTimeout(() => {
 
-     
-   )
-    // this.loading = true;
-    //   if (new URLSearchParams(window.location.search).has("edit")) {
-    //     this.invoiceCRUD.updateInvoice(new URLSearchParams(window.location.search).get("edit"), this.invoice).then(
-    //       () => {
-    //         alert("Invoice Edit")// add sweet alert
-    //       }
-    //     )
-    //   } else {
-      
-      setTimeout(() => {
+      this.invoiceCRUD.createNewInvoice(this.invoice).then(
+        () => {
+          alert("Invoice Added")// add sweet alert
+        }
+      )
 
-        this.invoiceCRUD.createNewInvoice(this.invoice).then(
-          () => {
-            alert("Invoice Added")// add sweet alert
-          }
-        )
-        // }
-        this.router.navigate(["Invoicer"]);
-      }, 6000);
-    }
-  
+      this.router.navigate(["Invoicer"]);
+    }, 6000);
   }
-  
+
+}
