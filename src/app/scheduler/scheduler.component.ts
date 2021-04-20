@@ -5,6 +5,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
 import { SchedulerService } from 'src/services/scheduler/scheduler.service';
 import { element } from 'protractor';
+import { GuardService } from 'src/services/guard/guard.service';
 
 const colors: any = {
   red: {
@@ -38,7 +39,10 @@ export class SchedulerComponent implements OnInit {
     action: string;
     event: CalendarEvent;
     description: string;
+    guardArray;
+    GuardName;
   };
+  guardD=[]
 
   actions: CalendarEventAction[] = [
     {
@@ -91,7 +95,7 @@ export class SchedulerComponent implements OnInit {
 
   activeDayIsOpen: boolean = false;
 
-  constructor(private modal: NgbModal, public firebaseCrud: SchedulerService) { }
+  constructor(private modal: NgbModal, public firebaseCrud: SchedulerService,public guardCRUD: GuardService) { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -125,11 +129,13 @@ export class SchedulerComponent implements OnInit {
     this.handleEvent('Dropped or resized', event);
   }
 
-  handleEvent(action: string, event: CalendarEvent): void {
+  handleEvent(action: string, event): void {
     this.modalData = {
       event,
       action,
-      description: "Dev"
+      description: event.title,
+      guardArray : new Array(event.guard),
+      GuardName : []
     };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
@@ -168,23 +174,35 @@ export class SchedulerComponent implements OnInit {
       schedule.forEach(doc => {
         let dummyE = new Date(doc.end)
         let dummyS = new Date(doc.start)
-
+let dummyArr= new Array(doc.guard)
         let dummyC = colors.red
         let dummyA = this.actions
-        let  data = {...doc,end:dummyE,start:dummyS,color:dummyC,actions:dummyA}
+        let data = { ...doc, end: dummyE, start: dummyS, color: dummyC, actions: dummyA,ArrGuard:dummyArr }
         this.events.push(data)
         console.log(data);
-        
+
       })
     })
-setTimeout(() => {
-  this.refresh.next()
-}, 2000);
-setTimeout(() => {
-  this.refresh.next()
-}, 3000);
+    setTimeout(() => {
+      this.refresh.next()
+    }, 4000);
+    setTimeout(() => {
+      this.refresh.next()
+    }, 5000);
     console.log(this.events);
-    
+    this.guardCRUD.getGuard().subscribe((Guards: any) => {
+      Guards.forEach(Guard => {
+        let GuardData: any = {};
+        GuardData.id = Guard.ClientID;
+        GuardData.Name = Guard.fname +" "+ Guard.fname;
+        this.guardD.push(GuardData);
+
+
+
+      });
+      // console.log(this.clientD);
+
+    })
   }
 
 }
