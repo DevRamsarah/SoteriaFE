@@ -3,6 +3,8 @@ import { startOfDay, endOfDay, subDays, addDays, endOfMonth, isSameDay, isSameMo
 import { Subject } from 'rxjs';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, CalendarView } from 'angular-calendar';
+import { SchedulerService } from 'src/services/scheduler/scheduler.service';
+import { element } from 'protractor';
 
 const colors: any = {
   red: {
@@ -59,37 +61,37 @@ export class SchedulerComponent implements OnInit {
   refresh: Subject<any> = new Subject();
 
   events: CalendarEvent[] = [
-    {
-      start: subDays(startOfDay(new Date()), 1),
-      end: addDays(new Date(), 1),
-      title: 'A 3 day event',
-      color: colors.red,
-      actions: this.actions,
-      allDay: true,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
+    // {
+    //   start: subDays(startOfDay(new Date()), 1),
+    //   end: addDays(new Date(), 1),
+    //   title: 'A 3 day event',
+    //   color: colors.red,
+    //   actions: this.actions,
+    //   allDay: true,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
 
-    {
-      start: addHours(startOfDay(new Date()), 2),
-      end: addHours(new Date(), 2),
-      title: 'A draggable and resizable event',
-      color: colors.yellow,
-      actions: this.actions,
-      resizable: {
-        beforeStart: true,
-        afterEnd: true,
-      },
-      draggable: true,
-    },
+    // {
+    //   start: addHours(startOfDay(new Date()), 2),
+    //   end: addHours(new Date(), 2),
+    //   title: 'A draggable and resizable event',
+    //   color: colors.yellow,
+    //   actions: this.actions,
+    //   resizable: {
+    //     beforeStart: true,
+    //     afterEnd: true,
+    //   },
+    //   draggable: true,
+    // },
   ];
 
-  activeDayIsOpen: boolean = true;
+  activeDayIsOpen: boolean = false;
 
-  constructor(private modal: NgbModal) { }
+  constructor(private modal: NgbModal, public firebaseCrud: SchedulerService) { }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
     if (isSameMonth(date, this.viewDate)) {
@@ -124,9 +126,11 @@ export class SchedulerComponent implements OnInit {
   }
 
   handleEvent(action: string, event: CalendarEvent): void {
-    this.modalData = { event,
-                       action,
-                      description : "Dev" };
+    this.modalData = {
+      event,
+      action,
+      description: "Dev"
+    };
     this.modal.open(this.modalContent, { size: 'lg' });
   }
 
@@ -159,6 +163,28 @@ export class SchedulerComponent implements OnInit {
     this.activeDayIsOpen = false;
   }
   ngOnInit(): void {
+    this.firebaseCrud.getScheduler().subscribe((schedule: any) => {
+      console.log(schedule);
+      schedule.forEach(doc => {
+        let dummyE = new Date(doc.end)
+        let dummyS = new Date(doc.start)
+
+        let dummyC = colors.red
+        let dummyA = this.actions
+        let  data = {...doc,end:dummyE,start:dummyS,color:dummyC,actions:dummyA}
+        this.events.push(data)
+        console.log(data);
+        
+      })
+    })
+setTimeout(() => {
+  this.refresh.next()
+}, 2000);
+setTimeout(() => {
+  this.refresh.next()
+}, 3000);
+    console.log(this.events);
+    
   }
 
 }

@@ -186,8 +186,8 @@ export class AddInvoiceComponent implements OnInit {
 
     this.SchedulerCRUD.createNewScheduler(
       {
-       start: this.fieldArray[0].start,
-       end: this.fieldArray[0].end,
+       start: (this.fieldArray[0].start).toString(),
+       end: (this.fieldArray[0].end).toString(),
    guard : this.invoice.arrayDes[0].quatity,
        title :this.invoice.PostSiteid +"/"+ this.invoice.Summary,
        color: "red",
