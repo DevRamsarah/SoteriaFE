@@ -44,6 +44,9 @@ import { ZoneComponent } from './zone/zone.component';
 import { AngularFireDatabaseModule } from 'angularfire2/database';
 import { AddZoneComponent } from './zone/add-zone/add-zone.component';
 import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
+import { DropDownsModule } from '@progress/kendo-angular-dropdowns';
+import { DateInputsModule } from '@progress/kendo-angular-dateinputs';
+import { DialogsModule } from '@progress/kendo-angular-dialog';
 @NgModule({
   declarations: [
     AppComponent,
@@ -77,7 +80,6 @@ import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component
     ZoneComponent,
     AddZoneComponent,
     AddInvoiceComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -98,7 +100,10 @@ import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component
     FlexLayoutModule,
     CustomMaterialModule,
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-    NgbModule
+    NgbModule,
+    DateInputsModule,
+    DropDownsModule,
+    DialogsModule
   ],
   providers: [FirebaseService],
   bootstrap: [AppComponent]

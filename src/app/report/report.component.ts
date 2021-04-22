@@ -52,13 +52,12 @@ export class ReportComponent implements OnInit {
         this._loading = false;
         if (reports.length > 0) {
           let r2 = reports.map((r) => ({
-            'Employee ID': r.emp_id,
-            'Employee Name': r.name,
-            Region: r.region_name,
-            'Number of times travelled': r.travel_count,
-            'Travel Cost': r.travel_amount,
-            'Cost Center': r.costcenter,
-            Department: r.department,
+            'Employee ID': r.ClientID,
+            'Employee Name': r.ClientName,
+            'Address': r.ClientAddress,
+            'Mobile Number': r.travel_amount,
+            'Zone': r.Zone,
+            'Post-Site': r.PsLocation,
           }));
           convertToCSV(r2, `${from} to ${to}.csv`);
         } else {
