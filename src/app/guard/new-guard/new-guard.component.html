@@ -83,8 +83,11 @@
                                                                 <div class="form-group"><label
                                                                                 for="Mobile Number"><strong>Mobile
                                                                                         Number</strong></label><input
-                                                                                class="form-control" type="text"
-                                                                                placeholder="555-5555-5555" required
+                                                                                class="form-control" type="number"
+                                                                                pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
+                                                                                [ngClass]="this.guardObject.MobileNum == '' ? 'is-invalid' : ''"
+                                            
+                                                                            placeholder="5555-5555" required
                                                                                 [ngModelOptions]="{standalone: true}"
                                                                                 [(ngModel)]="this.guardObject.MobileNum">
                                                                 </div>
@@ -93,8 +96,11 @@
                                                                 <div class="form-group"><label
                                                                                 for="Mobile Number"><strong>Phone
                                                                                         Number</strong></label><input
-                                                                                class="form-control" type="text"
-                                                                                placeholder="555-5555-5555" required
+                                                                                class="form-control" type="number"
+                                                                                pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
+                                                                                [ngClass]="this.guardObject.PhoneNum == '' ? 'is-invalid' : ''"
+                                    
+                                                                            placeholder="5555-5555" required
                                                                                 [ngModelOptions]="{standalone: true}"
                                                                                 [(ngModel)]="this.guardObject.PhoneNum">
                                                                 </div>
@@ -105,10 +111,10 @@
                                                         <div class="col">
                                                                 <div class="form-group"><label for="Email"><strong>Email
                                                                                         Address</strong></label><input
-                                                                                class="form-control" type="email"
-                                                                                placeholder="user@example.com" required
-                                                                                [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="this.guardObject.Email">
+                                                                                        [ngClass]="this.cemail==true ? 'is-invalid' : ''"
+                                                                                        (ngModelChange)="ValidateEmail()" 
+                                                                                            class="form-control" type="email" placeholder="user@example.com" required
+                                                                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="this.guardObject.Email">
                                                                 </div>
                                                         </div>
                                                         <div class="col">
@@ -136,14 +142,7 @@
                                                                                 [(ngModel)]="this.guardObject.address">
                                                                 </div>
                                                         </div>
-                                                        <div class="col-2 mt-4 pt-2">
-                                                                <mat-slide-toggle
-                                                                        [(ngModel)]="this.guardObject.isChecked"
-                                                                        [color]="color"
-                                                                        [ngModelOptions]="{standalone: true}">
-                                                                        Add coordinate
-                                                                </mat-slide-toggle>
-                                                        </div>
+
                                                 </div>
                                                 <div class="form-row" *ngIf="isChecked">
                                                         <fieldset class="scheduler-border d-flex flex-row row">
@@ -154,13 +153,14 @@
                                                                         class="mt-2 mr-4"><strong>Latitude</strong></label><input
                                                                         class="form-control col-4" type="text"
                                                                         placeholder="Latitude" required
-                                                                        [ngClass]="this.guardObject.Latitude == '' ? 'is-invalid' : 'is-valid'"
-                                                                        [ngModelOptions]="{standalone: true}"
+                                                                        [ngClass]="this.guardObject.Latitude < -22|| this.guardObject.Latitude >0? 'is-invalid' : ''"                                                                        [ngModelOptions]="{standalone: true}"
                                                                         [(ngModel)]="this.guardObject.Latitude"
                                                                        >
                                                                 <div class="col-lg-2 col-md-0 col-sm-0"></div>
                                                                 <label for="Long"
                                                                         class="mt-2 mr-4"><strong>Longitude</strong></label><input
+                                                                        [ngClass]="this.guardObject.Longitude < -50 || this.guardObject.Longitude > 60 ? 'is-invalid' : ''"
+
                                                                         class="form-control col-4" type="text"
                                                                         placeholder="Longitude" required
                                                                         [ngModelOptions]="{standalone: true}"

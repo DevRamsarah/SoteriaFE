@@ -17,7 +17,9 @@ export class NewGuardComponent implements OnInit {
   loading = false;
   isChecked = true
   loadingEdit = true;
+  mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
+cemail=false;
  
 
   color: ThemePalette = 'primary';
@@ -36,7 +38,7 @@ export class NewGuardComponent implements OnInit {
   }];
   guardObject = {
     fname: null,
-    Email: null,
+    Email: '',
     lname: null,
     MobileNum: null,
     PhoneNum: null,
@@ -181,7 +183,11 @@ export class NewGuardComponent implements OnInit {
       });
   
     }
-  
+
+    ValidateEmail(){
+      this.guardObject.Email.match(this.mailformat)? this.cemail = false: this.cemail=true;
+      
+    }
     submit() {
       
       this.loading = true;
