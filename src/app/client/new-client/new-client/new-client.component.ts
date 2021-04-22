@@ -17,12 +17,15 @@ export class NewClientComponent implements OnInit {
   loading = false;
   isChecked = true
   loadingEdit = true;
-
+  mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+  phoneno = /^\d{10}$/;
+cemail=false;
+cpnum=false;
 
   clientObject = {
     Category: null,
     ClientEmail: null,
-    ClientName: '',
+    ClientName: null,
     ContactName: null,
     MobileNum: null,
     PhoneNum: null,
@@ -30,7 +33,7 @@ export class NewClientComponent implements OnInit {
     ClientAddress: null,
     Latitude: '',
     Longitude: '',
-    PsLocation: '',
+    PsLocation: null,
     Zone: null
   }
   New: FormGroup;
@@ -163,6 +166,10 @@ export class NewClientComponent implements OnInit {
       center: data.geometry.coordinates
 
     })
+  }
+  ValidateEmail(){
+    this.clientObject.ClientEmail.match(this.mailformat)? this.cemail = false: this.cemail=true;
+    
   }
 
   checkZone(lng, lat) {

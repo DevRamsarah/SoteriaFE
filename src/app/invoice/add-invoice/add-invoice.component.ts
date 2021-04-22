@@ -23,8 +23,8 @@ export class AddInvoiceComponent implements OnInit {
     Title: "",
     Summary: "",
     number: "",
-    Currentdate: null,
-    dueDate: null,
+    Currentdate: new Date().toISOString().split('T')[0],
+    dueDate: new Date().toISOString().split('T')[0],
     arrayDes: [],
     total: 0,
     note: "",
@@ -180,7 +180,7 @@ export class AddInvoiceComponent implements OnInit {
       })
 
       this.gua.getGuard().subscribe((guards: any) => {
-      
+        this.guardlist=[];
         guards.forEach(guard => {
 
      if (guard.Zone == this.psCoordinate.Zone){
@@ -191,6 +191,7 @@ export class AddInvoiceComponent implements OnInit {
        )
       }
       })
+        console.log( this.guardlist);
         
       })
 
@@ -246,7 +247,7 @@ console.log(this.selectedGuard);
         }
       )
 
-      this.router.navigate(["Invoicer"]);
+      window.location.href= "Invoicer"
     }, 6000);
   }
 

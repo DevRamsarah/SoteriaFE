@@ -124,10 +124,7 @@ export class NewPostSiteComponent implements OnInit {
         console.log("Error getting documents: ", error);
       });
   }
-  ngAfterViewInit(): void {
-    this.initializeMap()
 
-  }
 
 
   initializeMap() {
