@@ -5,7 +5,12 @@ import { MatPaginator } from '@angular/material/paginator';
 import { ClientService } from 'src/services/client/client.service';
 import { Client } from 'src/model/client/client.model';
 import { Router } from '@angular/router';
-
+import * as mapboxgl from "mapbox-gl";
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { MapService } from '../../services/map/map.service';
+import { GeoJson, FeatureCollection } from '../../model/map/map'
+import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
+import * as turf from '@turf/turf';
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -20,15 +25,29 @@ export class ClientComponent implements AfterViewInit {
   data: any;
   data2: any;
   displayedColumns2: string[] = ['ClientID', 'ContactName', 'MobileNum', 'ClientEmail', 'action'];
-
-
+  Zone = null
+  map: mapboxgl.Map;
+  style = 'mapbox://styles/mapbox/outdoors-v9';
+  lat = -20.23930295803079;
+  lng = 57.57140179981943;
+  message = 'Hello World';
+  bounds = [
+    [56.71206514379577, -20.702642368289588], // Southwest coordinates
+    [58.47918717931003, -19.6383333967767] // Northeast coordinates
+  ];
+  source: any;
+  New: FormGroup;
+  markers: any;
+  dropdown: any = []
+  marker1:any
   dataSource2 = new MatTableDataSource<Client>();
   selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: ClientService, public router: Router) { }
+  constructor(public firebaseCrud: ClientService, public router: Router,private mapService: MapService) { }
   ngOnInit(): void {
+    
 
 
     this.firebaseCrud.getClient().subscribe((Dispatches: any) => {
@@ -43,11 +62,45 @@ export class ClientComponent implements AfterViewInit {
       this.dataSource2.paginator = this.paginator;
     })
 
+  }
+
+
+  initializeMap() {
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: this.style,
+      minZoom: 2,
+      zoom: 9,
+      center: [this.lng, this.lat],
+      maxBounds: this.bounds
+
+
+    })
+    //add navigation control to map 
+    this.map.addControl(new mapboxgl.NavigationControl());
+
+   
+    this.map.on('load', (event) => {
+      this.data2.forEach(element => {
+      console.log(element);
+      this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
+      this.marker1.setLngLat([element.Longitude, element.Latitude])
+      .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
+    .setHTML('<h3>' + element.ClientName + '</h3><p>' + element.ClientAddress + '</p>'))
+        .addTo(this.map);
+
+    })
+  });
 
   }
 
+
   ngAfterViewInit() {
     this.dataSource2.paginator = this.paginator;
+        setTimeout(() => {
+      this.initializeMap()
+
+    }, 4000);
   }
   change(x) {
     this.edit = (this.edit == false ? true : false);
