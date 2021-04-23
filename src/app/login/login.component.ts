@@ -8,6 +8,7 @@ import { FirebaseService } from 'src/services/firebase.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  forget=false
   InOut = true;
   loading = false;
   @Output() log: EventEmitter<any> = new EventEmitter();
@@ -30,5 +31,9 @@ export class LoginComponent implements OnInit {
   }
   clickEvent() {
     this.InOut = !this.InOut;
+  }
+
+  forgetP(){
+    this.forget? this.forget=false: this.forget=true
   }
 }

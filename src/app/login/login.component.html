@@ -1,17 +1,30 @@
 <div class="container " [ngClass]="InOut ? '' : 'sign-up-mode'">
     <div class="forms-container">
         <div class="signin-signup">
-            <form action="#" class="sign-in-form">
+            <form action="#" class="sign-in-form" *ngIf="!forget">
                 <h2 class="title">Sign in</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" #email placeholder="Username" />
+                    <input type="text" #email placeholder="Email" />
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
                     <input type="password" #password placeholder="Password" />
                 </div>
                 <input type="button" value="Login" class="btn solid" (click)="onSignin(email.value,password.value)" *ngIf="!loading"/>
+                <a (click)="forgetP()" class="text-muted">Forget Password?</a>
+                <div class="spinner-border text-primary" role="status" *ngIf="loading">
+                    <span class="visually-hidden"></span>
+                  </div>
+            </form>
+            <form action="#" class="sign-in-form"*ngIf="forget">
+                <h2 class="title">Forget Password</h2>
+                <div class="input-field">
+                    <i class="fas fa-user"></i>
+                    <input type="text" #email placeholder="Email" />
+                </div>
+                <input type="button" value="Request Password" class="btnF solid" (click)="onSignin(email.value,password.value)" *ngIf="!loading"/>
+                <a (click)="forgetP()" class="text-muted">Login</a>
                 <div class="spinner-border text-primary" role="status" *ngIf="loading">
                     <span class="visually-hidden"></span>
                   </div>
@@ -30,7 +43,12 @@
                     <i class="fas fa-lock"></i>
                     <input type="password" placeholder="Password" />
                 </div>
+                <div class="input-field">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" placeholder="Retype Password" />
+                </div>
                 <input type="submit" class="btn" value="Sign up" />
+                
             </form>
         </div>
     </div>
@@ -38,10 +56,21 @@
     <div class="panels-container">
         <div class="panel left-panel">
             <div class="content">
-                <h3>New here ?</h3>
+                <h1>Welcome to Soteria</h1>
+                <p class="">
+                    Guard
+                    Management
+                    System                       
+                </p>
                 <p>
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Debitis,
-                    ex ratione. Aliquid!
+    A Management System for Security Provider                      
+                </p>
+                <p>
+
+
+                    Responsive
+                    Cloud-based
+                    Fast                       
                 </p>
                 <button class="btn transparent" id="sign-up-btn" (click)="clickEvent()">
                     Sign up
@@ -51,10 +80,11 @@
         </div>
         <div class="panel right-panel">
             <div class="content">
-                <h3>One of us ?</h3>
+                <h1>Welcome to Soteria</h1>
+
+                
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Nostrum
-                    laboriosam ad deleniti.
+                    One of us ?
                 </p>
                 <button class="btn transparent" id="sign-in-btn" (click)="clickEvent()" >
                     Sign in
