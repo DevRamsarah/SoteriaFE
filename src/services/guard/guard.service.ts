@@ -21,7 +21,9 @@ export class GuardService {
   updateGuard(id, data) {
     return this.firebaseCrud.collection('employees').doc(id).set(data);
   }
-
+  updateStatus(id, data) {
+    return this.firebaseCrud.collection('employees').doc(id).update({"recordStatus": data});
+  }
   deleteGuard(id) {
     return this.firebaseCrud.collection('employees').doc(id).delete();
   }

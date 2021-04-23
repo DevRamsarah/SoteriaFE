@@ -21,7 +21,9 @@ export class InvoiceService {
   updateInvoice(id, data) {
     return this.firebaseCrud.collection('Invoices').doc(id).set(data);
   }
-
+  updateStatus(id, data) {
+    return this.firebaseCrud.collection('Invoices').doc(id).update({"recordStatus": data});
+  }
   deleteInvoice(id) {
     return this.firebaseCrud.collection('Invoices').doc(id).delete();
   }

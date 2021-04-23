@@ -25,6 +25,9 @@ export class SchedulerService {
   deleteScheduler(id) {
     return this.firebaseCrud.collection('Schedulers').doc(id).delete();
   }
+  updateStatus(id, data) {
+    return this.firebaseCrud.collection('Schedulers').doc(id).update({"recordStatus": data});
+  }
   getStats(dateFrom, dateTo) {
 
     return this.firebaseCrud.collection('Schedulers').valueChanges({ idField: 'SchedulerID' })

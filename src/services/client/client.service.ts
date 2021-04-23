@@ -23,7 +23,9 @@ export class ClientService {
   updateClient(id, data) {
     return this.firebaseCrud.collection('clients').doc(id).set(data);
   }
-
+  updateStatus(id, data) {
+    return this.firebaseCrud.collection('clients').doc(id).update({"recordStatus": data});
+  }
   deleteClient(id) {
     return this.firebaseCrud.collection('clients').doc(id).delete();
   }

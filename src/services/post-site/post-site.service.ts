@@ -21,7 +21,9 @@ export class PostSiteService {
   updatePostSite(id, data) {
     return this.firebaseCrud.collection('postSite').doc(id).set(data);
   }
-
+  updateStatus(id, data) {
+    return this.firebaseCrud.collection('postSite').doc(id).update({"recordStatus": data});
+  }
   deletePostSite(id) {
     return this.firebaseCrud.collection('postSite').doc(id).delete();
   }

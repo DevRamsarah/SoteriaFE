@@ -6,6 +6,7 @@ import { ClientService } from 'src/services/client/client.service';
 import { Client } from 'src/model/client/client.model';
 import { Router } from '@angular/router';
 import * as mapboxgl from "mapbox-gl";
+import { environment } from '../../environments/environment'
 
 @Component({
   selector: 'app-client',
@@ -13,7 +14,7 @@ import * as mapboxgl from "mapbox-gl";
   styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements AfterViewInit {
-
+  recStatus=true
   edit = false;
   editE = null;
   loading = true;
@@ -40,15 +41,18 @@ export class ClientComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: ClientService, public router: Router) { }
+  constructor(public firebaseCrud: ClientService, public router: Router) { 
+    mapboxgl.accessToken = environment.mapbox.accessToken
+
+  }
   ngOnInit(): void {
     
 
 
     this.firebaseCrud.getClient().subscribe((Dispatches: any) => {
       console.log(Dispatches);
-      // this.data = Dispatch.filter((client) => client.position === 'Employee');
-      this.data2 = Dispatches;
+      this.data = Dispatches.filter((client) => client.recordStatus === 'archieve');
+      this.data2 = Dispatches.filter((client) => client.recordStatus === 'active');
 
       this.loading = false;
 
@@ -102,6 +106,7 @@ export class ClientComponent implements AfterViewInit {
     this.editE = (this.edit == true ? x : null);
   }
   active2(x) {
+    this.recStatus?this.recStatus=false:this.recStatus=true;
     this.dataSource2.data = x;
   }
   applyFilter(event: Event) {
@@ -124,6 +129,22 @@ export class ClientComponent implements AfterViewInit {
     this.firebaseCrud.deleteClient(id).then(
       () => {
         alert("Client removed")// add sweet alert
+      }
+    )
+  }
+  archieve(id) {
+
+    this.firebaseCrud.updateStatus(id,"archieve").then(
+      () => {
+        alert("Client archieve")// add sweet alert
+      }
+    )
+  }
+  unarchieve(id) {
+
+    this.firebaseCrud.updateStatus(id,"active").then(
+      () => {
+        alert("Client unarchieve")// add sweet alert
       }
     )
   }
