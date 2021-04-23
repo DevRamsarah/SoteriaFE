@@ -6,8 +6,6 @@ import { ClientService } from 'src/services/client/client.service';
 import { Client } from 'src/model/client/client.model';
 import { Router } from '@angular/router';
 import * as mapboxgl from "mapbox-gl";
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MapService } from '../../services/map/map.service';
 
 @Component({
   selector: 'app-client',
@@ -34,7 +32,6 @@ export class ClientComponent implements AfterViewInit {
     [58.47918717931003, -19.6383333967767] // Northeast coordinates
   ];
   source: any;
-  New: FormGroup;
   markers: any;
   dropdown: any = []
   marker1:any

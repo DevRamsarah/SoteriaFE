@@ -5,12 +5,27 @@ import { MatPaginator } from '@angular/material/paginator';
 import { PostSiteService } from 'src/services/post-site/post-site.service';
 import { Dispatcher } from 'src/model/dispatcher/dispatcher.model';
 import { Router } from '@angular/router';
+import * as mapboxgl from "mapbox-gl";
+
 @Component({
   selector: 'app-post-site',
   templateUrl: './post-site.component.html',
   styleUrls: ['./post-site.component.css']
 })
 export class PostSiteComponent implements OnInit {
+  map: mapboxgl.Map;
+  style = 'mapbox://styles/mapbox/outdoors-v9';
+  lat = -20.23930295803079;
+  lng = 57.57140179981943;
+  message = 'Hello World';
+  bounds = [
+    [56.71206514379577, -20.702642368289588], // Southwest coordinates
+    [58.47918717931003, -19.6383333967767] // Northeast coordinates
+  ];
+  source: any;
+  markers: any;
+  dropdown: any = []
+  marker1:any
 
   edit = false;
   editE = null;
@@ -44,9 +59,41 @@ export class PostSiteComponent implements OnInit {
 
 
   }
+  initializeMap() {
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: this.style,
+      minZoom: 2,
+      zoom: 9,
+      center: [this.lng, this.lat],
+      maxBounds: this.bounds
+
+
+    })
+    //add navigation control to map 
+    this.map.addControl(new mapboxgl.NavigationControl());
+
+   
+    this.map.on('load', (event) => {
+      this.data2.forEach(element => {
+      console.log(element);
+      this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
+      this.marker1.setLngLat([element.Longitude, element.Latitude])
+      .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
+    .setHTML('<h3>Name: ' + element.ClientName+" ("+ element.PsLocation+ ")" +" "+ element.ClientAddress + '</h3><p> Addrress: ' + element.address + '</p>'))
+        .addTo(this.map);
+
+    })
+  });
+
+  }
 
   ngAfterViewInit() {
     this.dataSource2.paginator = this.paginator;
+    setTimeout(() => {
+      this.initializeMap()
+
+    }, 4000);
   }
   change(x) {
     this.edit = (this.edit == false ? true : false);
