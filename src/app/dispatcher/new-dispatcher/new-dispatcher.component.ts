@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
+import { ClientService } from 'src/services/client/client.service';
+import { PostSiteService } from 'src/services/post-site/post-site.service';
+import { AngularFirestore } from '@angular/fire/firestore';
+import { GuardService } from 'src/services/guard/guard.service';
 
 @Component({
   selector: 'app-new-dispatcher',
@@ -10,57 +14,141 @@ import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
 })
 export class NewDispatcherComponent implements OnInit {
   New: FormGroup;
-  client = [{
-    ID: '1',
-    Name: 'a',
+
+  prioL = [{
+    Name: 'High',
   }, {
-    ID: '3',
-    Name: 'GasdTX',
+    Name: 'Medium',
   }, {
-    ID: '6',
-    Name: 'rerg',
+    Name: 'Low',
   }];
-  PostSiteL = [{
-    ID: '3',
-    Name: 'a',
-  }, {
-    ID: '33',
-    Name: 'GasdTX',
-  }, {
-    ID: '63',
-    Name: 'rerg',
-  }];
-  GuardL = [{
-    ID: '17',
-    Name: 'a',
-  }, {
-    ID: '37',
-    Name: 'GasdTX',
-  }, {
-    ID: '67',
-    Name: 'rerg',
-  }];
-  constructor(public firebaseCrud: DispatcherService, public router: Router) { }
+  ClientE= ""
+  PostSiteE=""
+  guardE=""
+  status = null
+  loading = false;
+  loadingEdit = true;
+edit=false
+  clientD = [];
+  guardD=[]
+  guardDrop;
+  ClientDrop;
+  PostSiteDrop;
+  PostSiteD = []
+
+  invoiceObject= {
+    ClientID: "",
+    PostSite: "",
+    Guard: "",
+    Priority: "",
+    Incident: "",
+    IncidentDate: null,
+    IncidentDetail: "",
+    ActionTaken: "",
+    InternalNotes: "",
+    status:"inactive"
+  }
+  constructor(public firebaseCrud: DispatcherService,
+    public fire: AngularFirestore,public cli: ClientService
+    ,public guardCRUD: GuardService,public router: Router
+    ,public psCrud: PostSiteService,) { }
 
   ngOnInit(): void {
-    this.New = new FormGroup({
-      ClientID: new FormControl(null, [Validators.required]),
-      PostSite: new FormControl(null, [Validators.required]),
-      Guard: new FormControl(null, [Validators.required]),
-      Priority: new FormControl(null, [Validators.required]),
-      Caller: new FormControl(null, [Validators.required]),
-      CallerName: new FormControl(null, [Validators.required]),
-      Incident: new FormControl(null, [Validators.required]),
-      IncidentDate: new FormControl(null, [Validators.required]),
-      IncidentDetail: new FormControl(null, [Validators.required]),
-      ActionTaken: new FormControl(null, [Validators.required]),
-      InternalNotes: new FormControl(null, [Validators.required]),
+    this.loadingEdit = true
 
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      this.edit=true
+      this.status = "Edit Dispatch"
+      this.firebaseCrud.getOneDispatch(new URLSearchParams(window.location.search).get("edit")).subscribe((dispatch: any) => {
+        this.invoiceObject= {
+          ClientID: dispatch.ClientID,
+          PostSite: dispatch.PostSite,
+          Guard: dispatch.Guard,
+          Priority: dispatch.Priority,
+          Incident: dispatch.Incident,
+          IncidentDate: dispatch.IncidentDate,
+          IncidentDetail: dispatch.IncidentDetail,
+          ActionTaken: dispatch.ActionTaken,
+          InternalNotes: dispatch.InternalNotes,
+          status:"inactive",
+ 
+        }
+        console.log(dispatch);
+        
+        this.ClientE=dispatch.ClientID
+        this.PostSiteE=dispatch.PostSite
+        this.guardE=dispatch.Guard
+      })
+
+    } else {
+      this.status = "New Dispatch"
+      this.loadingEdit = false
+
+    }
+    
+    setTimeout(() => {
+      this.loadingEdit = false
+
+    }, 3500);
+    this.cli.getClient().subscribe((clients: any) => {
+      clients.forEach(client => {
+        let clientData: any = {};
+        clientData.id = client.ClientID;
+        clientData.Name = client.ClientName;
+        this.clientD.push(clientData);
+
+
+
+      });
+      console.log(this.clientD);
+
+    })
+
+    this.guardCRUD.getGuard().subscribe((Guards: any) => {
+      Guards.forEach(Guard => {
+        let GuardData: any = {};
+        GuardData.id = Guard.ClientID;
+        GuardData.Name = Guard.fname +" "+ Guard.lname;
+        this.guardD.push(GuardData);
+
+
+
+      });
     });
 
   }
+
+  getClientDrop($event) {
+
+console.log(this.ClientDrop);
+
+    this.PostSiteD = []
+
+    this.fire.collection('postSite', ref => ref.where("ClientName", "==", this.ClientDrop)).valueChanges({ idField: 'PostSiteID' })
+      .subscribe((PostSite: any) => {
+        console.log(PostSite);
+
+        PostSite.forEach(ps => {
+          let PostSiteData: any = {};
+          PostSiteData.id = ps.PostSiteID;
+          PostSiteData.Name = ps.PsLocation;
+          this.PostSiteD.push(PostSiteData);
+
+
+
+        });
+        // console.log(this.clientD);
+
+      })
+
+
+
+  }
   submit() {
-    console.log(this.New.value)
-    this.firebaseCrud.createNewDispatchTicket(this.New.value)
+    this.invoiceObject.ClientID= this.ClientDrop
+    this.invoiceObject.Guard= this.guardDrop
+    this.invoiceObject.PostSite= this.PostSiteDrop
+    console.log(this.invoiceObject)
+    this.firebaseCrud.createNewDispatchTicket(this.invoiceObject)
   }
 }

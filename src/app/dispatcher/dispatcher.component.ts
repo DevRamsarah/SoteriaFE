@@ -18,7 +18,7 @@ export class DispatcherComponent implements OnInit {
   active = false;
   data: any;
   data2: any;
-  displayedColumns2: string[] = ['DispatcherID', 'Date', 'ClientID', 'PostSite', 'CallerType', 'IncidentType', 'Status', 'action'];
+  displayedColumns2: string[] = ['DispatcherID', 'Date', 'ClientID', 'PostSite', 'IncidentType', 'Status', 'action'];
 
 
   dataSource2 = new MatTableDataSource<Dispatcher>();
@@ -68,7 +68,16 @@ export class DispatcherComponent implements OnInit {
   new() {
     this.router.navigate(["/Dispatcher/New-dispatcher"]);
   }
-
+  editData(id) {
+    location.href = "Dispatcher/New-dispatcher/?edit=" + id;
+  }
+  deleteData(id) {
+    this.firebaseCrud.deleteDispatch(id).then(
+      () => {
+        alert("Client Dispatch")// add sweet alert
+      }
+    )
+  }
 
 }
 

@@ -6,20 +6,20 @@
     <div class="row">
         <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4 text-center">
         <button mat-raised-button class="btn-primary "
-         title="Add New Client"><i class="fas fa-download fa-sm text-white-50"[routerLink]="['/Clients/New-client']"></i>&nbsp;Add New Client</button>
+         title="Add New Client"[routerLink]="['/Clients/New-client']"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Add New Client</button>
         </div>        
         <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4 text-center">
 
          <button mat-raised-button class="btn-primary"
-         title="Add New Client"><i class="fas fa-download fa-sm text-white-50"[routerLink]="['PostSite/New-PostSite']"></i>&nbsp;Add New Post Site</button>
+         title="Add New Client"[routerLink]="['/PostSite/New-PostSite']"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Add New Post Site</button>
         </div>        
         <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4 text-center">
          <button mat-raised-button class="btn-primary"
-         title="Add New Client"><i class="fas fa-download fa-sm text-white-50"[routerLink]="['Guards/New-guard']"></i>&nbsp;Add New Guard</button>
+         title="Add New Client"[routerLink]="['/Guards/New-guard']"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Add New Guard</button>
         </div>        
         <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4 text-center">
          <button mat-raised-button class="btn-primary"
-         title="Add New Client"><i class="fas fa-download fa-sm text-white-50"[routerLink]="['Invoicer/New-invoice']"></i>&nbsp;Add New Invoice</button>
+         title="Add New Client"[routerLink]="['/Invoicer/New-invoice']"><i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Add New Invoice</button>
         </div>
 
 
@@ -60,11 +60,28 @@
             <app-card title="No Show" icon="calendar" number="0" subtitle="Shift" sub="(Last 7 days)"></app-card>
         </div>
         <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4">
-            <app-card title="Late Show" icon="calendar" number="0" subtitle="Shift" sub="(Last 7 days)"></app-card>
+            <app-card title="Emergency Incident" icon="exclamation-triangle" number="0" ></app-card>
         </div>
 
         <a class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4" [routerLink]="['/Dispatcher']">
             <app-card title="Dispatch" icon="exclamation" number={{CountDispatch}}></app-card>
         </a>
+
+    </div>
+    <div class="row">
+        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4 text-center">
+        </div>        
+        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4 text-center">
+        </div>        
+        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4 text-center">
+        </div>        
+        <div class="col-xl-3 col-lg-6 col-md-12 col-sm-12 mb-4 text-center">
+         <button mat-raised-button class="btn-primary"
+         title="Add New Dispatch"[routerLink]="['/Dispatcher/New-dispatcher']">
+         <i class="fas fa-download fa-sm text-white-50"></i>&nbsp;Add New Dispatch</button>
+        </div>
+
+
+
 
     </div>
