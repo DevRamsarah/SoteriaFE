@@ -34,7 +34,8 @@ cpnum=false;
     Latitude: '',
     Longitude: '',
     PsLocation: null,
-    Zone: null
+    Zone: null,
+    recordStatus: "active"
   }
   New: FormGroup;
   GuardL = [{
@@ -84,7 +85,8 @@ cpnum=false;
           Latitude: client.Latitude,
           Longitude: client.Longitude,
           PsLocation: client.PsLocation,
-          Zone: client.Zone
+          Zone: client.Zone,
+          recordStatus: "active"
 
 
         }

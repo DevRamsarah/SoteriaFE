@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./invoice.component.css']
 })
 export class InvoiceComponent implements OnInit {
+  recStatus=true
 
   edit = false;
   editE = null;
@@ -33,9 +34,8 @@ export class InvoiceComponent implements OnInit {
 
     this.firebaseCrud.getInvoice().subscribe((Dispatches: any) => {
       console.log(Dispatches);
-      // this.data = Dispatch.filter((client) => client.position === 'Employee');
-      this.data2 = Dispatches;
-
+      this.data = Dispatches.filter((client) => client.recordStatus === 'archieve');
+      this.data2 = Dispatches.filter((client) => client.recordStatus === 'active');
       this.loading = false;
 
       this.dataSource2 = new MatTableDataSource<Client>(this.data2);
@@ -54,6 +54,8 @@ export class InvoiceComponent implements OnInit {
     this.editE = (this.edit == true ? x : null);
   }
   active2(x) {
+    this.recStatus?this.recStatus=false:this.recStatus=true;
+
     this.dataSource2.data = x;
   }
   applyFilter(event: Event) {
@@ -82,7 +84,23 @@ export class InvoiceComponent implements OnInit {
       }
     )
   }
+  archieve(id) {
 
+    this.firebaseCrud.updateStatus(id,"archieve").then(
+      () => {
+        alert("Guard archieve")// add sweet alert
+      }
+    )
+  }
+  unarchieve(id) {
+
+    this.firebaseCrud.updateStatus(id,"active").then(
+      () => {
+        alert("Guard active")// add sweet alert
+      
+      }
+    )
+  }
 }
 
 

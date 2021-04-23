@@ -46,7 +46,8 @@ edit=false
     IncidentDetail: "",
     ActionTaken: "",
     InternalNotes: "",
-    status:"inactive"
+    status:"inactive",
+    recordStatus: "active"
   }
   constructor(public firebaseCrud: DispatcherService,
     public fire: AngularFirestore,public cli: ClientService
@@ -71,6 +72,7 @@ edit=false
           ActionTaken: dispatch.ActionTaken,
           InternalNotes: dispatch.InternalNotes,
           status:"inactive",
+          recordStatus: "active"
  
         }
         console.log(dispatch);

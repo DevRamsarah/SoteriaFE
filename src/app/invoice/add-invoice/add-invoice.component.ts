@@ -32,6 +32,7 @@ export class AddInvoiceComponent implements OnInit {
     PostSiteid: "",
     ClientName: "",
     PostSiteName: "",
+    recordStatus: "active"
 
 
   }

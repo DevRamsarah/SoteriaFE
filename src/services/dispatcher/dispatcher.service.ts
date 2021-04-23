@@ -22,7 +22,7 @@ export class DispatcherService {
     return this.firebaseCrud.collection('dispatcher').doc(id).set(data);
   }
   updateStatus(id, data) {
-    return this.firebaseCrud.collection('clients').doc(id).update({"recordStatus": data});
+    return this.firebaseCrud.collection('dispatcher').doc(id).update({"recordStatus": data});
   }
   deleteDispatch(id) {
     return this.firebaseCrud.collection('dispatcher').doc(id).delete();

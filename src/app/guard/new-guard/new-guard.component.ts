@@ -49,7 +49,8 @@ cemail=false;
     PsLocation: '',
     nid:null,
     gender: null,
-    Zone: null
+    Zone: null,
+    recordStatus: "active"
 
   }
 
@@ -87,7 +88,8 @@ cemail=false;
           Latitude: client.Latitude,
           Longitude: client.Longitude,
           PsLocation: client.PsLocation,
-          Zone: client.Zone
+          Zone: client.Zone,
+          recordStatus: "active"
 
 
         }

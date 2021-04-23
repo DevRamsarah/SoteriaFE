@@ -31,7 +31,8 @@ export class NewPostSiteComponent implements OnInit {
     Latitude: '',
     Longitude: '',
     PsLocation: '',
-    Zone: null
+    Zone: null,
+    recordStatus: "active"
 
  
 
@@ -80,7 +81,8 @@ export class NewPostSiteComponent implements OnInit {
           Latitude: client.Latitude,
           Longitude: client.Longitude,
           PsLocation: client.PsLocation,
-          Zone: client.Zone
+          Zone: client.Zone,
+          recordStatus: "active"
 
 
         }
