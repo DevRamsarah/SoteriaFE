@@ -4,8 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { GuardService } from 'src/services/guard/guard.service';
 import * as mapboxgl from "mapbox-gl";
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { MapService } from '../../services/map/map.service';
+
 
 
 export interface Client {
@@ -32,7 +31,6 @@ export class GuardComponent implements AfterViewInit, OnInit {
     [58.47918717931003, -19.6383333967767] // Northeast coordinates
   ];
   source: any;
-  New: FormGroup;
   markers: any;
   dropdown: any = []
   marker1:any
