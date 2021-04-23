@@ -4,6 +4,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { GuardService } from 'src/services/guard/guard.service';
 import * as mapboxgl from "mapbox-gl";
+import { Subject } from 'rxjs';
+import { environment } from 'src/environments/environment';
 
 
 
@@ -21,6 +23,8 @@ export interface Client {
   styleUrls: ['./guard.component.css']
 })
 export class GuardComponent implements AfterViewInit, OnInit {
+  recStatus=true
+
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/outdoors-v9';
   lat = -20.23930295803079;
@@ -34,6 +38,7 @@ export class GuardComponent implements AfterViewInit, OnInit {
   markers: any;
   dropdown: any = []
   marker1:any
+  refresh: Subject<any> = new Subject();
 
   loading = true;
   active = false;
@@ -43,14 +48,17 @@ export class GuardComponent implements AfterViewInit, OnInit {
   dataSource2 = new MatTableDataSource<Client>();
   selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
-  constructor(public firebaseCrud: GuardService) { }
+  constructor(public firebaseCrud: GuardService) { 
+    mapboxgl.accessToken = environment.mapbox.accessToken
+
+  }
   ngOnInit(): void {
 
 
     this.firebaseCrud.getGuard().subscribe((Clients: any) => {
       console.log(Clients);
-      // this.data = Clients.filter((client) => client.position === 'Employee');
-      this.data2 = Clients;
+      this.data = Clients.filter((client) => client.recordStatus === 'archieve');
+      this.data2 = Clients.filter((client) => client.recordStatus === 'active');
 
       this.loading = false;
 
@@ -98,6 +106,8 @@ export class GuardComponent implements AfterViewInit, OnInit {
     }, 4000);
   }
   active2(x) {
+    this.recStatus?this.recStatus=false:this.recStatus=true;
+
     this.dataSource2.data = x;
   }
   applyFilter(event: Event) {
@@ -125,6 +135,23 @@ export class GuardComponent implements AfterViewInit, OnInit {
     this.firebaseCrud.deleteGuard(id).then(
       () => {
         alert("Guard removed")// add sweet alert
+      }
+    )
+  }
+  archieve(id) {
+
+    this.firebaseCrud.updateStatus(id,"archieve").then(
+      () => {
+        alert("Guard archieve")// add sweet alert
+      }
+    )
+  }
+  unarchieve(id) {
+
+    this.firebaseCrud.updateStatus(id,"active").then(
+      () => {
+        alert("Guard active")// add sweet alert
+      
       }
     )
   }

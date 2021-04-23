@@ -76,11 +76,14 @@
                       <mat-icon>more_vert</mat-icon>
                     </button>
                     <mat-menu #menu="matMenu">
-                      <button mat-menu-item (click)="editData(element.GuardID)"
+                      <button mat-menu-item *ngIf="recStatus"(click)="editData(element.GuardID)"
                     >Edit</button>
-                  <button mat-menu-item (click)="deleteData(element.GuardID)"
+                  <button mat-menu-item *ngIf="recStatus" (click)="archieve(element.GuardID)"
+                  >Archive</button>
+                  <button mat-menu-item *ngIf="!recStatus"(click)="unarchieve(element.GuardID)"
+                  >Unarchive</button>
+                  <button mat-menu-item *ngIf="!recStatus" (click)="deleteData(element.GuardID)"
                   >Delete</button>
-
                   </mat-menu>
                 </td>
             </ng-container>
