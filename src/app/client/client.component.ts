@@ -8,9 +8,7 @@ import { Router } from '@angular/router';
 import * as mapboxgl from "mapbox-gl";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MapService } from '../../services/map/map.service';
-import { GeoJson, FeatureCollection } from '../../model/map/map'
-import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
-import * as turf from '@turf/turf';
+
 @Component({
   selector: 'app-client',
   templateUrl: './client.component.html',
@@ -45,7 +43,7 @@ export class ClientComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: ClientService, public router: Router,private mapService: MapService) { }
+  constructor(public firebaseCrud: ClientService, public router: Router) { }
   ngOnInit(): void {
     
 
@@ -86,7 +84,7 @@ export class ClientComponent implements AfterViewInit {
       this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
       this.marker1.setLngLat([element.Longitude, element.Latitude])
       .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
-    .setHTML('<h3>' + element.ClientName + '</h3><p>' + element.ClientAddress + '</p>'))
+    .setHTML('<h3> Name: ' + element.ClientName + '</h3><p> Address: ' + element.ClientAddress + '</p>'))
         .addTo(this.map);
 
     })
