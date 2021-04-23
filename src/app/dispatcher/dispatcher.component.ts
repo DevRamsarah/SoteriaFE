@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
 import { Dispatcher } from 'src/model/dispatcher/dispatcher.model';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-dispatcher',
   templateUrl: './dispatcher.component.html',
@@ -75,11 +76,29 @@ export class DispatcherComponent implements OnInit {
     location.href = "Dispatcher/New-dispatcher/?edit=" + id;
   }
   deleteData(id) {
-    this.firebaseCrud.deleteDispatch(id).then(
-      () => {
-        alert("Client Dispatch")// add sweet alert
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.firebaseCrud.deleteDispatch(id).then(
+          () => {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }
+        )
+        
       }
-    )
+    })
+
   }
   archieve(id) {
 

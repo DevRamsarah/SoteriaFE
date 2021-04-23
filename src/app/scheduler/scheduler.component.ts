@@ -6,6 +6,7 @@ import { CalendarEvent, CalendarEventAction, CalendarEventTimesChangedEvent, Cal
 import { SchedulerService } from 'src/services/scheduler/scheduler.service';
 import { element } from 'protractor';
 import { GuardService } from 'src/services/guard/guard.service';
+import Swal from 'sweetalert2';
 
 const colors: any = {
   red: {
@@ -158,7 +159,25 @@ export class SchedulerComponent implements OnInit {
   }
 
   deleteEvent(eventToDelete: CalendarEvent) {
-    this.events = this.events.filter((event) => event !== eventToDelete);
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.events = this.events.filter((event) => event !== eventToDelete);
+
+        Swal.fire(
+          'Deleted!',
+          'Your file has been deleted.',
+          'success'
+        )
+      }
+    })
   }
 
   setView(view: CalendarView) {
@@ -204,5 +223,23 @@ export class SchedulerComponent implements OnInit {
 
     })
   }
+save(){
+  Swal.fire({
+    title: 'Do you want to save the changes?',
+    showDenyButton: true,
+    showCancelButton: false,
+    confirmButtonText: `Save`,
+    denyButtonText: `Don't save`,
+  }).then((result) => {
+    if (result.isConfirmed) {
+      // this.firebaseCrud.createNewDispatchTicket(this.invoiceObject)
+            Swal.fire('Guard edited!', '', 'success')
+            // this.router.navigate(["Clients"]);
 
+    } else if (result.isDenied) {
+      Swal.fire('Changes are not saved', '', 'info')
+    }
+  })
+
+}
 }

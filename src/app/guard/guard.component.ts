@@ -6,6 +6,7 @@ import { GuardService } from 'src/services/guard/guard.service';
 import * as mapboxgl from "mapbox-gl";
 import { Subject } from 'rxjs';
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 
 
@@ -132,11 +133,28 @@ export class GuardComponent implements AfterViewInit, OnInit {
     location.href = "Guards/New-guard/?edit=" + id;
   }
   deleteData(id) {
-    this.firebaseCrud.deleteGuard(id).then(
-      () => {
-        alert("Guard removed")// add sweet alert
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.firebaseCrud.deleteGuard(id).then(
+          () => {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )          }
+        )
+        
       }
-    )
+    })
+    
   }
   archieve(id) {
 

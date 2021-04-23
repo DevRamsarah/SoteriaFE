@@ -7,6 +7,7 @@ import { Client } from 'src/model/client/client.model';
 import { Router } from '@angular/router';
 import * as mapboxgl from "mapbox-gl";
 import { environment } from '../../environments/environment'
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-client',
@@ -126,11 +127,29 @@ export class ClientComponent implements AfterViewInit {
     location.href = "Clients/New-client/?edit=" + id;
   }
   deleteData(id) {
-    this.firebaseCrud.deleteClient(id).then(
-      () => {
-        alert("Client removed")// add sweet alert
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.firebaseCrud.deleteClient(id).then(
+          () => {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )
+          }
+        )
+ 
       }
-    )
+    })
+
   }
   archieve(id) {
 

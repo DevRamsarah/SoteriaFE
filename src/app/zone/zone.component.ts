@@ -5,6 +5,7 @@ import { MapService } from '../../services/map/map.service';
 import { GeoJson, FeatureCollection } from '../../model/map/map'
 import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
 import * as turf from '@turf/turf';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-zone',
   templateUrl: './zone.component.html',
@@ -151,13 +152,27 @@ export class ZoneComponent implements OnInit {
   }
 
   submit() {
-
-    this.mapService.createZone(sessionStorage.getItem("Zone"), this.New.value.ZoneName).then(
-      () => {
-        alert("Zone Added")// add sweet alert
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      showDenyButton: true,
+      showCancelButton: true,
+      confirmButtonText: `Save`,
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        this.mapService.createZone(sessionStorage.getItem("Zone"), this.New.value.ZoneName).then(
+          () => {
+            Swal.fire('Zone Saved!', '', 'success')
+          }
+        )
+        sessionStorage.removeItem('Zone');
+        
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
       }
-    )
-    sessionStorage.removeItem('Zone');
+    })
+   
 
   }
   displayZone(name, saved_markers) {

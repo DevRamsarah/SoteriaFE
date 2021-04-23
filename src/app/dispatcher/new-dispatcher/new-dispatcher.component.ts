@@ -6,6 +6,7 @@ import { ClientService } from 'src/services/client/client.service';
 import { PostSiteService } from 'src/services/post-site/post-site.service';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { GuardService } from 'src/services/guard/guard.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-new-dispatcher',
@@ -151,6 +152,37 @@ console.log(this.ClientDrop);
     this.invoiceObject.Guard= this.guardDrop
     this.invoiceObject.PostSite= this.PostSiteDrop
     console.log(this.invoiceObject)
-    this.firebaseCrud.createNewDispatchTicket(this.invoiceObject)
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: `Save`,
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      if (result.isConfirmed) {
+
+        if (new URLSearchParams(window.location.search).has("edit")) {
+          this.firebaseCrud.updateDispatch(new URLSearchParams(window.location.search).get("edit"), this.invoiceObject).then(
+            () => {
+              Swal.fire('Dispatch data edited!', '', 'success')
+              this.router.navigate(["Dispatcher"]);
+
+            }
+          )
+        } else {
+    
+          this.firebaseCrud.createNewDispatchTicket(this.invoiceObject).then(
+            () => {
+              Swal.fire('Dispatch data saved!', '', 'success')
+              this.router.navigate(["Dispatcher"]);
+
+            }
+          )
+        }
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
+  
   }
 }

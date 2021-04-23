@@ -5,6 +5,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { InvoiceService } from 'src/services/invoice/invoice.service';
 import { Client } from 'src/model/client/client.model';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-invoice',
@@ -78,6 +79,27 @@ export class InvoiceComponent implements OnInit {
     location.href = "Invoicer/New-invoice/?edit=" + id;
   }
   deleteData(id) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.firebaseCrud.deleteInvoice(id).then(
+          () => {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )          }
+        )
+        
+      }
+    })
     this.firebaseCrud.deleteInvoice(id).then(
       () => {
         alert("Invoice removed")// add sweet alert

@@ -6,7 +6,7 @@ import * as mapboxgl from "mapbox-gl";
 import { MapService } from '../../../../services/map/map.service';
 import { GeoJson } from '../../../../model/map/map'
 import * as turf from '@turf/turf';
-
+import Swal from 'sweetalert2'
 @Component({
   selector: 'app-new-client',
   templateUrl: './new-client.component.html',
@@ -188,23 +188,38 @@ cpnum=false;
   }
 
   submit() {
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: `Save`,
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        if (new URLSearchParams(window.location.search).has("edit")) {
+          this.firebaseCrud.updateClient(new URLSearchParams(window.location.search).get("edit"), this.clientObject).then(
+            () => {
+              Swal.fire('Client data edited!', '', 'success')
+              this.router.navigate(["Clients"]);
 
-    this.loading = true;
-    if (new URLSearchParams(window.location.search).has("edit")) {
-      this.firebaseCrud.updateClient(new URLSearchParams(window.location.search).get("edit"), this.clientObject).then(
-        () => {
-          alert("Client Edit")// add sweet alert
-        }
-      )
-    } else {
+            }
+          )
+        } else {
+    
+          this.firebaseCrud.createNewClient(this.clientObject).then(
+            () => {
+              Swal.fire('Client data saved!', '', 'success')
+              this.router.navigate(["Clients"]);
 
-      this.firebaseCrud.createNewClient(this.clientObject).then(
-        () => {
-          alert("Client Added")// add sweet alert
+            }
+          )
         }
-      )
-    }
-    this.router.navigate(["Clients"]);
+      } else if (result.isDenied) {
+        Swal.fire('Changes are not saved', '', 'info')
+      }
+    })
+
 
     // console.log(this.clientObject);
 

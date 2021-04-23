@@ -7,6 +7,7 @@ import { Dispatcher } from 'src/model/dispatcher/dispatcher.model';
 import { Router } from '@angular/router';
 import * as mapboxgl from "mapbox-gl";
 import { environment } from 'src/environments/environment';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-post-site',
@@ -129,11 +130,28 @@ export class PostSiteComponent implements OnInit {
     location.href = "PostSite/New-PostSite/?edit=" + id;
   }
   deleteData(id) {
-    this.firebaseCrud.deletePostSite(id).then(
-      () => {
-        alert("PostSite removed")// add sweet alert
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.firebaseCrud.deletePostSite(id).then(
+          () => {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            )          }
+        )
+        
       }
-    )
+    })
+    
   }
   archieve(id) {
 

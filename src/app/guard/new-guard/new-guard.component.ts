@@ -7,6 +7,7 @@ import * as mapboxgl from "mapbox-gl";
 import { MapService } from '../../../services/map/map.service';
 import { GeoJson } from '../../../model/map/map'
 import * as turf from '@turf/turf';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-new-guard',
   templateUrl: './new-guard.component.html',
@@ -191,23 +192,35 @@ cemail=false;
       
     }
     submit() {
+      Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: `Save`,
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          if (new URLSearchParams(window.location.search).has("edit")) {
+            this.firebaseCrud.updateGuard(new URLSearchParams(window.location.search).get("edit"), this.guardObject).then(
+              () => {
+                Swal.fire('Guard data edited!', '', 'success')
+                this.router.navigate(["Guards"]);              }
+            )
+          } else {
       
-      this.loading = true;
-      if (new URLSearchParams(window.location.search).has("edit")) {
-        this.firebaseCrud.updateGuard(new URLSearchParams(window.location.search).get("edit"), this.guardObject).then(
-          () => {
-            alert("Guard Edit")// add sweet alert
+            this.firebaseCrud.createNewGuard(this.guardObject).then(
+              () => {
+                Swal.fire('Guard data saved!', '', 'success')
+                this.router.navigate(["Guards"]);              }
+            )
           }
-        )
-      } else {
-  
-        this.firebaseCrud.createNewGuard(this.guardObject).then(
-          () => {
-            alert("Guard Added")// add sweet alert
-          }
-        )
-      }
-      this.router.navigate(["Guards"]);
+
+        } else if (result.isDenied) {
+          Swal.fire('Changes are not saved', '', 'info')
+        }
+      })
+     
   
       // console.log(this.guardObject);
       
