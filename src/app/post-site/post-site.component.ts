@@ -6,6 +6,7 @@ import { PostSiteService } from 'src/services/post-site/post-site.service';
 import { Dispatcher } from 'src/model/dispatcher/dispatcher.model';
 import { Router } from '@angular/router';
 import * as mapboxgl from "mapbox-gl";
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-post-site',
@@ -13,6 +14,8 @@ import * as mapboxgl from "mapbox-gl";
   styleUrls: ['./post-site.component.css']
 })
 export class PostSiteComponent implements OnInit {
+  recStatus=true
+
   map: mapboxgl.Map;
   style = 'mapbox://styles/mapbox/outdoors-v9';
   lat = -20.23930295803079;
@@ -41,14 +44,17 @@ export class PostSiteComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: PostSiteService, public router: Router) { }
+  constructor(public firebaseCrud: PostSiteService, public router: Router) {
+    mapboxgl.accessToken = environment.mapbox.accessToken
+
+   }
   ngOnInit(): void {
 
 
     this.firebaseCrud.getPostSite().subscribe((Dispatches: any) => {
       console.log(Dispatches);
-      // this.data = Dispatch.filter((client) => client.position === 'Employee');
-      this.data2 = Dispatches;
+      this.data = Dispatches.filter((client) => client.recordStatus === 'archieve');
+      this.data2 = Dispatches.filter((client) => client.recordStatus === 'active');
 
       this.loading = false;
 
@@ -100,6 +106,7 @@ export class PostSiteComponent implements OnInit {
     this.editE = (this.edit == true ? x : null);
   }
   active2(x) {
+    this.recStatus?this.recStatus=false:this.recStatus=true;
     this.dataSource2.data = x;
   }
   applyFilter(event: Event) {
@@ -128,7 +135,23 @@ export class PostSiteComponent implements OnInit {
       }
     )
   }
+  archieve(id) {
 
+    this.firebaseCrud.updateStatus(id,"archieve").then(
+      () => {
+        alert("Guard archieve")// add sweet alert
+      }
+    )
+  }
+  unarchieve(id) {
+
+    this.firebaseCrud.updateStatus(id,"active").then(
+      () => {
+        alert("Guard active")// add sweet alert
+      
+      }
+    )
+  }
 }
 
 
