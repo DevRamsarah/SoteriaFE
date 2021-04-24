@@ -22,6 +22,7 @@ import { NewGuardComponent } from './guard/new-guard/new-guard.component';
 import { NewDispatcherComponent } from './dispatcher/new-dispatcher/new-dispatcher.component';
 import { NewPostSiteComponent } from './post-site/new-post-site/new-post-site.component';
 import { ZoneComponent } from './zone/zone.component';
+import { ProfileComponent } from './profile/profile.component';
 import { AddZoneComponent } from './zone/add-zone/add-zone.component';
 import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
 
@@ -37,6 +38,11 @@ const routes: Routes = [
   },
   {
     path: 'Clients', component: ClientComponent,
+
+
+  },
+  {
+    path: 'Profile', component: ProfileComponent,
 
 
   },

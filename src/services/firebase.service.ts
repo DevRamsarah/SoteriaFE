@@ -15,20 +15,16 @@ export class FirebaseService {
 
     await this.firebaseAuth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        console.log(res.user.uid)
+        console.log(res.user)
 
         this.isLoggedIn = true
         localStorage.setItem('userid', res.user.uid)
-        localStorage.setItem('userName', res.user.displayName)
-        localStorage.setItem('userEmail', res.user.email)
 
       })
       .catch(error => {
         throw error.message
       })
-;(await this.firebaseAuth.currentUser).updateProfile({
-  displayName:localStorage.getItem('userNameR')
-})
+
   }
   async signup(email: string,password: string, name:string) {
     await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
@@ -36,8 +32,6 @@ export class FirebaseService {
 
         console.log(res)
         this.isLoggedIn = true
-        localStorage.setItem('user', JSON.stringify(res.user))
-        localStorage.setItem('userNameR', name)
       })
   }
 
@@ -64,6 +58,30 @@ reset(emailAddress){
   }
   getClient() {
     return this.firebaseCrud.collection('employees').valueChanges()
+  }
+  
+
+
+  createNewUser(records) {
+    return this.firebaseCrud.collection('users').add(records)
+  }
+
+  getOneUser(id) {
+    return this.firebaseCrud.collection('users').doc(id).valueChanges();
+
+  }
+  updateUser(id, data) {
+    return this.firebaseCrud.collection('users').doc(id).set(data);
+  }
+  updateStatus(id, data) {
+    return this.firebaseCrud.collection('users').doc(id).update({"recordStatus": data});
+  }
+  deleteUser(id) {
+    return this.firebaseCrud.collection('users').doc(id).delete();
+  }
+  getStats(dateFrom, dateTo) {
+
+    return this.firebaseCrud.collection('users').valueChanges({ idField: 'UserID' })
   }
 }
 

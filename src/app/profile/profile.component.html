@@ -3,4 +3,53 @@
     <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
     <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Profile</a>
 </div>
-<p>profile works!</p>
+<div class="container rounded bg-white mt-5">
+    <div class="row">
+        <div class="col-md-4 border-right">
+            <div id="map" >
+               
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex flex-row align-items-center back">
+                        <h3>Back to home</h3>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" 
+                        [(ngModel)]="this.currentUser.fname" placeholder="First Name" value="John"></div>
+                    <div class="col-md-6">
+                        <input type="text" [(ngModel)]="this.currentUser.lname" class="form-control"  placeholder="Last Name"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <input type="text" [(ngModel)]="this.currentUser.email" class="form-control" placeholder="Email" ></div>
+                    <div class="col-md-6">
+                        <input type="number"
+                        pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
+                        [(ngModel)]="this.currentUser.num"
+                         class="form-control" value="+19685969668" placeholder="Phone number"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" placeholder="address" 
+                        [(ngModel)]="this.currentUser.address"></div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" [(ngModel)]="this.currentUser.zone" placeholder="Zone"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <input type="date" class="form-control" placeholder="Date Of Birth" 
+                        [(ngModel)]="this.currentUser.dob"></div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+
+                <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+            </div>
+        </div>
+    </div>
+</div>
