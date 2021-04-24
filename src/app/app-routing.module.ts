@@ -131,7 +131,7 @@ const routes: Routes = [
     path: 'Invoicer/New-invoice', component: AddInvoiceComponent,
 
   },
-  { path: '**', redirectTo: 'Dashboard', pathMatch: 'full' },
+  
 
 ];
 

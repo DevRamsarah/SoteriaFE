@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
+import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { FirebaseService } from 'src/services/firebase.service';
@@ -103,7 +104,8 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
     NgbModule,
     DateInputsModule,
     DropDownsModule,
-    DialogsModule
+    DialogsModule,
+    AngularFireAuthModule
   ],
   providers: [FirebaseService],
   bootstrap: [AppComponent]

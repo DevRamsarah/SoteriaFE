@@ -8,6 +8,7 @@ import { GeoJson } from '../../../../model/map/map'
 import * as turf from '@turf/turf';
 import Swal from 'sweetalert2'
 import { FirebaseService } from 'src/services/firebase.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-new-client',
@@ -69,7 +70,7 @@ export class NewClientComponent implements OnInit {
   markers: any;
   dropdown: any = []
   marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
-  constructor(public userService: FirebaseService, public firebaseCrud: ClientService, public router: Router, private mapService: MapService) { }
+  constructor(public firebaseAuth: AngularFireAuth,public userService: FirebaseService, public firebaseCrud: ClientService, public router: Router, private mapService: MapService) { }
 
   ngOnInit(): void {
     this.loadingEdit = true
@@ -193,6 +194,10 @@ export class NewClientComponent implements OnInit {
   }
 
   submit() {
+    const actionCodeSettings = {
+      url:'http://localhost:4200/Dashboard',
+      handleCodeInApp:true
+  };
     Swal.fire({
       title: 'Do you want to save the changes?',
       showDenyButton: true,
@@ -228,6 +233,7 @@ export class NewClientComponent implements OnInit {
                 role:"Guard"
               }
               this.userService.createNewUser(this.currentUser).then(() => {
+                this.firebaseAuth.sendSignInLinkToEmail(this.currentUser.email,actionCodeSettings).catch((err)=>console.log(err));
                 Swal.fire('Client data saved!', '', 'success')
                 this.router.navigate(["Clients"]);
               })
@@ -240,12 +246,6 @@ export class NewClientComponent implements OnInit {
       }
     })
 
-
-    // console.log(this.clientObject);
-
   }
-  getURL() {
 
-    (new URLSearchParams(window.location.search).has("edit")) ? alert("The URL of this page is: " + new URLSearchParams(window.location.search).get("edit")) : alert("add");
-  }
 }
