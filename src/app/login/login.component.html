@@ -23,7 +23,7 @@
                     <i class="fas fa-user"></i>
                     <input type="text" #email placeholder="Email" />
                 </div>
-                <input type="button" value="Request Password" class="btnF solid" (click)="onSignin(email.value,password.value)" *ngIf="!loading"/>
+                <input type="button" value="Request Password" class="btnF solid" (click)="resetP(email.value)" *ngIf="!loading"/>
                 <a (click)="forgetP()" class="text-muted">Login</a>
                 <div class="spinner-border text-primary" role="status" *ngIf="loading">
                     <span class="visually-hidden"></span>
@@ -33,21 +33,22 @@
                 <h2 class="title">Sign up</h2>
                 <div class="input-field">
                     <i class="fas fa-user"></i>
-                    <input type="text" placeholder="Username" />
+                    <input type="text" #name placeholder="Name" />
                 </div>
                 <div class="input-field">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" placeholder="Email" />
+                    <input type="email" #emailr placeholder="Email" />
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Password" />
+                    <input type="password" #passwordr placeholder="Password" />
                 </div>
                 <div class="input-field">
                     <i class="fas fa-lock"></i>
-                    <input type="password" placeholder="Retype Password" />
+                    <input type="password" #Repasswordr placeholder="Retype Password" />
                 </div>
-                <input type="submit" class="btn" value="Sign up" />
+                <input type="submit" class="btn" value="Sign up"
+                (click)="onSignup(emailr.value,passwordr.value,Repasswordr.value,name.value)" />
                 
             </form>
         </div>

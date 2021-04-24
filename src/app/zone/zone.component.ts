@@ -31,7 +31,7 @@ export class ZoneComponent implements OnInit {
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
-    
+
     this.New = new FormGroup({
       ZoneName: new FormControl(null, [Validators.required])
     })
@@ -49,10 +49,10 @@ export class ZoneComponent implements OnInit {
         console.log("Error getting documents: ", error);
       });
 
-      setTimeout(() => {
-        this.loading = false
-        this.initializeMap()
-      }, 3000);
+    setTimeout(() => {
+      this.loading = false
+      this.initializeMap()
+    }, 3000);
 
 
   }
@@ -145,10 +145,8 @@ export class ZoneComponent implements OnInit {
       if (turf.booleanPointInPolygon(pt, poly)) {
         console.log(zoneS.region);
         this.Zone = zoneS.region
-        // console.log(turf.booleanPointInPolygon(pt, poly));
       }
     });
-
   }
 
   submit() {
@@ -167,12 +165,12 @@ export class ZoneComponent implements OnInit {
           }
         )
         sessionStorage.removeItem('Zone');
-        
+
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info')
       }
     })
-   
+
 
   }
   displayZone(name, saved_markers) {

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore'
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -25,19 +26,34 @@ export class FirebaseService {
       .catch(error => {
         throw error.message
       })
-
+;(await this.firebaseAuth.currentUser).updateProfile({
+  displayName:localStorage.getItem('userNameR')
+})
   }
-  async signup(email: string, name: string, age: number, address: string, tel: string, password: string) {
+  async signup(email: string,password: string, name:string) {
     await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(res => {
 
         console.log(res)
         this.isLoggedIn = true
         localStorage.setItem('user', JSON.stringify(res.user))
+        localStorage.setItem('userNameR', name)
       })
   }
 
-
+reset(emailAddress){
+  this.firebaseAuth.sendPasswordResetEmail(emailAddress).then(function() {
+    Swal.fire({
+      position: 'center',
+      icon: 'success',
+      title: 'Reset link send to your mail : '+ emailAddress,
+      showConfirmButton: false,
+      timer: 3500
+    })
+  }).catch(function(error) {
+    // An error happened.
+  });
+}
 
   logout() {
     this.firebaseAuth.signOut()

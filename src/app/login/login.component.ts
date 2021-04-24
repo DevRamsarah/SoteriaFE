@@ -1,6 +1,7 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/services/firebase.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -8,6 +9,7 @@ import { FirebaseService } from 'src/services/firebase.service';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent implements OnInit {
+  errMssg=""
   forget=false
   InOut = true;
   loading = false;
@@ -23,11 +25,34 @@ export class LoginComponent implements OnInit {
       // this.router.navigate(['/Dashboard'])
       window.location.href = "Dashboard"
     }).catch(err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: err
+      })
       console.log(err);
+      this.errMssg = err
       this.loading = false;
 
     })
     this.loading = true;
+  }
+  onSignup(email: string, password: string,rpassword: string, name:string) {
+    if(password === rpassword){
+    this.firebaseService.signup(email, password,name).then(() => {
+      Swal.fire({
+        position: 'center',
+        icon: 'success',
+        title: 'Registration successful',
+        showConfirmButton: false,
+        timer: 1500
+      })
+      window.location.reload()
+    })
+  }else{
+
+  }
   }
   clickEvent() {
     this.InOut = !this.InOut;
@@ -35,5 +60,8 @@ export class LoginComponent implements OnInit {
 
   forgetP(){
     this.forget? this.forget=false: this.forget=true
+  }
+  resetP(email){
+    this.firebaseService.reset(email)
   }
 }

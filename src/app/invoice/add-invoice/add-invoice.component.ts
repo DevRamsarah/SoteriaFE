@@ -9,6 +9,7 @@ import { FormControl, FormGroup } from '@angular/forms';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import * as turf from '@turf/turf';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-invoice',
@@ -41,13 +42,13 @@ export class AddInvoiceComponent implements OnInit {
     end: null
   }
   psCoordinate = {
-    Latitude:null,
-    Longitude:null,
-    Zone:null
+    Latitude: null,
+    Longitude: null,
+    Zone: null
   }
 
-  selectedGuard=[]
-  guardlist=[turf.point([28.973865, 41.011122],{id:'a'})]
+  selectedGuard = []
+  guardlist = [turf.point([28.973865, 41.011122], { id: 'a' })]
   clientD = [];
   PostSiteD = []
   postSite = [];
@@ -86,7 +87,7 @@ export class AddInvoiceComponent implements OnInit {
       // console.log(this.clientD);
 
     })
-   
+
   }
 
   download() {
@@ -101,15 +102,14 @@ export class AddInvoiceComponent implements OnInit {
       jsPDF: { orientation: 'portrait' }
     };
 
-    // New Promise-based usage:
+
     html2pdf().set(opt).from(element).save();
     setTimeout(() => {
       this.pdf = true
     }, 1000);
-    // Old monolithic-style usage:
+
     html2pdf(element, opt);
-    // console.log(this.fieldArray);
-    // console.log(this.newAttribute);
+
 
 
   }
@@ -160,67 +160,41 @@ export class AddInvoiceComponent implements OnInit {
 
   }
   getAddress($event) {
-
-
-
-
     this.fire.collection('postSite', ref => ref.where("PsLocation", "==", this.PostSiteDrop)).valueChanges()
       .subscribe((PostSite: any) => {
-
-      this.psCoordinate.Latitude=  PostSite[0].Latitude
-      this.psCoordinate.Longitude=  PostSite[0].Longitude
-      this.psCoordinate.Zone=  PostSite[0].Zone
-      
-
-
+        this.psCoordinate.Latitude = PostSite[0].Latitude
+        this.psCoordinate.Longitude = PostSite[0].Longitude
+        this.psCoordinate.Zone = PostSite[0].Zone
         this.invoice.Summary = PostSite[0].ClientAddress;
-
-
-        // console.log(this.clientD);
-
       })
-
-      this.gua.getGuard().subscribe((guards: any) => {
-        this.guardlist=[];
-        guards.forEach(guard => {
-
-     if (guard.Zone == this.psCoordinate.Zone){
-       this.guardlist.push(turf.point([parseFloat(guard.Longitude), parseFloat(guard.Latitude)],
-        {id:guard.GuardID,  
-          name:guard.fname+' '+guard.lname,
-        Zone:guard.Zone})
-       )
-      }
+    this.gua.getGuard().subscribe((guards: any) => {
+      this.guardlist = [];
+      guards.forEach(guard => {
+        if (guard.Zone == this.psCoordinate.Zone) {
+          this.guardlist.push(turf.point([parseFloat(guard.Longitude), parseFloat(guard.Latitude)],
+            {
+              id: guard.GuardID,
+              name: guard.fname + ' ' + guard.lname,
+              Zone: guard.Zone
+            })
+          )
+        }
       })
-        console.log( this.guardlist);
-        
-      })
-
+      console.log(this.guardlist);
+    })
   }
   generate() {
-        
     this.invoice.arrayDes = this.fieldArray
     this.invoice.Clientid = this.ClientDrop
     this.invoice.PostSiteid = this.PostSiteDrop
-
-    
-      var targetPoint = turf.point([parseFloat(this.psCoordinate.Longitude), parseFloat(this.psCoordinate.Latitude)]);
-      for (let index = 0; index < this.invoice.arrayDes[0].quatity; index++) {       
-        var points = turf.featureCollection(this.guardlist);
-        
-        var nearest = turf.nearestPoint(targetPoint, points);
-        this.selectedGuard.push(nearest.properties)
-        this.guardlist.splice(nearest.properties.featureIndex,1)
-
-
-      }
-   
-console.log(this.selectedGuard);
-
-
-
-    // console.log(this.invoice);
-
+    var targetPoint = turf.point([parseFloat(this.psCoordinate.Longitude), parseFloat(this.psCoordinate.Latitude)]);
+    for (let index = 0; index < this.invoice.arrayDes[0].quatity; index++) {
+      var points = turf.featureCollection(this.guardlist);
+      var nearest = turf.nearestPoint(targetPoint, points);
+      this.selectedGuard.push(nearest.properties)
+      this.guardlist.splice(nearest.properties.featureIndex, 1)
+    }
+    console.log(this.selectedGuard);
     this.SchedulerCRUD.createNewScheduler(
       {
         start: (this.fieldArray[0].start).toString(),
@@ -236,20 +210,24 @@ console.log(this.selectedGuard);
         },
         draggable: false,
       }
-
-
     )
-
     setTimeout(() => {
-
-      this.invoiceCRUD.createNewInvoice(this.invoice).then(
-        () => {
-          alert("Invoice Added")// add sweet alert
+      Swal.fire({
+        title: 'Do you want to save the changes?',
+        showDenyButton: true,
+        showCancelButton: false,
+        confirmButtonText: `Save`,
+        denyButtonText: `Don't save`,
+      }).then((result) => {
+        /* Read more about isConfirmed, isDenied below */
+        if (result.isConfirmed) {
+          this.invoiceCRUD.createNewInvoice(this.invoice).then(
+            () => {
+              Swal.fire('Client data edited!', '', 'success')
+              this.router.navigate(["Invoicer"]);
+            })
         }
-      )
-
-      window.location.href= "Invoicer"
+      })
     }, 6000);
   }
-
 }
