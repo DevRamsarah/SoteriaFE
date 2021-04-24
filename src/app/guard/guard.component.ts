@@ -50,7 +50,7 @@ export class GuardComponent implements AfterViewInit, OnInit {
   selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
   constructor(public firebaseCrud: GuardService) { 
-    mapboxgl.accessToken = environment.mapbox.accessToken
+    mapboxgl.accessToken ='pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
 
   }
   ngOnInit(): void {

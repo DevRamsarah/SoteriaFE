@@ -17,7 +17,7 @@ export class MapService {
   geocollection = this.GeoFirestore.collection('Zone');
 
   constructor(public firebaseCrud: AngularFirestore) {
-    mapboxgl.accessToken = environment.mapbox.accessToken
+    mapboxgl.accessToken ='pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
   }
 
 
