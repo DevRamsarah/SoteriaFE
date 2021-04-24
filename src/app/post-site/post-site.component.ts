@@ -46,7 +46,7 @@ export class PostSiteComponent implements OnInit {
 
 
   constructor(public firebaseCrud: PostSiteService, public router: Router) {
-    mapboxgl.accessToken = environment.mapbox.accessToken
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
 
    }
   ngOnInit(): void {
