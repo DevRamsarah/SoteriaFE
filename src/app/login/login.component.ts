@@ -48,10 +48,26 @@ export class LoginComponent implements OnInit {
         showConfirmButton: false,
         timer: 1500
       })
-      window.location.reload()
+     
+    }).catch(err => {
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: err
+      })
+      console.log(err);
+      this.errMssg = err
+      this.loading = false;
+
     })
   }else{
-
+    Swal.fire({
+      icon: 'error',
+      title: 'Oops...',
+      text: 'Something went wrong!',
+      footer: "Password do not match. Please try again"
+    })
   }
   }
   clickEvent() {

@@ -30,8 +30,15 @@ export class FirebaseService {
     await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(res => {
 
-        console.log(res)
+ 
+      this.createNewUser({
+        fname:name,
+        email:email,
+        id: res.user.uid
+      })
         this.isLoggedIn = true
+      }) .catch(error => {
+        throw error.message
       })
   }
 

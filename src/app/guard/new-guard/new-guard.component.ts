@@ -8,6 +8,8 @@ import { MapService } from '../../../services/map/map.service';
 import { GeoJson } from '../../../model/map/map'
 import * as turf from '@turf/turf';
 import Swal from 'sweetalert2';
+import { FirebaseService } from 'src/services/firebase.service';
+
 @Component({
   selector: 'app-new-guard',
   templateUrl: './new-guard.component.html',
@@ -26,17 +28,20 @@ cemail=false;
   color: ThemePalette = 'primary';
 
   datePickerId = new Date().toISOString().split("T")[0];
-  New: FormGroup;
-  GuardL = [{
-    ID: '17',
-    Name: 'a',
-  }, {
-    ID: '37',
-    Name: 'GasdTX',
-  }, {
-    ID: '67',
-    Name: 'rerg',
-  }];
+  currentUser={
+    id:"",
+    fname:"",
+    lname:"",
+    email:"",
+    num:"",
+    nic:"",
+    address:"",
+    zome:"",
+    latitude:"",
+    longitude:"",
+    role:""
+
+  }
   guardObject = {
     fname: null,
     Email: '',
@@ -70,7 +75,7 @@ cemail=false;
   dropdown: any = []
   marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
 
-  constructor(public firebaseCrud: GuardService, public router: Router, private mapService: MapService) { }
+  constructor(public userService: FirebaseService,public firebaseCrud: GuardService, public router: Router, private mapService: MapService) { }
 
   ngOnInit(): void {
     if (new URLSearchParams(window.location.search).has("edit")) {
@@ -208,11 +213,29 @@ cemail=false;
                 this.router.navigate(["Guards"]);              }
             )
           } else {
-      
+
             this.firebaseCrud.createNewGuard(this.guardObject).then(
-              () => {
-                Swal.fire('Guard data saved!', '', 'success')
-                this.router.navigate(["Guards"]);              }
+              (user) => {
+                this.currentUser = {
+                  id:user.id,
+                  fname: this.guardObject.fname,
+                  lname: this.guardObject.lname,
+                  email: this.guardObject.Email,
+                  num: this.guardObject.MobileNum,
+                  nic: this.guardObject.nid,
+                  address: this.guardObject.address,
+                  zome: this.guardObject.Zone,
+                  latitude: this.guardObject.Latitude,
+                  longitude: this.guardObject.Longitude,
+                  role:"Guard"
+                }
+                this.userService.createNewUser(this.currentUser).then(() => {
+                  Swal.fire('Guard data saved!', '', 'success')
+                  this.router.navigate(["Guards"]); 
+                })
+                
+                
+              }
             )
           }
 

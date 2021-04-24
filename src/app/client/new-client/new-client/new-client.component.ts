@@ -7,6 +7,8 @@ import { MapService } from '../../../../services/map/map.service';
 import { GeoJson } from '../../../../model/map/map'
 import * as turf from '@turf/turf';
 import Swal from 'sweetalert2'
+import { FirebaseService } from 'src/services/firebase.service';
+
 @Component({
   selector: 'app-new-client',
   templateUrl: './new-client.component.html',
@@ -19,8 +21,8 @@ export class NewClientComponent implements OnInit {
   loadingEdit = true;
   mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
   phoneno = /^\d{10}$/;
-cemail=false;
-cpnum=false;
+  cemail = false;
+  cpnum = false;
 
   clientObject = {
     Category: null,
@@ -37,17 +39,20 @@ cpnum=false;
     Zone: null,
     recordStatus: "active"
   }
-  New: FormGroup;
-  GuardL = [{
-    ID: '17',
-    Name: 'a',
-  }, {
-    ID: '37',
-    Name: 'GasdTX',
-  }, {
-    ID: '67',
-    Name: 'rerg',
-  }];
+  currentUser = {
+    id:"",
+    fname: "",
+    lname: "",
+    email: "",
+    num: "",
+    nic: "",
+    address: "",
+    zome: "",
+    latitude: "",
+    longitude: "",
+    role:""
+
+  }
 
 
   map: mapboxgl.Map;
@@ -64,7 +69,7 @@ cpnum=false;
   markers: any;
   dropdown: any = []
   marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
-  constructor(public firebaseCrud: ClientService, public router: Router, private mapService: MapService) { }
+  constructor(public userService: FirebaseService, public firebaseCrud: ClientService, public router: Router, private mapService: MapService) { }
 
   ngOnInit(): void {
     this.loadingEdit = true
@@ -97,7 +102,7 @@ cpnum=false;
       this.loadingEdit = false
 
     }
-    
+
     setTimeout(() => {
       this.loadingEdit = false
 
@@ -169,9 +174,9 @@ cpnum=false;
 
     })
   }
-  ValidateEmail(){
-    this.clientObject.ClientEmail.match(this.mailformat)? this.cemail = false: this.cemail=true;
-    
+  ValidateEmail() {
+    this.clientObject.ClientEmail.match(this.mailformat) ? this.cemail = false : this.cemail = true;
+
   }
 
   checkZone(lng, lat) {
@@ -206,14 +211,29 @@ cpnum=false;
             }
           )
         } else {
-    
+         
           this.firebaseCrud.createNewClient(this.clientObject).then(
-            () => {
-              Swal.fire('Client data saved!', '', 'success')
-              this.router.navigate(["Clients"]);
-
+            (user) => {
+              this.currentUser = {
+                id:user.id,
+                fname: this.clientObject.ClientName,
+                lname: "",
+                email: this.clientObject.ClientEmail,
+                num: this.clientObject.MobileNum,
+                nic: null,
+                address: this.clientObject.ClientAddress,
+                zome: this.clientObject.Zone,
+                latitude: this.clientObject.Latitude,
+                longitude: this.clientObject.Longitude,
+                role:"Guard"
+              }
+              this.userService.createNewUser(this.currentUser).then(() => {
+                Swal.fire('Client data saved!', '', 'success')
+                this.router.navigate(["Clients"]);
+              })
             }
           )
+
         }
       } else if (result.isDenied) {
         Swal.fire('Changes are not saved', '', 'info')

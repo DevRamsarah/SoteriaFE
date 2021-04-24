@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
     num:"",
     dob:"",
     address:"",
-    zome:"",
+    zone:"",
     latitude:"",
     longitude:""
 
