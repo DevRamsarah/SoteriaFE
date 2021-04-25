@@ -50,7 +50,7 @@ try {
 
     this.firebaseService.signin(email, password).then(() => {
       // this.router.navigate(['/Dashboard'])
-      window.location.href = "Dashboard"
+      this.redirect()
     }).catch(err => {
       Swal.fire({
         icon: 'error',
@@ -100,7 +100,12 @@ try {
   clickEvent() {
     this.InOut = !this.InOut;
   }
+redirect(){
+  setTimeout(() => {
+    window.location.href = "Dashboard"
 
+  }, 4000);
+}
   forgetP(){
     this.forget? this.forget=false: this.forget=true
   }

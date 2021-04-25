@@ -9,9 +9,17 @@ import { FirebaseService } from 'src/services/firebase.service';
 export class SidebarComponent implements OnInit {
   @Output() isLogout = new EventEmitter<void>()
   status: boolean = false;
-role = (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Client")?true:false
+  role 
   constructor(public firebaseService: FirebaseService
   ) {
+    this.firebaseService.getOneUser(localStorage.getItem('userid')).subscribe((user: any) => {
+      console.log(user);
+
+      localStorage.setItem('CurentUser', JSON.stringify(user))
+    })
+
+
+
   }
 
   logout(): void {
@@ -21,5 +29,8 @@ role = (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Client")?true
   clickEvent() {
     this.status = !this.status;
   }
-  ngOnInit(): void { }
+  ngOnInit(): void {
+    this.role = (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Admin") ? true : false
+
+  }
 }

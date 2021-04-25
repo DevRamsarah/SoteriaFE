@@ -39,6 +39,13 @@
    (click)="expandedElement = expandedElement === element ? null : element">
 </tr>
 <tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+<tr class="mat-row" *matNoDataRow>
+
+    <td class="mat-cell"  *ngIf="!loading">No Schedule record found</td>
+    <td class="mat-cell text-center" colspan="2">
+        <spinner *ngIf="loading"></spinner>
+    </td>
+</tr>
 </table>
   <div id="map" class="col-12 "></div>
 

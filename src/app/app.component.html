@@ -1,6 +1,8 @@
 <app-login *ngIf="!logIn"></app-login>
 
 <div *ngIf="logIn">
+    <spinner *ngIf="logi"></spinner>
+    <div *ngIf="!logi">
     <app-header class="header"></app-header>
     <div class=" d-flex ">
 
@@ -12,4 +14,5 @@
 
         </div>
     </div>
+</div>
 </div>

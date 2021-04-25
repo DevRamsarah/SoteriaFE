@@ -10,8 +10,13 @@ import Swal from 'sweetalert2';
 })
 export class AppComponent implements OnInit {
   title = 'SoteriaFE';
+  logi=true
   logIn = (localStorage.getItem('userid') !== null ? true : false);
-  constructor(public firebaseAuth: AngularFireAuth,public firebaseService: FirebaseService, public router:Router) { }
+  constructor(public firebaseAuth: AngularFireAuth,public firebaseService: FirebaseService,
+     public router:Router) { 
+      this.logi = (localStorage.getItem('CurentUser')=== null) ? true : false
+
+     }
  
   ngOnInit() {
     if(this.logIn){

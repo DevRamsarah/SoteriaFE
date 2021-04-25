@@ -25,7 +25,7 @@ import { ZoneComponent } from './zone/zone.component';
 import { ProfileComponent } from './profile/profile.component';
 import { AddZoneComponent } from './zone/add-zone/add-zone.component';
 import { AddInvoiceComponent } from './invoice/add-invoice/add-invoice.component';
-
+import { AuthGuard } from '../services/auth/auth.guard';
 
 const routes: Routes = [
   {
@@ -33,11 +33,11 @@ const routes: Routes = [
 
   },
   {
-    path: 'Guards', component: GuardComponent,
+    path: 'Guards', component: GuardComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Clients', component: ClientComponent,
+    path: 'Clients', component: ClientComponent, canActivate: [AuthGuard],
 
 
   },
@@ -47,22 +47,22 @@ const routes: Routes = [
 
   },
   {
-    path: 'Clients/New-client', component: NewClientComponent,
+    path: 'Clients/New-client', component: NewClientComponent, canActivate: [AuthGuard],
 
 
   },
   {
-    path: 'Guards/New-guard', component: NewGuardComponent,
+    path: 'Guards/New-guard', component: NewGuardComponent, canActivate: [AuthGuard],
 
 
   },
   {
-    path: 'Dispatcher/New-dispatcher', component: NewDispatcherComponent,
+    path: 'Dispatcher/New-dispatcher', component: NewDispatcherComponent, canActivate: [AuthGuard],
 
 
   },
   {
-    path: 'PostSite/New-PostSite', component: NewPostSiteComponent,
+    path: 'PostSite/New-PostSite', component: NewPostSiteComponent, canActivate: [AuthGuard],
 
 
   },
@@ -71,64 +71,64 @@ const routes: Routes = [
 
   },
   {
-    path: 'Dispatcher', component: DispatcherComponent,
+    path: 'Dispatcher', component: DispatcherComponent, canActivate: [AuthGuard],
 
   },
 
   {
-    path: 'Register', component: RegisterComponent,
+    path: 'Admin', component: RegisterComponent,
 
   },
   {
-    path: 'Home', component: HomeComponent,
+    path: 'Home', component: HomeComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Zone', component: ZoneComponent,
+    path: 'Zone', component: ZoneComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Zone/New-Zone', component: AddZoneComponent,
+    path: 'Zone/New-Zone', component: AddZoneComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Visitors', component: VisitorsComponent,
+    path: 'Visitors', component: VisitorsComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'PostSite', component: PostSiteComponent,
+    path: 'PostSite', component: PostSiteComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Tracker', component: TrackerComponent,
+    path: 'Tracker', component: TrackerComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Messenger', component: MessengerComponent,
+    path: 'Messenger', component: MessengerComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Reports', component: ReportComponent,
+    path: 'Reports', component: ReportComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Scheduler', component: SchedulerComponent,
+    path: 'Scheduler', component: SchedulerComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Time', component: TimeClockComponent,
+    path: 'Time', component: TimeClockComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Payroll', component: PayrollComponent,
+    path: 'Payroll', component: PayrollComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Invoicer', component: InvoiceComponent,
+    path: 'Invoicer', component: InvoiceComponent, canActivate: [AuthGuard],
 
   },
   {
-    path: 'Invoicer/New-invoice', component: AddInvoiceComponent,
+    path: 'Invoicer/New-invoice', component: AddInvoiceComponent, canActivate: [AuthGuard],
 
   },
   

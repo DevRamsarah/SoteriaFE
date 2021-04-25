@@ -55,6 +55,7 @@ export class DashboardComponent implements OnInit {
       
       localStorage.setItem('CurentUser', JSON.stringify(user))
     })
+
     this.ClientD.getClient().subscribe((Client: any) => {
       Client.forEach(element => {
         this.ClientC.push(element)

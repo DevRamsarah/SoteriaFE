@@ -16,7 +16,7 @@ export class FirebaseService {
     await this.firebaseAuth.signInWithEmailAndPassword(email, password)
       .then(res => {
         this.getOneUser(res.user.uid).subscribe((user: any) => {
-          localStorage.setItem('CurentUser', user)
+          localStorage.setItem('CurentUser', JSON.stringify(user))
         })
         localStorage.setItem('userid', res.user.uid)
         this.isLoggedIn = true
@@ -27,15 +27,17 @@ export class FirebaseService {
       })
 
   }
-  async signup(email: string,password: string, name:string) {
+  async signup(email: string,password: string, fname:string, lname:string) {
     await this.firebaseAuth.createUserWithEmailAndPassword(email, password)
       .then(res => {
 
  
       this.createNewUser({
-        fname:name,
+        fname:fname,
+        lname:lname,
         email:email,
-        id: res.user.uid
+        id: res.user.uid,
+        role: "Admin"
       })
         this.isLoggedIn = true
       }) .catch(error => {
@@ -56,7 +58,7 @@ reset(emailAddress){
       title: 'Reset link send to your mail : '+ emailAddress,
       showConfirmButton: false,
       timer: 3500
-    })
+    }).then(()=>window.location.href="Dashboard")
   }).catch(function(error) {
     // An error happened.
   });
