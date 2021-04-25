@@ -202,6 +202,8 @@ export class AddInvoiceComponent implements OnInit {
         guard: this.invoice.arrayDes[0].quatity,
         ArrayGuard: this.selectedGuard,
         title: this.invoice.PostSiteid + "/" + this.invoice.Summary,
+        ClientName:this.invoice.Clientid,
+        PostSiteName:this.invoice.PostSiteid,
         color: "red",
         actions: "actions",
         resizable: {
