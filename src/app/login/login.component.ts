@@ -2,6 +2,7 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { FirebaseService } from 'src/services/firebase.service';
 import Swal from 'sweetalert2';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-login',
@@ -14,9 +15,34 @@ export class LoginComponent implements OnInit {
   InOut = true;
   loading = false;
   @Output() log: EventEmitter<any> = new EventEmitter();
-  constructor(public firebaseService: FirebaseService, private router: Router) { }
+  constructor(public firebaseAuth: AngularFireAuth,public firebaseService: FirebaseService, private router: Router) { }
   ngOnInit(): void {
+
+    
+    const url = window.location.href
+    if (this.router.url == "/" && new URLSearchParams(window.location.search).has("apiKey")){
+    this.confirmLog(url)}
   }
+
+  async confirmLog(url){
+try {
+  if( this.firebaseAuth.isSignInWithEmailLink(url)){
+    let email= window.prompt('Please provide your email for confirmation')
+    const result = await this.firebaseAuth.signInWithEmailLink(email,url)
+    localStorage.setItem('userid', result.user.uid)
+    window.location.href = "Dashboard"
+  }
+} catch (error) {
+  Swal.fire({
+    icon: 'error',
+    title: 'Oops...',
+    text: 'Something went wrong!',
+    footer: error.message
+  })
+}
+    
+  }
+
   onSignin(email: string, password: string) {
     this.loading = true;
 

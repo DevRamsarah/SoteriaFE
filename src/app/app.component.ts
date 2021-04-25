@@ -13,25 +13,9 @@ export class AppComponent implements OnInit {
   constructor(public firebaseAuth: AngularFireAuth,public firebaseService: FirebaseService, public router:Router) { }
  
   ngOnInit() {
-  
-    const url = window.location.href
-    if (this.router.url == "/" && new URLSearchParams(window.location.search).has("apiKey")){
-    this.confirmLog(url)}
-
   }
 
-  async confirmLog(url){
 
-    if( this.firebaseAuth.isSignInWithEmailLink(url)){
-      let email= window.prompt('Please provide your email for confirmation')
-      console.log(url);
-      console.log(email);
-      
-      const result = await this.firebaseAuth.signInWithEmailLink(email,url)
-      console.log(result);
-      
-    }
-  }
 
 
 
