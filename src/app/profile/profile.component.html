@@ -19,36 +19,36 @@
                 </div>
                 <div class="row mt-2">
                     <div class="col-md-6">
-                        <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" 
+                        <input readonly type="text" class="form-control" [ngModelOptions]="{standalone: true}" 
                         [(ngModel)]="fname" placeholder="First Name"></div>
                     <div class="col-md-6">
-                        <input type="text" [(ngModel)]="lname" class="form-control"  placeholder="Last Name"></div>
+                        <input readonly type="text" [(ngModel)]="lname" class="form-control"  placeholder="Last Name"></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <input type="text" [(ngModel)]="email" class="form-control" placeholder="Email" ></div>
+                        <input readonly type="text" [(ngModel)]="email" class="form-control" placeholder="Email" ></div>
                     <div class="col-md-6">
-                        <input type="number"
+                        <input readonly type="number"
                         pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
                         [(ngModel)]="num"
                          class="form-control" value="+19685969668" placeholder="Phone number"></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="address" 
+                        <input readonly type="text" class="form-control" placeholder="address" 
                         [(ngModel)]="address"></div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" [(ngModel)]="zone" placeholder="Zone"></div>
+                        <input readonly type="text" class="form-control" [(ngModel)]="zone" placeholder="Zone"></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <input type="date" class="form-control" placeholder="Date Of Birth" 
+                        <input readonly type="date" class="form-control" placeholder="Date Of Birth" 
                         [(ngModel)]="dob"></div>
                     <div class="col-md-6">
                     </div>
                 </div>
 
-                <div class="mt-5 text-right"><button class="btn btn-primary profile-button" type="button">Save Profile</button></div>
+                <div class="mt-5 text-right"><div class="btn btn-primary profile-button" (click)="password()" >Change Password</div></div>
             </div>
         </div>
     </div>

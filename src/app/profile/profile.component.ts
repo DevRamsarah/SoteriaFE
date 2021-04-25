@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
+import Swal from 'sweetalert2';
+import { FirebaseService } from 'src/services/firebase.service';
 
 @Component({
   selector: 'app-profile',
@@ -30,7 +32,7 @@ export class ProfileComponent implements OnInit {
     longitude
 
 
-  constructor() {
+  constructor(public firebaseService: FirebaseService,) {
     mapboxgl.accessToken ='pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
 
    }
@@ -73,5 +75,30 @@ export class ProfileComponent implements OnInit {
 
     })
   
+  }
+  password(){
+    let password=""
+    Swal.fire({
+      title: 'Enter your password',
+      input: 'password',
+      inputLabel: 'Password',
+      inputPlaceholder: 'Enter your password',
+      inputAttributes: {
+        autocapitalize: 'off',
+        autocorrect: 'off'
+      },
+      allowOutsideClick:false,
+      confirmButtonText: 'Save',
+      preConfirm: (login) => { password = `${login}`},
+      allowEscapeKey:false
+    }).then(()=> this.firebaseService.updatePassword(password).catch(
+      (err)=> 
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Something went wrong!',
+        footer: err.message
+      })
+    ).then(()=> localStorage.removeItem("passwordless")))
   }
 }
