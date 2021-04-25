@@ -29,7 +29,7 @@ import { AuthGuard } from '../services/auth/auth.guard';
 
 const routes: Routes = [
   {
-    path: 'Dashboard', component: DashboardComponent,
+    path: 'Dashboard', component: DashboardComponent,canActivate: [AuthGuard],
 
   },
   {
@@ -76,7 +76,7 @@ const routes: Routes = [
   },
 
   {
-    path: 'Admin', component: RegisterComponent,
+    path: 'Admin', component: RegisterComponent,canActivate: [AuthGuard],
 
   },
   {

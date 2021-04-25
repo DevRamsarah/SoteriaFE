@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
           title: 'Enter your password',
           input: 'password',
           inputLabel: 'Password',
-          inputPlaceholder: 'Enter your password',
+          inputPlaceholder: 'Enter your new login password',
           inputAttributes: {
             autocapitalize: 'off',
             autocorrect: 'off'

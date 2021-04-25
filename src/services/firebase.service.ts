@@ -47,7 +47,10 @@ export class FirebaseService {
 async updatePassword(password){
   console.log(password);
   
-  await (await this.firebaseAuth.currentUser).updatePassword(password).then(() => Swal.fire('Password saved!', '', 'success'));
+  await (await this.firebaseAuth.currentUser).updatePassword(password)
+  .then(() =>
+   Swal.fire('Password saved!', '', 'success')
+   ).then(()=>window.location.reload())
 
 }
 reset(emailAddress){

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AngularFireAuth } from '@angular/fire/auth';
 import { FirebaseService } from 'src/services/firebase.service';
 
 @Component({
@@ -12,7 +13,7 @@ export class HeaderComponent implements OnInit {
   _name;
   _role;
 role = false
-  constructor(    public firebaseService: FirebaseService,
+  constructor( public firebaseAuth: AngularFireAuth,   public firebaseService: FirebaseService,
     ) { }
 
   ngOnInit(): void {
@@ -32,6 +33,7 @@ role = false
 }
   logout() {
     localStorage.clear();
+    this.firebaseAuth.signOut();
     window.location.reload()
   }
 }

@@ -102,7 +102,21 @@ try {
   }
 redirect(){
   setTimeout(() => {
+    switch (JSON.parse(localStorage.getItem('CurentUser'))[0].role) {
+      case "Admin":
+        window.location.href = "Dashboard"
+        break;
+    case "Client":
+          window.location.href = "Location"
+          break;
+      default:
+        localStorage.clear();
+    window.location.reload()
+        break;
+    }
+    if(JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Admin"){
     window.location.href = "Dashboard"
+  }else{}
 
   }, 4000);
 }
