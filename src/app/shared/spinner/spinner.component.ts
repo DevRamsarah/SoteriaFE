@@ -13,10 +13,10 @@ export class SpinnerComponent implements OnInit {
   @Input() title;
 
   ngOnInit(): void {
-    this.firebaseService.getOneUser(localStorage.getItem('userid')).subscribe((user: any) => {
-      console.log(user);
+    // this.firebaseService.getOneUser(localStorage.getItem('userid')).subscribe((user: any) => {
+    //   console.log(user);
       
-      localStorage.setItem('CurentUser', JSON.stringify(user))
-    })
+    //   localStorage.setItem('CurentUser', JSON.stringify(user))
+    // })
   }
 }

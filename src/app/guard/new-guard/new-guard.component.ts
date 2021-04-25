@@ -9,6 +9,7 @@ import { GeoJson } from '../../../model/map/map'
 import * as turf from '@turf/turf';
 import Swal from 'sweetalert2';
 import { FirebaseService } from 'src/services/firebase.service';
+import { AngularFireAuth } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-new-guard',
@@ -22,24 +23,24 @@ export class NewGuardComponent implements OnInit {
   loadingEdit = true;
   mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
-cemail=false;
- 
+  cemail = false;
+
 
   color: ThemePalette = 'primary';
 
   datePickerId = new Date().toISOString().split("T")[0];
-  currentUser={
-    id:"",
-    fname:"",
-    lname:"",
-    email:"",
-    num:"",
-    nic:"",
-    address:"",
-    zome:"",
-    latitude:"",
-    longitude:"",
-    role:""
+  currentUser = {
+    id: "",
+    fname: "",
+    lname: "",
+    email: "",
+    num: "",
+    nic: "",
+    address: "",
+    zome: "",
+    latitude: "",
+    longitude: "",
+    role: ""
 
   }
   guardObject = {
@@ -53,7 +54,7 @@ cemail=false;
     Latitude: '',
     Longitude: '',
     PsLocation: '',
-    nid:null,
+    nid: null,
     gender: null,
     Zone: null,
     recordStatus: "active"
@@ -75,7 +76,7 @@ cemail=false;
   dropdown: any = []
   marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
 
-  constructor(public userService: FirebaseService,public firebaseCrud: GuardService, public router: Router, private mapService: MapService) { }
+  constructor(public firebaseAuth: AngularFireAuth, public userService: FirebaseService, public firebaseCrud: GuardService, public router: Router, private mapService: MapService) { }
 
   ngOnInit(): void {
     if (new URLSearchParams(window.location.search).has("edit")) {
@@ -106,118 +107,123 @@ cemail=false;
 
     setTimeout(() => {
       this.loadingEdit = false
-          
-        }, 3500);
+
+    }, 3500);
     setTimeout(() => {
       this.initializeMap()
-      
+
     }, 4000);
 
-    
 
-  
-  this.mapService.getAllZone().then((querySnapshot) => {
-    querySnapshot.forEach((doc) => {
-      // console.log(doc.data());
-      this.dropdown.push(doc.data())
-    });
-    console.log(this.dropdown);
-    // console.log(this.dropdown[1]);
-  
-  })
-    .catch((error) => {
-      console.log("Error getting documents: ", error);
-    });
-    }
-  
-  
-  
-  
-    initializeMap() {
-  
-      this.map = new mapboxgl.Map({
-        container: 'map',
-        style: this.style,
-        minZoom: 2,
-        zoom: 9,
-        center: [this.lng, this.lat],
-        maxBounds: this.bounds
-  
-  
-      })
-      //add navigation control to map 
-  
-  
-      this.map.on('click', (event) => {
-        this.marker1.remove();
-        const coordinates = [event.lngLat.lng, event.lngLat.lat]
-        const newMarker = new GeoJson(coordinates, { message: this.message })
-        this.marker1.setLngLat(coordinates)
-          .addTo(this.map);
-          
-          this.guardObject.Latitude = event.lngLat.lat.toFixed(6)
-          this.guardObject.Longitude = event.lngLat.lng.toFixed(6)
-          this.checkZone(this.guardObject.Longitude, this.guardObject.Latitude)
-      })
-  
-      if (new URLSearchParams(window.location.search).has("edit")) {
-        this.marker1.setLngLat([this.guardObject.Longitude, this.guardObject.Latitude])
-          .addTo(this.map);
-      }
-  
-      this.checkZone(this.guardObject.Longitude, this.guardObject.Latitude)
-    }
-  
-    removeMarker(marker) {
-      this.mapService.removeMarker(marker.$key)
-    }
-  
-    flyTo(data: GeoJson) {
-      this.map.flyTo({
-        center: data.geometry.coordinates
-  
-      })
-    }
-  
-    checkZone(lng, lat) {
-      var pt = turf.point([lng, lat]);
-      this.dropdown.forEach(zoneS => {
-        var poly = turf.polygon(JSON.parse(zoneS.coords));
-        if (turf.booleanPointInPolygon(pt, poly)) {
-          // console.log(zoneS.region);
-          this.guardObject.Zone = zoneS.region
-          // console.log(turf.booleanPointInPolygon(pt, poly));
-        }
+
+
+    this.mapService.getAllZone().then((querySnapshot) => {
+      querySnapshot.forEach((doc) => {
+        // console.log(doc.data());
+        this.dropdown.push(doc.data())
       });
-  
+      console.log(this.dropdown);
+      // console.log(this.dropdown[1]);
+
+    })
+      .catch((error) => {
+        console.log("Error getting documents: ", error);
+      });
+  }
+
+
+
+
+  initializeMap() {
+
+    this.map = new mapboxgl.Map({
+      container: 'map',
+      style: this.style,
+      minZoom: 2,
+      zoom: 9,
+      center: [this.lng, this.lat],
+      maxBounds: this.bounds
+
+
+    })
+    //add navigation control to map 
+
+
+    this.map.on('click', (event) => {
+      this.marker1.remove();
+      const coordinates = [event.lngLat.lng, event.lngLat.lat]
+      const newMarker = new GeoJson(coordinates, { message: this.message })
+      this.marker1.setLngLat(coordinates)
+        .addTo(this.map);
+
+      this.guardObject.Latitude = event.lngLat.lat.toFixed(6)
+      this.guardObject.Longitude = event.lngLat.lng.toFixed(6)
+      this.checkZone(this.guardObject.Longitude, this.guardObject.Latitude)
+    })
+
+    if (new URLSearchParams(window.location.search).has("edit")) {
+      this.marker1.setLngLat([this.guardObject.Longitude, this.guardObject.Latitude])
+        .addTo(this.map);
     }
 
-    ValidateEmail(){
-      this.guardObject.Email.match(this.mailformat)? this.cemail = false: this.cemail=true;
-      
-    }
-    submit() {
-      Swal.fire({
-        title: 'Do you want to save the changes?',
-        showDenyButton: true,
-        showCancelButton: false,
-        confirmButtonText: `Save`,
-        denyButtonText: `Don't save`,
-      }).then((result) => {
-        /* Read more about isConfirmed, isDenied below */
-        if (result.isConfirmed) {
-          if (new URLSearchParams(window.location.search).has("edit")) {
-            this.firebaseCrud.updateGuard(new URLSearchParams(window.location.search).get("edit"), this.guardObject).then(
-              () => {
-                Swal.fire('Guard data edited!', '', 'success')
-                this.router.navigate(["Guards"]);              }
-            )
-          } else {
+    this.checkZone(this.guardObject.Longitude, this.guardObject.Latitude)
+  }
 
-            this.firebaseCrud.createNewGuard(this.guardObject).then(
+  removeMarker(marker) {
+    this.mapService.removeMarker(marker.$key)
+  }
+
+  flyTo(data: GeoJson) {
+    this.map.flyTo({
+      center: data.geometry.coordinates
+
+    })
+  }
+
+  checkZone(lng, lat) {
+    var pt = turf.point([lng, lat]);
+    this.dropdown.forEach(zoneS => {
+      var poly = turf.polygon(JSON.parse(zoneS.coords));
+      if (turf.booleanPointInPolygon(pt, poly)) {
+        // console.log(zoneS.region);
+        this.guardObject.Zone = zoneS.region
+        // console.log(turf.booleanPointInPolygon(pt, poly));
+      }
+    });
+
+  }
+
+  ValidateEmail() {
+    this.guardObject.Email.match(this.mailformat) ? this.cemail = false : this.cemail = true;
+
+  }
+  submit() {
+    const actionCodeSettings = {
+      url:'http://localhost:4200/Dashboard',
+      handleCodeInApp:true
+  };
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: `Save`,
+      denyButtonText: `Don't save`,
+    }).then((result) => {
+      /* Read more about isConfirmed, isDenied below */
+      if (result.isConfirmed) {
+        if (new URLSearchParams(window.location.search).has("edit")) {
+          this.firebaseCrud.updateGuard(new URLSearchParams(window.location.search).get("edit"), this.guardObject).then(
+            () => {
+              Swal.fire('Guard data edited!', '', 'success')
+              this.router.navigate(["Guards"]);
+            }
+          )
+        } else {
+          this.firebaseAuth.createUserWithEmailAndPassword(this.guardObject.Email, "soteria@1234")
+            .then(
               (user) => {
                 this.currentUser = {
-                  id:user.id,
+                  id: user.user.uid,
                   fname: this.guardObject.fname,
                   lname: this.guardObject.lname,
                   email: this.guardObject.Email,
@@ -227,25 +233,28 @@ cemail=false;
                   zome: this.guardObject.Zone,
                   latitude: this.guardObject.Latitude,
                   longitude: this.guardObject.Longitude,
-                  role:"Guard"
+                  role: "Guard"
                 }
-                this.userService.createNewUser(this.currentUser).then(() => {
-                  Swal.fire('Guard data saved!', '', 'success')
-                  this.router.navigate(["Guards"]); 
-                })
-                
-                
-              }
-            )
-          }
+                this.firebaseCrud.createNewGuard(this.guardObject).then(
+                  () => {
+                    this.userService.createNewUser(this.currentUser).then(() => {
+                      this.firebaseAuth.sendSignInLinkToEmail(this.currentUser.email,actionCodeSettings).catch((err)=>console.log(err));
+                      Swal.fire('Guard data saved!', '', 'success')
+                      this.router.navigate(["Guards"]);
+                    })
 
+                  })
+                }
+                )
+              }
+        
         } else if (result.isDenied) {
           Swal.fire('Changes are not saved', '', 'info')
         }
       })
-     
-  
-      // console.log(this.guardObject);
-      
-    }
+
+
+    // console.log(this.guardObject);
+
+  }
 }

@@ -103,33 +103,24 @@ export class LoginComponent implements OnInit {
   }
   redirect() {
     setTimeout(() => {
-      switch (JSON.parse(localStorage.getItem('CurentUser'))[0].role) {
-        case "Admin":
-          window.location.href = "Dashboard"
-          break;
-        case "Client":
-          window.location.href = "Location"
-          break;
-        default:
-        case "Guard":
-          Swal.fire({
-            icon: 'warning',
-            title: 'Guard Mail Detected!',
-            text: 'Please use the Mobile app.',
-            footer: "Please contact the admin to resolve this issue."
-          }).then(() => {
-            localStorage.clear();
-            window.location.reload()
-          })
-          break;
-          localStorage.clear();
-          window.location.reload()
-          break;
-      }
+
       if (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Admin") {
         window.location.href = "Dashboard"
-      } else { }
-
+      } 
+      if (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Client") {
+        window.location.href = "Location"
+      } 
+      if (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Guard") {
+        Swal.fire({
+          icon: 'warning',
+          title: 'Guard Mail Detected!',
+          text: 'Please use the Mobile app.',
+          footer: "Please contact the admin to resolve this issue."
+        }).then(() => {
+          localStorage.clear();
+          window.location.reload()
+        })
+      } 
     }, 4000);
   }
   forgetP() {
