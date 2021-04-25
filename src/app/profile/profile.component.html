@@ -20,30 +20,30 @@
                 <div class="row mt-2">
                     <div class="col-md-6">
                         <input type="text" class="form-control" [ngModelOptions]="{standalone: true}" 
-                        [(ngModel)]="this.currentUser.fname" placeholder="First Name" value="John"></div>
+                        [(ngModel)]="fname" placeholder="First Name"></div>
                     <div class="col-md-6">
-                        <input type="text" [(ngModel)]="this.currentUser.lname" class="form-control"  placeholder="Last Name"></div>
+                        <input type="text" [(ngModel)]="lname" class="form-control"  placeholder="Last Name"></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
-                        <input type="text" [(ngModel)]="this.currentUser.email" class="form-control" placeholder="Email" ></div>
+                        <input type="text" [(ngModel)]="email" class="form-control" placeholder="Email" ></div>
                     <div class="col-md-6">
                         <input type="number"
                         pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
-                        [(ngModel)]="this.currentUser.num"
+                        [(ngModel)]="num"
                          class="form-control" value="+19685969668" placeholder="Phone number"></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <input type="text" class="form-control" placeholder="address" 
-                        [(ngModel)]="this.currentUser.address"></div>
+                        [(ngModel)]="address"></div>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" [(ngModel)]="this.currentUser.zone" placeholder="Zone"></div>
+                        <input type="text" class="form-control" [(ngModel)]="zone" placeholder="Zone"></div>
                 </div>
                 <div class="row mt-3">
                     <div class="col-md-6">
                         <input type="date" class="form-control" placeholder="Date Of Birth" 
-                        [(ngModel)]="this.currentUser.dob"></div>
+                        [(ngModel)]="dob"></div>
                     <div class="col-md-6">
                     </div>
                 </div>

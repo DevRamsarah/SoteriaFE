@@ -7,6 +7,7 @@ import * as mapboxgl from "mapbox-gl";
   styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
+  CurentUser =JSON.parse(localStorage.getItem('CurentUser'))
   map: mapboxgl.Map;
   marker1:any
   style = 'mapbox://styles/mapbox/outdoors-v9';
@@ -17,24 +18,36 @@ export class ProfileComponent implements OnInit {
     [56.71206514379577, -20.702642368289588], // Southwest coordinates
     [58.47918717931003, -19.6383333967767] // Northeast coordinates
   ];
-  currentUser={
-    fname:"",
-    lname:"",
-    email:"",
-    num:"",
-    dob:"",
-    address:"",
-    zone:"",
-    latitude:"",
-    longitude:""
 
-  }
+    fname
+    lname
+    email
+    num
+    dob
+    address
+    zone
+    latitude
+    longitude
+
+
   constructor() {
     mapboxgl.accessToken ='pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
 
    }
 
   ngOnInit(): void {
+    this.CurentUser =JSON.parse(localStorage.getItem('CurentUser'))
+      this.fname= this.CurentUser[0].fname,
+      this.lname= this.CurentUser[0].lname,
+      this.email= this.CurentUser[0].email,
+      this.num= this.CurentUser[0].num,
+      this.dob= this.CurentUser[0].dob,
+      this.address= this.CurentUser[0].address,
+      this.zone= this.CurentUser[0].zome,
+      this.latitude= this.CurentUser[0].latitude,
+      this.longitude= this.CurentUser[0].longitude
+  
+
     this.initializeMap()
   }
   initializeMap() {
@@ -43,7 +56,7 @@ export class ProfileComponent implements OnInit {
       style: this.style,
       minZoom: 8,
       zoom: 9,
-      center: [this.lng, this.lat],
+      center: [this.longitude, this.latitude],
       maxBounds: this.bounds
 
 
@@ -54,11 +67,9 @@ export class ProfileComponent implements OnInit {
    
     this.map.on('load', (event) => {
      
-    // //   this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
-    // //   this.marker1.setLngLat([element.Longitude, element.Latitude])
-    // //   .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
-    // // .setHTML('<h3> Name: ' + element.ClientName + '</h3><p> Address: ' + element.ClientAddress + '</p>'))
-    // //     .addTo(this.map);
+      this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
+      this.marker1.setLngLat([this.longitude, this.latitude])
+        .addTo(this.map);
 
     })
   
