@@ -9,6 +9,7 @@ import { FirebaseService } from 'src/services/firebase.service';
 export class SidebarComponent implements OnInit {
   @Output() isLogout = new EventEmitter<void>()
   status: boolean = false;
+role = (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Client")?true:false
   constructor(public firebaseService: FirebaseService
   ) {
   }
