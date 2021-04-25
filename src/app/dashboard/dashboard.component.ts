@@ -5,6 +5,8 @@ import { PostSiteService } from 'src/services/post-site/post-site.service';
 import { InvoiceService } from 'src/services/invoice/invoice.service';
 import { DispatcherService } from 'src/services/dispatcher/dispatcher.service';
 import * as mapboxgl from "mapbox-gl";
+import { FirebaseService } from 'src/services/firebase.service';
+
 import { environment } from '../../environments/environment'
 
 @Component({
@@ -36,6 +38,7 @@ export class DashboardComponent implements OnInit {
   CountInvoice = 0
   CountDispatch = 0
   constructor(
+    public firebaseService: FirebaseService,
     public ClientD: ClientService,
     public GuardD: GuardService,
     public PostSiteD: PostSiteService,
@@ -47,6 +50,11 @@ export class DashboardComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.firebaseService.getOneUser(localStorage.getItem('userid')).subscribe((user: any) => {
+      console.log(user);
+      
+      localStorage.setItem('CurentUser', JSON.stringify(user))
+    })
     this.ClientD.getClient().subscribe((Client: any) => {
       Client.forEach(element => {
         this.ClientC.push(element)

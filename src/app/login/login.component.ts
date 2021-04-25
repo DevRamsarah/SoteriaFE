@@ -29,6 +29,7 @@ try {
   if( this.firebaseAuth.isSignInWithEmailLink(url)){
     let email= window.prompt('Please provide your email for confirmation')
     const result = await this.firebaseAuth.signInWithEmailLink(email,url)
+    localStorage.setItem('passwordless',"true")
     localStorage.setItem('userid', result.user.uid)
     window.location.href = "Dashboard"
   }

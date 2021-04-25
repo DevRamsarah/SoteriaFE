@@ -15,10 +15,11 @@ export class FirebaseService {
 
     await this.firebaseAuth.signInWithEmailAndPassword(email, password)
       .then(res => {
-        console.log(res.user)
-
-        this.isLoggedIn = true
+        this.getOneUser(res.user.uid).subscribe((user: any) => {
+          localStorage.setItem('CurentUser', user)
+        })
         localStorage.setItem('userid', res.user.uid)
+        this.isLoggedIn = true
 
       })
       .catch(error => {
@@ -41,7 +42,12 @@ export class FirebaseService {
         throw error.message
       })
   }
+async updatePassword(password){
+  console.log(password);
+  
+  await (await this.firebaseAuth.currentUser).updatePassword(password).then(() => Swal.fire('Password saved!', '', 'success'));
 
+}
 reset(emailAddress){
   this.firebaseAuth.sendPasswordResetEmail(emailAddress).then(function() {
     Swal.fire({
@@ -74,7 +80,8 @@ reset(emailAddress){
   }
 
   getOneUser(id) {
-    return this.firebaseCrud.collection('users').doc(id).valueChanges();
+   
+    return  this.firebaseCrud.collection('users', ref => ref.where("id", "==", id)).valueChanges({ idField: 'userdocId' });
 
   }
   updateUser(id, data) {

@@ -216,29 +216,33 @@ export class NewClientComponent implements OnInit {
             }
           )
         } else {
-         
-          this.firebaseCrud.createNewClient(this.clientObject).then(
-            (user) => {
-              this.currentUser = {
-                id:user.id,
-                fname: this.clientObject.ClientName,
-                lname: "",
-                email: this.clientObject.ClientEmail,
-                num: this.clientObject.MobileNum,
-                nic: null,
-                address: this.clientObject.ClientAddress,
-                zome: this.clientObject.Zone,
-                latitude: this.clientObject.Latitude,
-                longitude: this.clientObject.Longitude,
-                role:"Guard"
-              }
-              this.userService.createNewUser(this.currentUser).then(() => {
-                this.firebaseAuth.sendSignInLinkToEmail(this.currentUser.email,actionCodeSettings).catch((err)=>console.log(err));
-                Swal.fire('Client data saved!', '', 'success')
-                this.router.navigate(["Clients"]);
-              })
+          this.firebaseAuth.createUserWithEmailAndPassword(this.clientObject.ClientEmail, "soteria@1234")
+          .then(res => {
+            this.currentUser = {
+              id:res.user.uid,
+              fname: this.clientObject.ClientName,
+              lname: "",
+              email: this.clientObject.ClientEmail,
+              num: this.clientObject.MobileNum,
+              nic: null,
+              address: this.clientObject.ClientAddress,
+              zome: this.clientObject.Zone,
+              latitude: this.clientObject.Latitude,
+              longitude: this.clientObject.Longitude,
+              role:"Client"
             }
-          )
+            this.firebaseCrud.createNewClient(this.clientObject).then(
+              (user) => {
+                
+                this.userService.createNewUser(this.currentUser).then(() => {
+                  this.firebaseAuth.sendSignInLinkToEmail(this.currentUser.email,actionCodeSettings).catch((err)=>console.log(err));
+                  Swal.fire('Client data saved!', '', 'success')
+                  this.router.navigate(["Clients"]);
+                })
+              }
+            )
+          })
+    
 
         }
       } else if (result.isDenied) {
