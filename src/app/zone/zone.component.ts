@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import * as mapboxgl from "mapbox-gl";
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { MapService } from '../../services/map/map.service';
@@ -6,6 +6,8 @@ import { GeoJson, FeatureCollection } from '../../model/map/map'
 import * as MapboxDraw from '@mapbox/mapbox-gl-draw';
 import * as turf from '@turf/turf';
 import Swal from 'sweetalert2';
+import { MatTableDataSource } from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-zone',
   templateUrl: './zone.component.html',
@@ -28,9 +30,28 @@ export class ZoneComponent implements OnInit {
   markers: any;
   dropdown: any = []
   marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
+
+  data2: any;
+  displayedColumns2: string[] = ['Zone', 'action'];
+
+
+  dataSource2 = new MatTableDataSource();
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+
   constructor(private mapService: MapService) { }
 
   ngOnInit(): void {
+
+    this.mapService.getAllZoneTable().subscribe((Zone: any) => {
+      console.log(Zone);
+      this.data2 = Zone
+
+      this.loading = false;
+
+      this.dataSource2 = new MatTableDataSource(this.data2);
+
+      this.dataSource2.paginator = this.paginator;
+    })
 
     this.New = new FormGroup({
       ZoneName: new FormControl(null, [Validators.required])
@@ -133,7 +154,10 @@ export class ZoneComponent implements OnInit {
 
     })
   }
+  ngAfterViewInit() {
+    this.dataSource2.paginator = this.paginator;
 
+  }
 
 
 
@@ -153,7 +177,7 @@ export class ZoneComponent implements OnInit {
     Swal.fire({
       title: 'Do you want to save the changes?',
       showDenyButton: true,
-      showCancelButton: true,
+      showCancelButton: false,
       confirmButtonText: `Save`,
       denyButtonText: `Don't save`,
     }).then((result) => {
@@ -161,7 +185,7 @@ export class ZoneComponent implements OnInit {
       if (result.isConfirmed) {
         this.mapService.createZone(sessionStorage.getItem("Zone"), this.New.value.ZoneName).then(
           () => {
-            Swal.fire('Zone Saved!', '', 'success')
+            Swal.fire('Zone Saved!', '', 'success').then(()=> window.location.reload())
           }
         )
         sessionStorage.removeItem('Zone');
@@ -172,6 +196,35 @@ export class ZoneComponent implements OnInit {
     })
 
 
+  }
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource2.filter = filterValue.trim().toLowerCase();
+  }
+  deleteData(id) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.mapService.deleteZone(id).then(
+          () => {
+            Swal.fire(
+              'Deleted!',
+              'Your file has been deleted.',
+              'success'
+            ).then(()=> window.location.reload())
+           }
+        )
+        
+      }
+    })
+    
   }
   displayZone(name, saved_markers) {
     this.map.addSource(name, {

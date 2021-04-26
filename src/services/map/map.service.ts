@@ -20,7 +20,10 @@ export class MapService {
     mapboxgl.accessToken ='pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
   }
 
+  getAllZoneTable() {
+    return this.firebaseCrud.collection('Zone').valueChanges({ idField: 'ZoneID' })
 
+  }
 
   getAllZone() {
     return this.firestore.collection('Zone')
@@ -43,7 +46,9 @@ export class MapService {
     //   coordinates: new firebase.firestore.GeoPoint(40.7589, -73.9851)
     // })
   }
-
+  deleteZone(id) {
+    return this.firebaseCrud.collection('Zone').doc(id).delete();
+  }
   removeMarker($key: string) {
     // return this.db.object('/markers/' + $key).remove()
   }
