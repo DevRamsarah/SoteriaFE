@@ -88,13 +88,20 @@ import { DialogsModule } from '@progress/kendo-angular-dialog';
     ReactiveFormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp({
-      apiKey: "AIzaSyAuP1Fv3Hx0Qw1gT9wroxJmiPFke1ufF98",
-      authDomain: "demoauth-48ba3.firebaseapp.com",
-      databaseURL: "https://demoauth-48ba3.firebaseio.com",
-      projectId: "demoauth-48ba3",
-      storageBucket: "demoauth-48ba3.appspot.com",
-      messagingSenderId: "176754222221",
-      appId: "1:176754222221:web:797017e545d6794ff6eec4"
+      // apiKey: "AIzaSyAuP1Fv3Hx0Qw1gT9wroxJmiPFke1ufF98",
+      // authDomain: "demoauth-48ba3.firebaseapp.com",
+      // databaseURL: "https://demoauth-48ba3.firebaseio.com",
+      // projectId: "demoauth-48ba3",
+      // storageBucket: "demoauth-48ba3.appspot.com",
+      // messagingSenderId: "176754222221",
+      // appId: "1:176754222221:web:797017e545d6794ff6eec4"
+      apiKey: "AIzaSyB-xbEQIqiil60fHnTg0dGCLiFKPUCw8wk",
+      authDomain: "soteria-a2ac4.firebaseapp.com",
+      databaseURL: "https://soteria-a2ac4.firebaseio.com",
+      projectId: "soteria-a2ac4",
+      storageBucket: "soteria-a2ac4.appspot.com",
+      messagingSenderId: "606448462013",
+      appId: "1:606448462013:web:4d21eca7f53786000defd4"
     }),
     // AngularFireDatabaseModule,
     BrowserAnimationsModule,
