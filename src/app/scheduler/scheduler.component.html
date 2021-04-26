@@ -1,1 +1,149 @@
-<p>scheduler works!</p>
+<div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
+  <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+  <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+  <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Scheduler</a>
+</div>
+<div class="container-fluid">
+
+
+<div class="table-responsive" *ngIf="true">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Starts at</th>
+        <th>Ends at</th>
+        <th>Remove</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr *ngFor="let event of events">
+        <td>
+          <input readonly type="text" class="form-control" [(ngModel)]="event.title" (keyup)="refresh.next()" />
+        </td>
+
+        <td>
+          <mat-form-field appearance="fill" class="example-form-field">
+            <!-- <mat-label>Choose a date</mat-label> -->
+            <input readonly matInput [matDatepicker]="datepicker" mwlFlatpickr [(ngModel)]="event.start"
+            (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" [enableTime]="true"
+            dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
+            <!-- <mat-datepicker-toggle matSuffix [for]="datepicker"></mat-datepicker-toggle> -->
+            <mat-datepicker #datepicker>
+              <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+         
+        </td>
+        <td>
+          <mat-form-field appearance="fill" class="example-form-field">
+            <!-- <mat-label>Choose a date</mat-label> -->
+            <input readonly matInput [matDatepicker]="datepicker2" mwlFlatpickr [(ngModel)]="event.end"
+            (ngModelChange)="refresh.next()" [altInput]="true" [convertModelValue]="true" [enableTime]="true"
+            dateFormat="Y-m-dTH:i" altFormat="F j, Y H:i" placeholder="Not set">
+            <!-- <mat-datepicker-toggle matSuffix [for]="datepicker2"></mat-datepicker-toggle> -->
+            <mat-datepicker #datepicker2>
+              <mat-datepicker-actions>
+                <button mat-button matDatepickerCancel>Cancel</button>
+                <button mat-raised-button color="primary" matDatepickerApply>Apply</button>
+              </mat-datepicker-actions>
+            </mat-datepicker>
+          </mat-form-field>
+         
+        </td>
+        <td>
+          <button class="btn btn-danger" (click)="deleteEvent(event)">
+            Remove
+          </button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<br /><br /><br />
+
+<div class=" container row text-center">
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">
+        Previous
+      </div>
+      <div class="btn btn-outline-secondary" mwlCalendarToday [(viewDate)]="viewDate">
+        Today
+      </div>
+      <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate"
+        (viewDateChange)="closeOpenMonthViewDay()">
+        Next
+      </div>
+    </div>
+  </div>
+  <div class="col-md-4">
+    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+  </div>
+  <div class="col-md-4">
+    <div class="btn-group">
+      <div class="btn btn-primary" (click)="setView(CalendarView.Month)" [class.active]="view === CalendarView.Month">
+        Month
+      </div>
+      <div class="btn btn-primary" (click)="setView(CalendarView.Week)" [class.active]="view === CalendarView.Week">
+        Week
+      </div>
+      <div class="btn btn-primary" (click)="setView(CalendarView.Day)" [class.active]="view === CalendarView.Day">
+        Day
+      </div>
+    </div>
+  </div>
+</div>
+<br />
+<div [ngSwitch]="view" id="calender">
+  <mwl-calendar-month-view *ngSwitchCase="CalendarView.Month" [viewDate]="viewDate" [events]="events"
+    [refresh]="refresh" [activeDayIsOpen]="activeDayIsOpen" (dayClicked)="dayClicked($event.day)"
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view *ngSwitchCase="CalendarView.Week" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view *ngSwitchCase="CalendarView.Day" [viewDate]="viewDate" [events]="events" [refresh]="refresh"
+    (eventClicked)="handleEvent('Clicked', $event.event)" (eventTimesChanged)="eventTimesChanged($event)">
+  </mwl-calendar-day-view>
+</div>
+</div>
+<br /><br /><br />
+
+
+<ng-template #modalContent let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">{{ modalData?.description }} Detail</h5>
+    <button type="button" class="close" (click)="close()">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <div class="form-row" *ngFor="let item of modalData.guardArray, let i = index ">
+      <div class="col" >
+          <div class="form-group"><label for="Client"><strong>Guard {{i+1}}</strong></label>
+              <select class="form-control" [(ngModel)]="modalData.GuardName[i].name" [ngModelOptions]="{standalone: true}" autofocus>
+
+                  <option [value]="cli.Name" *ngFor="let cli of guardD">
+                      {{cli.Name}}
+                  </option>
+              </select>
+          </div>
+      </div>
+  </div>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-success" (click)="save()">
+      Save
+    </button>
+    <button type="button" class="btn btn-outline-secondary" (click)="close()">
+      Close
+    </button>
+  </div>
+</ng-template>
+

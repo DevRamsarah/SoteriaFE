@@ -1,0 +1,23 @@
+#sidebar .x1 {
+    font-weight: 700;
+    font-size: 6vh; }
+    #sidebar .x1 .logo {
+        color: #fff; 
+      font-size: 40px;}
+      .x1{
+        padding-left: 15px;
+        padding-right: 15px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #47c5ff;
+        font-family: 'Rancho', cursive;
+        letter-spacing: 1.44vh;
+height: 60px;
+
+      }
+
+.noP {
+    padding: 0
+}
+a {text-decoration: none;}

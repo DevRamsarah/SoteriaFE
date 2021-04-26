@@ -1,4 +1,5 @@
 import { Component, OnInit,Input } from '@angular/core';
+import { FirebaseService } from 'src/services/firebase.service';
 
 @Component({
   selector: 'spinner',
@@ -6,9 +7,16 @@ import { Component, OnInit,Input } from '@angular/core';
   styleUrls: ['./spinner.component.css'],
 })
 export class SpinnerComponent implements OnInit {
-  constructor() {}
+    public firebaseService: FirebaseService
+    constructor() {}
 
   @Input() title;
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    // this.firebaseService.getOneUser(localStorage.getItem('userid')).subscribe((user: any) => {
+    //   console.log(user);
+      
+    //   localStorage.setItem('CurentUser', JSON.stringify(user))
+    // })
+  }
 }

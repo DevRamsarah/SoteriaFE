@@ -1,38 +1,16 @@
-<div *ngIf="!isSignIn" class="page-wrapper">
+<app-login *ngIf="!logIn"></app-login>
 
-  <h2>Sign up</h2>
-  <input type="text" #Name placeholder="Name" />
-  <input type="number" #Age placeholder="Age" />
-  <input type="text" #Address placeholder="Address" />
-  <input type="number" #tel placeholder="Tel Num" />
+<div *ngIf="logIn">
 
-  <input type="text" #emailSignup placeholder="Email" />
-  <input type="text" #passwordSignup placeholder="Password" />
-  <button (click)="onSignup(Name.value,Age.value,Address.value,tel.value,emailSignup.value,passwordSignup.value)">Sign
-    Up</button>
-</div>
+    <app-header class="header"></app-header>
+    <div class=" d-flex ">
 
+    <app-sidebar class="sidebar"></app-sidebar>
+        <!-- Page Content  -->
+        <div id="content" class="  pt-3">
 
-<div *ngIf="!isSignIn" class="page-wrapper">
-  <h2>Sign In</h2>
-  <input type="text" #email placeholder="Email" />
-  <input type="text" #password placeholder="Password" />
-  <button (click)="onSignin(email.value,password.value)">Sign In</button>
-</div>
-<div id="main-wrapper" *ngIf="isSignIn">
-  <div class="d-flex" id="wrapper">
-    <!-- Sidebar -->
-<app-sidebar></app-sidebar>
-    <!-- /#sidebar-wrapper -->
-    <!-- Page Content -->
-    <div id="page-content-wrapper">
-<app-header></app-header>
-        <div class="container-fluid">
- <router-outlet></router-outlet>
-        
-      </div>
+            <router-outlet></router-outlet>
+
+        </div>
     </div>
-    <!-- /#page-content-wrapper -->
-  </div>
-  
 </div>

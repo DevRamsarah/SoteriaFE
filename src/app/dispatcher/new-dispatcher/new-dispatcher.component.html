@@ -1,0 +1,141 @@
+<div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
+    <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+    <a class="text-dark  h6 px-2 " [routerLink]="['/Dispatcher']" style="text-decoration: none;">Dispatcher</a>
+    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">{{status}}</a>
+</div>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-3">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">{{status}}</p>
+                </div>
+                <div class="card-body">
+                    <form  ngNativeValidate (ngSubmit)="submit()">
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="ClientID"><strong>ClientID</strong></label>
+                                    <select class="form-control"*ngIf="!edit" required  [(ngModel)]="ClientDrop" [ngModelOptions]="{standalone: true}"
+                                    (ngModelChange)="getClientDrop($event)" >
+                                        <option selected disabled>Choose Client</option>
+                                        <option [value]="country.Name" *ngFor="let country of clientD">
+                                            {{country.Name}}
+                                        </option>
+                                    </select>
+                                    <input readonly class="form-control" type="text" [(ngModel)]="ClientE" [ngModelOptions]="{standalone: true}"*ngIf="edit" >
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group"  ><label for="PostSite"><strong>Post Site</strong></label>
+                                    <select class="form-control "*ngIf="!edit"  required [(ngModel)]="PostSiteDrop" [ngModelOptions]="{standalone: true}" >
+                                        <option selected disabled *ngIf="ClientDrop == null">Choose A client first</option>
+                                        <option [value]="country.Name" *ngFor="let country of PostSiteD">
+                                            {{country.Name}}
+                                        </option>
+                                    </select>
+                                    <input readonly class="form-control" type="text" [(ngModel)]="PostSiteE" [ngModelOptions]="{standalone: true}"*ngIf="edit" >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="Assign to Guard"><strong>Assign to Guard
+                                        </strong></label>
+                                        <select class="form-control" *ngIf="!edit" [(ngModel)]="guardDrop" [ngModelOptions]="{standalone: true}" autofocus>
+
+                                            <option [value]="cli.Name" *ngFor="let cli of guardD">
+                                                {{cli.Name}}
+                                            </option>
+                                        </select>
+                                        <input readonly class="form-control" type="text" [(ngModel)]="guardE" [ngModelOptions]="{standalone: true}"*ngIf="edit" >
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group"><label for="Priority"><strong>Priority
+                                        </strong></label>
+                                        <select class="form-control"  [(ngModel)]="invoiceObject.Priority" [ngModelOptions]="{standalone: true}" required>
+
+                                            <option *ngFor="let pri of prioL" [value]="pri.Name">
+                                                {{pri.Name}}
+                                            </option>
+                                        </select>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <!-- <div class="col">
+                                <div class="form-group"><label for="Caller"><strong>Caller
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="invoiceObject.Caller">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div>
+                            </div> -->
+                            <div class="col">
+                                <!-- <div class="form-group"><label for="CallerName"><strong>Caller Name
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="invoiceObject.CallerName">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div> -->
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="Incident"><strong>Incident Type
+                                        </strong></label>
+                                    <input class="form-control" type="text" required
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="invoiceObject.Incident">
+   
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group"><label for="IncidentDate"><strong>Incident Date/Time
+                                        </strong></label>
+                            
+                                            <input class="form-control" type="datetime-local" 
+                                            [(ngModel)]="invoiceObject.IncidentDate" 
+                                            [ngModelOptions]="{standalone: true}"
+                                            value="invoiceObject.IncidentDate"
+                                            required>
+                                  
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group"><label for="IncidentDetail"><strong>Incident Detail</strong></label>
+                            <textarea class="form-control" type="text" required
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="invoiceObject.IncidentDetail">
+                            </textarea>
+                        </div>
+                        <div class="form-group"><label for="ActionTaken"><strong>Action Taken</strong></label>
+                            <textarea class="form-control" type="text" required
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="invoiceObject.ActionTaken">
+                            </textarea>
+                        </div>
+                        <div class="form-group"><label for="InternalNotes"><strong>Internal Notes</strong></label>
+                            <textarea class="form-control" type="text" required
+                                [ngModelOptions]="{standalone: true}" [(ngModel)]="invoiceObject.InternalNotes">
+                            </textarea>
+                        </div>
+                        <button mat-raised-button class="text-primary" type="submit" style="margin-right: 2%;">
+                            Submit
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+

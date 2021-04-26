@@ -1,0 +1,55 @@
+<div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
+    <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Profile</a>
+</div>
+<div class="container rounded bg-white mt-5">
+    <div class="row">
+        <div class="col-md-4 border-right">
+            <div id="map" >
+               
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="p-3 py-5">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="d-flex flex-row align-items-center back">
+                        <h3>Back to home</h3>
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="col-md-6">
+                        <input readonly type="text" class="form-control" [ngModelOptions]="{standalone: true}" 
+                        [(ngModel)]="fname" placeholder="First Name"></div>
+                    <div class="col-md-6">
+                        <input readonly type="text" [(ngModel)]="lname" class="form-control"  placeholder="Last Name"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <input readonly type="text" [(ngModel)]="email" class="form-control" placeholder="Email" ></div>
+                    <div class="col-md-6">
+                        <input readonly type="number"
+                        pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
+                        [(ngModel)]="num"
+                         class="form-control" value="+19685969668" placeholder="Phone number"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <input readonly type="text" class="form-control" placeholder="address" 
+                        [(ngModel)]="address"></div>
+                    <div class="col-md-6">
+                        <input readonly type="text" class="form-control" [(ngModel)]="zone" placeholder="Zone"></div>
+                </div>
+                <div class="row mt-3">
+                    <div class="col-md-6">
+                        <input readonly type="date" class="form-control" placeholder="Date Of Birth" 
+                        [(ngModel)]="dob"></div>
+                    <div class="col-md-6">
+                    </div>
+                </div>
+
+                <div class="mt-5 text-right"><div class="btn btn-primary profile-button" (click)="password()" >Change Password</div></div>
+            </div>
+        </div>
+    </div>
+</div>

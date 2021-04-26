@@ -1,0 +1,149 @@
+<div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
+    <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+    <a class="text-muted h6 px-2 " [routerLink]="['/Clients']">Client</a>
+    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">{{status}}</a>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <div class="card shadow mb-3">
+                <div class="card-header py-3">
+                    <p class="text-primary m-0 font-weight-bold">{{status}}</p>
+                </div>
+                <div class="card-body">
+                    <spinner *ngIf="loadingEdit"></spinner>
+                    <form  ngNativeValidate (ngSubmit)="submit()" *ngIf="!loadingEdit">
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="Client"><strong>Client Name</strong></label><input
+                                        class="form-control" type="text" placeholder="Company Name or Individual Name" required
+                                        [ngClass]="this.clientObject.ClientName == '' ? 'is-invalid' : ''"
+                                        [(ngModel)]="this.clientObject.ClientName"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group"><label for="Email"><strong>Email Address</strong></label><input
+                                    [ngClass]="this.cemail==true ? 'is-invalid' : ''"
+                                    (ngModelChange)="ValidateEmail()" 
+                                        class="form-control" type="email" placeholder="user@example.com" required
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.ClientEmail">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="Contact Name"><strong>Contact
+                                            Name</strong></label><input class="form-control" type="text"
+                                            [ngClass]="this.clientObject.ContactName == '' ? 'is-invalid' : ''"
+                                            placeholder="Contact Name" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.ContactName"></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group"><label for="Mobile Number"><strong>Mobile
+                                            Number</strong></label><input class="form-control" type="number"
+                                            pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
+                                            [ngClass]="this.clientObject.MobileNum == '' ? 'is-invalid' : ''"
+        
+                                        placeholder="5555-5555"  [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.MobileNum"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <div class="form-group"><label for="Mobile Number"><strong>Phone
+                                            Number</strong></label><input class="form-control" type="number"
+                                            pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
+                                            [ngClass]="this.clientObject.PhoneNum == '' ? 'is-invalid' : ''"
+
+                                        placeholder="5555-5555"  [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.PhoneNum"></div>
+                            </div>
+                            <div class="col">
+                                <div class="form-group"><label for="Mobile Number"><strong>Fax
+                                        </strong></label><input class="form-control" type="number"
+                                        pattern="/^-?\d+\.?\d*$/" onKeyPress="if(this.value.length==8) return false;"
+                                        [ngClass]="this.clientObject.faxNum == '' ? 'is-invalid' : ''"
+                                        placeholder="5555-5555"  [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.faxNum"></div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="col">
+                                <!-- <div class="form-group"><label for="Category"><strong>Category
+                                        </strong></label>
+                                    <input class="form-control" list="GuardL" placeholder="Select" required
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.Category">
+                                    <datalist id="GuardL">
+                                        <option *ngFor="let gua of GuardL" [value]="gua.Name">
+                                            {{gua.ID}}
+                                        </option>
+                                    </datalist>
+                                </div> -->
+                                <div class="form-group" *ngIf="isChecked">
+                                    <label for="PostSite "><strong>Post Site Name</strong></label>
+                                    <input class="form-control" type="text" placeholder="Location"
+                                    [ngClass]="this.clientObject.PsLocation == '' ? 'is-invalid' : ''"
+                                        required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.PsLocation"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div>
+                            </div>
+                            <div class="col">
+                                <!-- <div class="form-group" *ngIf="isChecked">
+                                    <label for="PostSite "><strong>Post Site Name</strong></label>
+                                    <input class="form-control" type="text" placeholder="Location"
+                                        [ngClass]="this.clientObject.PsLocation == '' ? 'is-invalid' : 'is-valid'"
+                                        required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.PsLocation"
+                                        [ngModelOptions]="{standalone: true}">
+                                </div> -->
+                                <div class="form-group">
+                                    <label for="address"><strong>Address</strong></label><input class="form-control"
+                                    [ngClass]="this.clientObject.ClientAddress == '' ? 'is-invalid' : ''"
+                                        type="text" placeholder="Address" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.ClientAddress">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+
+                            <div class="col">
+                                <!-- <div class="form-group">
+                                    <label for="address"><strong>Address</strong></label><input class="form-control"
+                                        type="text" placeholder="Address" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.clientObject.ClientAddress">
+                                </div> -->
+                            </div>
+                            <!-- <div class="col-2 mt-4 pt-2">
+                                <mat-slide-toggle  [(ngModel)]="isChecked" [color]="color"
+                                    [ngModelOptions]="{standalone: true}">
+                                    Add coordinate
+                                </mat-slide-toggle>
+                            </div> -->
+                        </div>
+                        <div class="form-row" *ngIf="isChecked">
+                            <fieldset class="scheduler-border d-flex flex-row row">
+                                <legend class="scheduler-border">Coordinate</legend>
+
+
+                                <label for="Lat" class="mt-2 mr-4"><strong>Latitude</strong></label><input
+                                [ngClass]="this.clientObject.Latitude < -22|| this.clientObject.Latitude >0? 'is-invalid' : ''"
+                                    class="form-control col-4" type="text" placeholder="Latitude" required
+                                    [(ngModel)]="this.clientObject.Latitude" [ngModelOptions]="{standalone: true}">
+                                <div class="col-lg-2 col-md-0 col-sm-0"></div>
+                                <label for="Long" class="mt-2 mr-4"><strong>Longitude</strong></label><input
+                                [ngClass]="this.clientObject.Longitude < -50 || this.clientObject.Longitude > 60 ? 'is-invalid' : ''"
+                                    class="form-control col-4" type="text" placeholder="Longitude" required
+                                    [(ngModel)]="this.clientObject.Longitude" [ngModelOptions]="{standalone: true}">
+                            </fieldset>
+                        </div>
+                        <div id="map" class="col-12 " [ngClass]="isChecked ? '' : 'd-none'"></div>
+
+
+                        <div class="form-group">
+                            <button class="btn btn-primary btn-sm" type="submit" *ngIf="!loading">Submit</button>
+                            <div class="spinner-border text-primary" role="status" *ngIf="loading">
+                                <span class="visually-hidden"></span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

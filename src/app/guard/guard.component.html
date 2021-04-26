@@ -1,17 +1,108 @@
-<div class="container-fluid">
-    <div class="form-group"><input type="text" [(ngModel)]="EmployeeName" class="form-control"
-                    placeholder="Enter Guard Name"></div>
-    <div class="form-group"><input type="number" [(ngModel)]="EmployeeAge" class="form-control"
-                    placeholder="Enter Guard Age"></div>
-    <div class="form-group"><input type="text" [(ngModel)]="EmployeeAddress" class="form-control"
-                    placeholder="Enter Guard Address"></div>
-    <div class="form-group"><input type="text" [(ngModel)]="EmployeeCity" class="form-control"
-                    placeholder="Enter Guard City"></div>
-    <div class="form-group"><button class="btn btn-primary" (click)="createEmployee()"
-                    [disabled]="!EmployeeName || !EmployeeAge || !EmployeeAddress || !EmployeeCity">Create
-                    Employee</button>
+<div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
+        <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+        <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+        <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Guards</a>
     </div>
-    <div class="form-group">
-            <h4>{{message}}</h4>
-    </div>
-</div>
+
+      <div class="container">
+        <div class="row d-flex justify-content-center" style="margin: 3% 0 2% 0;">
+          <mat-button-toggle-group appearance="legacy">
+            <mat-button-toggle checked (click)="active2(data2)">
+              <b>Active</b>
+            </mat-button-toggle>
+            <mat-button-toggle (click)="active2(data)">
+              <b>Archived</b>
+            </mat-button-toggle>
+          </mat-button-toggle-group>
+        </div>
+        <div class=" p-4" >
+          <div class="row">
+            <div class="col-6">
+              <mat-form-field style="width: 100%;">
+                <mat-label>Filter</mat-label>
+                <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+              </mat-form-field>
+            </div>
+            <div class="row col-6 justify-content-end">
+      
+              <button mat-raised-button class="btn-primary" title="Generate Report" style="height: 70%; width: 50%;"
+                (click)="newGuard()">
+                New Guard</button>
+            </div>
+          </div>
+      
+          <div class="mat-elevation-z8"  >
+
+            <table mat-table [dataSource]="dataSource2">
+      
+
+      
+              <!-- Position Column -->
+              <ng-container matColumnDef="fname">
+                <th mat-header-cell *matHeaderCellDef> First Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.fname}} </td>
+              </ng-container>
+      
+              <!-- Name Column -->
+              <ng-container matColumnDef="lname">
+                <th mat-header-cell *matHeaderCellDef>Last Name </th>
+                <td mat-cell *matCellDef="let element"> {{element.lname}} </td>
+              </ng-container>
+      
+              <!-- Weight Column -->
+              <ng-container matColumnDef="Email">
+                <th mat-header-cell *matHeaderCellDef> Email </th>
+                <td mat-cell *matCellDef="let element"> {{element.Email}} </td>
+              </ng-container>
+      
+              <!-- Symbol Column -->
+              <ng-container matColumnDef="nid">
+                <th mat-header-cell *matHeaderCellDef> NID </th>
+                <td mat-cell *matCellDef="let element"> {{element.nid}} </td>
+              </ng-container>
+      
+              <ng-container matColumnDef="position">
+                <th mat-header-cell *matHeaderCellDef> Position </th>
+                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element">
+
+                    <button mat-icon-button [matMenuTriggerFor]="menu" >
+
+                        <span>Action</span>
+                      <mat-icon>more_vert</mat-icon>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item *ngIf="recStatus"(click)="editData(element.GuardID)"
+                    >Edit</button>
+                  <button mat-menu-item *ngIf="recStatus" (click)="archieve(element.GuardID)"
+                  >Archive</button>
+                  <button mat-menu-item *ngIf="!recStatus"(click)="unarchieve(element.GuardID)"
+                  >Unarchive</button>
+                  <button mat-menu-item *ngIf="!recStatus" (click)="deleteData(element.GuardID)"
+                  >Delete</button>
+                  </mat-menu>
+                </td>
+            </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns2;" >
+              </tr>
+
+              <tr class="mat-row" *matNoDataRow>
+                
+                <td class="mat-cell" colspan="6" *ngIf="!loading">No record found</td>
+                <td class="mat-cell text-center" colspan="6">
+                  <spinner *ngIf="loading"></spinner>
+                </td>
+              </tr>
+            </table>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+          </div>
+        </div>
+  <div id="map" class="col-12 "></div>
+
+      </div>

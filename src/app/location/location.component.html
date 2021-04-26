@@ -1,1 +1,52 @@
-<p>location works!</p>
+<div class=" mb-3  mx-0" style="background: rgba(255, 255, 255, 0.651); padding: 15px 0 10px 0; margin-top: -1.75vh; ">
+    <a class="text-muted h6 px-2" [routerLink]="['/Dashboard']">Dashboard</a>
+    <a class="text-muted h6 px-0" style="text-decoration: none;margin:0 10px">/</a>
+    <a class="text-dark font-weight-bold h6 px-2 " style="text-decoration: none;">Location</a>
+</div>
+
+
+<div class="container">
+    <table mat-table
+    [dataSource]="dataSource2" multiTemplateDataRows
+    class="mat-elevation-z8">
+    <ng-container matColumnDef="PostSite">
+        <th mat-header-cell *matHeaderCellDef>Post Site</th>
+        <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="Guard">
+        <th mat-header-cell *matHeaderCellDef>Number of Guard</th>
+        <td mat-cell *matCellDef="let element"> {{element.guard}} </td>
+    </ng-container>
+<!-- Expanded Content Column - The detail row is made up of this one column that spans across all columns -->
+<ng-container matColumnDef="expandedDetail">
+ <td mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns2.length">
+   <div class="example-element-detail"
+        [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+     
+       <div class="col-4"> Start Date : {{(element.start)}} </div>
+       <div class="col-4"> End Date : {{element.end}} </div>
+       <div class="col-4"*ngFor="let gua of element.ArrayGuard, let i = index">Guard{{i+1}} Name: {{gua.name}} </div>
+ 
+   </div>
+ </td>
+</ng-container>
+
+<tr mat-header-row *matHeaderRowDef="displayedColumns2"></tr>
+<tr mat-row *matRowDef="let element; columns: displayedColumns2;"
+   class="example-element-row"
+   [class.example-expanded-row]="expandedElement === element"
+   (click)="expandedElement = expandedElement === element ? null : element">
+</tr>
+<tr mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></tr>
+<tr class="mat-row" *matNoDataRow>
+
+    <td class="mat-cell"  *ngIf="!loading">No Schedule record found</td>
+    <td class="mat-cell text-center" colspan="2">
+        <spinner *ngIf="loading"></spinner>
+    </td>
+</tr>
+</table>
+  <div id="map" class="col-12 "></div>
+
+</div>

@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from 'src/services/firebase.service';
-
+import { AngularFireAuth } from '@angular/fire/auth';
+import { Router } from '@angular/router'
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,31 +10,52 @@ import { FirebaseService } from 'src/services/firebase.service';
 })
 export class AppComponent implements OnInit {
   title = 'SoteriaFE';
-  isSignIn = false
-  constructor(public firebaseService: FirebaseService) { }
+  logi=true
+  logIn = (localStorage.getItem('userid') !== null ? true : false);
+  constructor(public firebaseAuth: AngularFireAuth,public firebaseService: FirebaseService,
+     public router:Router) { 
+      this.logi = (localStorage.getItem('CurentUser')=== null) ? true : false
+
+     }
+ 
   ngOnInit() {
-    if (localStorage.getItem('user') !== null)
-      this.isSignIn = true
-    else
-      this.isSignIn = false
+    if(this.logIn){
+
+
+      if(localStorage.getItem('passwordless') == "true"){
+        let password=""
+        Swal.fire({
+          title: 'Enter your password',
+          input: 'password',
+          inputLabel: 'Password',
+          inputPlaceholder: 'Enter your new login password',
+          inputAttributes: {
+            autocapitalize: 'off',
+            autocorrect: 'off'
+          },
+          allowOutsideClick:false,
+          confirmButtonText: 'Save',
+          preConfirm: (login) => { password = `${login}`},
+          allowEscapeKey:false
+        }).then(()=> this.firebaseService.updatePassword(password).catch(
+          (err)=> 
+          Swal.fire({
+            icon: 'error',
+            title: 'Oops...',
+            text: 'Something went wrong!',
+            footer: err.message
+          })
+        ).then(()=> localStorage.removeItem("passwordless")))
+      }
+    }
+
   }
 
-
-  async onSignup(email: string, name: string, age: number, address: string, tel: string, password: string) {
-    await this.firebaseService.signup(email, name, age, address, tel, password)
-    if (this.firebaseService.isLoggedIn)
-      this.isSignIn = true
-  }
+  
 
 
 
-  async onSignin(email: string, password: string) {
-    await this.firebaseService.signin(email, password)
-    if (this.firebaseService.isLoggedIn)
-      this.isSignIn = true
-  }
-  handleLogout() {
-    this.isSignIn = false
 
-  }
+
+
 }
