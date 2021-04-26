@@ -61,7 +61,6 @@ import { AngularFirestore } from '@angular/fire/firestore';
     ngOnInit(): void {
       this.fire.collection('postSite', ref => ref.where("ClientName", "==",  JSON.parse(localStorage.getItem('CurentUser'))[0].fname)).valueChanges()
       .subscribe((PostSite: any) => {
-        console.log(PostSite);
 this.data.push({
   Longitude:PostSite[0].Longitude,
   Latitude:PostSite[0].Latitude,
@@ -78,7 +77,6 @@ this.data.push({
   
       this.fire.collection('Schedulers', ref => ref.where("ClientName", "==",  JSON.parse(localStorage.getItem('CurentUser'))[0].fname)).valueChanges()
       .subscribe((Dispatches: any) => {
-        console.log(Dispatches);
         let arr=[]
         Dispatches.forEach(element => {
           arr.push(
@@ -116,7 +114,6 @@ this.data.push({
      
       this.map.on('load', (event) => {
         this.data.forEach(element => {
-        console.log(element);
         this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
         this.marker1.setLngLat([element.Longitude, element.Latitude])
         .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups

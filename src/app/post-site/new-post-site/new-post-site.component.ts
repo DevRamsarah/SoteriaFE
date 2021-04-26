@@ -7,6 +7,7 @@ import { MapService } from '../../../services/map/map.service';
 import { GeoJson } from '../../../model/map/map'
 import { ThemePalette } from '@angular/material/core';
 import * as turf from '@turf/turf';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-new-post-site',
   templateUrl: './new-post-site.component.html',
@@ -106,24 +107,15 @@ export class NewPostSiteComponent implements OnInit {
         clientData.id = client.ClientID;
         clientData.Name = client.ClientName;
         this.clientD.push(clientData);
-
-
-
       });
-      console.log(this.clientD);
-
     })
     this.mapService.getAllZone().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
         this.dropdown.push(doc.data())
       });
-      console.log(this.dropdown);
-      // console.log(this.dropdown[1]);
-
     })
       .catch((error) => {
-        console.log("Error getting documents: ", error);
+        Swal.fire(error.message, '', 'error')
       });
   }
 
@@ -167,9 +159,7 @@ export class NewPostSiteComponent implements OnInit {
     this.dropdown.forEach(zoneS => {
       var poly = turf.polygon(JSON.parse(zoneS.coords));
       if (turf.booleanPointInPolygon(pt, poly)) {
-        // console.log(zoneS.region);
         this.postSiteObject.Zone = zoneS.region
-        // console.log(turf.booleanPointInPolygon(pt, poly));
       }
     });
 
@@ -205,8 +195,6 @@ export class NewPostSiteComponent implements OnInit {
     }
     this.router.navigate(["PostSite"]);
 
-    console.log(this.postSiteObject);
-    
   }
 
 

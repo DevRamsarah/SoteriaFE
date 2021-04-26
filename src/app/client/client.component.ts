@@ -15,7 +15,7 @@ import Swal from 'sweetalert2';
   styleUrls: ['./client.component.css']
 })
 export class ClientComponent implements AfterViewInit {
-  recStatus=true
+  recStatus = true
   edit = false;
   editE = null;
   loading = true;
@@ -36,22 +36,20 @@ export class ClientComponent implements AfterViewInit {
   source: any;
   markers: any;
   dropdown: any = []
-  marker1:any
+  marker1: any
   dataSource2 = new MatTableDataSource<Client>();
   selection = new SelectionModel<Client>(true, []);
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: ClientService, public router: Router) { 
-    mapboxgl.accessToken ='pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
+  constructor(public firebaseCrud: ClientService, public router: Router) {
+    //init map api token
+    mapboxgl.accessToken = 'pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
 
   }
   ngOnInit(): void {
-    
-
-
+    //get client data when page load, display in table
     this.firebaseCrud.getClient().subscribe((Dispatches: any) => {
-      console.log(Dispatches);
       this.data = Dispatches.filter((client) => client.recordStatus === 'archieve');
       this.data2 = Dispatches.filter((client) => client.recordStatus === 'active');
 
@@ -64,7 +62,7 @@ export class ClientComponent implements AfterViewInit {
 
   }
 
-
+  //init map
   initializeMap() {
     this.map = new mapboxgl.Map({
       container: 'map',
@@ -73,31 +71,25 @@ export class ClientComponent implements AfterViewInit {
       zoom: 9,
       center: [this.lng, this.lat],
       maxBounds: this.bounds
-
-
     })
     //add navigation control to map 
     this.map.addControl(new mapboxgl.NavigationControl());
-
-   
+    //when map load, add client postsite
     this.map.on('load', (event) => {
       this.data2.forEach(element => {
-      console.log(element);
-      this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
-      this.marker1.setLngLat([element.Longitude, element.Latitude])
-      .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
-    .setHTML('<h3> Name: ' + element.ClientName + '</h3><p> Address: ' + element.ClientAddress + '</p>'))
-        .addTo(this.map);
-
-    })
-  });
-
+        this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
+        this.marker1.setLngLat([element.Longitude, element.Latitude])
+          .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
+            .setHTML('<h3> Name: ' + element.ClientName + '</h3><p> Address: ' + element.ClientAddress + '</p>'))
+          .addTo(this.map);
+      })
+    });
   }
 
 
   ngAfterViewInit() {
     this.dataSource2.paginator = this.paginator;
-        setTimeout(() => {
+    setTimeout(() => {
       this.initializeMap()
 
     }, 4000);
@@ -107,7 +99,7 @@ export class ClientComponent implements AfterViewInit {
     this.editE = (this.edit == true ? x : null);
   }
   active2(x) {
-    this.recStatus?this.recStatus=false:this.recStatus=true;
+    this.recStatus ? this.recStatus = false : this.recStatus = true;
     this.dataSource2.data = x;
   }
   applyFilter(event: Event) {
@@ -120,12 +112,15 @@ export class ClientComponent implements AfterViewInit {
     const numRows = this.dataSource2.data.length;
     return numSelected === numRows;
   }
+  // redirect to nnew client
   new() {
     this.router.navigate(["Clients/New-client"]);
   }
+  //edit data
   editData(id) {
     location.href = "Clients/New-client/?edit=" + id;
   }
+  //delete data
   deleteData(id) {
     Swal.fire({
       title: 'Are you sure?',
@@ -146,24 +141,46 @@ export class ClientComponent implements AfterViewInit {
             )
           }
         )
- 
+
       }
     })
 
   }
+  //archive data
   archieve(id) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to archive this client data?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, archive it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.firebaseCrud.updateStatus(id, "archieve").then(
+          () => {
+            Swal.fire(
+              'Archived!',
+              'Your file has been archive.',
+              'success'
+            )
+          }
+        )
 
-    this.firebaseCrud.updateStatus(id,"archieve").then(
-      () => {
-        alert("Client archieve")// add sweet alert
       }
-    )
+    })
+
   }
   unarchieve(id) {
 
-    this.firebaseCrud.updateStatus(id,"active").then(
+    this.firebaseCrud.updateStatus(id, "active").then(
       () => {
-        alert("Client unarchieve")// add sweet alert
+        Swal.fire(
+          'UnArchived!',
+          'Your file has been unarchive.',
+          'success'
+        )
       }
     )
   }

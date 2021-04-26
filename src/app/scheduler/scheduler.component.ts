@@ -189,7 +189,6 @@ export class SchedulerComponent implements OnInit {
   }
   ngOnInit(): void {
     this.firebaseCrud.getScheduler().subscribe((schedule: any) => {
-      console.log(schedule);
       schedule.forEach(doc => {
         let dummyE = new Date(doc.end)
         let dummyS = new Date(doc.start)
@@ -198,8 +197,6 @@ export class SchedulerComponent implements OnInit {
         let dummyA = this.actions
         let data = { ...doc, end: dummyE, start: dummyS, color: dummyC, actions: dummyA }
         this.events.push(data)
-        console.log(data);
-
       })
     })
     setTimeout(() => {
@@ -208,19 +205,13 @@ export class SchedulerComponent implements OnInit {
     setTimeout(() => {
       this.refresh.next()
     }, 5000);
-    console.log(this.events);
     this.guardCRUD.getGuard().subscribe((Guards: any) => {
       Guards.forEach(Guard => {
         let GuardData: any = {};
         GuardData.id = Guard.ClientID;
         GuardData.Name = Guard.fname +" "+ Guard.lname;
         this.guardD.push(GuardData);
-
-
-
       });
-      // console.log(this.clientD);
-
     })
   }
 save(){

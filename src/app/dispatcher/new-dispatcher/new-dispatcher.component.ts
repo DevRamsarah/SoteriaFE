@@ -76,8 +76,6 @@ edit=false
           recordStatus: "active"
  
         }
-        console.log(dispatch);
-        
         this.ClientE=dispatch.ClientID
         this.PostSiteE=dispatch.PostSite
         this.guardE=dispatch.Guard
@@ -103,8 +101,6 @@ edit=false
 
 
       });
-      console.log(this.clientD);
-
     })
 
     this.guardCRUD.getGuard().subscribe((Guards: any) => {
@@ -123,14 +119,10 @@ edit=false
 
   getClientDrop($event) {
 
-console.log(this.ClientDrop);
-
     this.PostSiteD = []
 
     this.fire.collection('postSite', ref => ref.where("ClientName", "==", this.ClientDrop)).valueChanges({ idField: 'PostSiteID' })
       .subscribe((PostSite: any) => {
-        console.log(PostSite);
-
         PostSite.forEach(ps => {
           let PostSiteData: any = {};
           PostSiteData.id = ps.PostSiteID;
@@ -140,18 +132,12 @@ console.log(this.ClientDrop);
 
 
         });
-        // console.log(this.clientD);
-
       })
-
-
-
   }
   submit() {
     this.invoiceObject.ClientID= this.ClientDrop
     this.invoiceObject.Guard= this.guardDrop
     this.invoiceObject.PostSite= this.PostSiteDrop
-    console.log(this.invoiceObject)
     Swal.fire({
       title: 'Do you want to save the changes?',
       showDenyButton: true,

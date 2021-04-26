@@ -53,7 +53,6 @@ export class PostSiteComponent implements OnInit {
 
 
     this.firebaseCrud.getPostSite().subscribe((Dispatches: any) => {
-      console.log(Dispatches);
       this.data = Dispatches.filter((client) => client.recordStatus === 'archieve');
       this.data2 = Dispatches.filter((client) => client.recordStatus === 'active');
 
@@ -83,7 +82,6 @@ export class PostSiteComponent implements OnInit {
    
     this.map.on('load', (event) => {
       this.data2.forEach(element => {
-      console.log(element);
       this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
       this.marker1.setLngLat([element.Longitude, element.Latitude])
       .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
@@ -125,8 +123,6 @@ export class PostSiteComponent implements OnInit {
   }
 
   editData(id) {
-    // console.log(id);
-
     location.href = "PostSite/New-PostSite/?edit=" + id;
   }
   deleteData(id) {

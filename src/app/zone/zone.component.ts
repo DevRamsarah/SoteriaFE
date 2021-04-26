@@ -43,7 +43,6 @@ export class ZoneComponent implements OnInit {
   ngOnInit(): void {
 
     this.mapService.getAllZoneTable().subscribe((Zone: any) => {
-      console.log(Zone);
       this.data2 = Zone
 
       this.loading = false;
@@ -59,15 +58,10 @@ export class ZoneComponent implements OnInit {
 
     this.mapService.getAllZone().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
         this.dropdown.push(doc.data())
       });
-      console.log(this.dropdown);
-      // console.log(this.dropdown[1]);
-
     })
       .catch((error) => {
-        console.log("Error getting documents: ", error);
       });
 
     setTimeout(() => {
@@ -125,17 +119,10 @@ export class ZoneComponent implements OnInit {
       this.dropdown.forEach(zoneS => {
 
         this.displayZone(zoneS.region, zoneS.coords)
-        console.log(zoneS);
-
       });
-
-
       this.map.on('draw.create', function (e) {
-
         var userPolygon = e.features[0];
         let point = turf.getCoords(userPolygon);
-
-        console.log(JSON.stringify(point));
         sessionStorage.setItem("Zone", JSON.stringify(point));
 
       });
@@ -167,7 +154,6 @@ export class ZoneComponent implements OnInit {
       var pt = turf.point([lng, lat]);
       var poly = turf.polygon(JSON.parse(zoneS.coords));
       if (turf.booleanPointInPolygon(pt, poly)) {
-        console.log(zoneS.region);
         this.Zone = zoneS.region
       }
     });

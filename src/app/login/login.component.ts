@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
         text: 'Something went wrong!',
         footer: err
       })
-      console.log(err);
       this.errMssg = err
       this.loading = false;
 
@@ -84,7 +83,6 @@ export class LoginComponent implements OnInit {
     //       text: 'Something went wrong!',
     //       footer: err
     //     })
-    //     console.log(err);
     //     this.errMssg = err
     //     this.loading = false;
 

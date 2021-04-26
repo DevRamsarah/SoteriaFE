@@ -57,7 +57,6 @@ export class GuardComponent implements AfterViewInit, OnInit {
 
 
     this.firebaseCrud.getGuard().subscribe((Clients: any) => {
-      console.log(Clients);
       this.data = Clients.filter((client) => client.recordStatus === 'archieve');
       this.data2 = Clients.filter((client) => client.recordStatus === 'active');
 
@@ -87,7 +86,6 @@ export class GuardComponent implements AfterViewInit, OnInit {
    
     this.map.on('load', (event) => {
       this.data2.forEach(element => {
-      console.log(element);
       this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#d02922" })
       this.marker1.setLngLat([element.Longitude, element.Latitude])
       .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
@@ -128,8 +126,6 @@ export class GuardComponent implements AfterViewInit, OnInit {
 
 
   editData(id) {
-    // console.log(id);
-
     location.href = "Guards/New-guard/?edit=" + id;
   }
   deleteData(id) {

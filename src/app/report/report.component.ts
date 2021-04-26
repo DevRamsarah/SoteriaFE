@@ -4,6 +4,7 @@ import { addWeeks } from '@progress/kendo-date-math';
 import { addMonths } from '@progress/kendo-date-math';
 import { convertToCSV } from '../../app/utils/generateCSV';
 import { ClientService } from 'src/services/client/client.service';
+import Swal from 'sweetalert2';
 
 const date = new Date();
 var day = addDays(date, -1);
@@ -65,7 +66,7 @@ export class ReportComponent implements OnInit {
         }
       },
       (err) => {
-        console.log(err);
+        Swal.fire(err.message, '', 'error')
         this._loading = false;
       }
     );

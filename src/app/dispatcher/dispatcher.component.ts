@@ -33,7 +33,6 @@ export class DispatcherComponent implements OnInit {
 
 
     this.firebaseCrud.getDispatch().subscribe((Dispatches: any) => {
-      console.log(Dispatches);
       this.data = Dispatches.filter((client) => client.recordStatus === 'archieve');
       this.data2 = Dispatches.filter((client) => client.recordStatus === 'active');
 

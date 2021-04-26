@@ -41,7 +41,7 @@ export class NewClientComponent implements OnInit {
     recordStatus: "active"
   }
   currentUser = {
-    id:"",
+    id: "",
     fname: "",
     lname: "",
     email: "",
@@ -51,7 +51,7 @@ export class NewClientComponent implements OnInit {
     zome: "",
     latitude: "",
     longitude: "",
-    role:""
+    role: ""
 
   }
 
@@ -70,7 +70,7 @@ export class NewClientComponent implements OnInit {
   markers: any;
   dropdown: any = []
   marker1 = new mapboxgl.Marker({ draggable: true, color: "#d02922" })
-  constructor(public firebaseAuth: AngularFireAuth,public userService: FirebaseService, public firebaseCrud: ClientService, public router: Router, private mapService: MapService) { }
+  constructor(public firebaseAuth: AngularFireAuth, public userService: FirebaseService, public firebaseCrud: ClientService, public router: Router, private mapService: MapService) { }
 
   ngOnInit(): void {
     this.loadingEdit = true
@@ -115,15 +115,11 @@ export class NewClientComponent implements OnInit {
 
     this.mapService.getAllZone().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
         this.dropdown.push(doc.data())
       });
-      console.log(this.dropdown);
-      // console.log(this.dropdown[1]);
-
     })
       .catch((error) => {
-        console.log("Error getting documents: ", error);
+        Swal.fire(error.message, '', 'error')
       });
   }
 
@@ -185,9 +181,7 @@ export class NewClientComponent implements OnInit {
     this.dropdown.forEach(zoneS => {
       var poly = turf.polygon(JSON.parse(zoneS.coords));
       if (turf.booleanPointInPolygon(pt, poly)) {
-        // console.log(zoneS.region);
         this.clientObject.Zone = zoneS.region
-        // console.log(turf.booleanPointInPolygon(pt, poly));
       }
     });
 
@@ -195,9 +189,9 @@ export class NewClientComponent implements OnInit {
 
   submit() {
     const actionCodeSettings = {
-      url:'http://localhost:4200/Dashboard',
-      handleCodeInApp:true
-  };
+      url: 'http://localhost:4200/Dashboard',
+      handleCodeInApp: true
+    };
     Swal.fire({
       title: 'Do you want to save the changes?',
       showDenyButton: true,
@@ -217,32 +211,32 @@ export class NewClientComponent implements OnInit {
           )
         } else {
           this.firebaseAuth.createUserWithEmailAndPassword(this.clientObject.ClientEmail, "soteria@1234")
-          .then(res => {
-            this.currentUser = {
-              id:res.user.uid,
-              fname: this.clientObject.ClientName,
-              lname: "",
-              email: this.clientObject.ClientEmail,
-              num: this.clientObject.MobileNum,
-              nic: null,
-              address: this.clientObject.ClientAddress,
-              zome: this.clientObject.Zone,
-              latitude: this.clientObject.Latitude,
-              longitude: this.clientObject.Longitude,
-              role:"Client"
-            }
-            this.firebaseCrud.createNewClient(this.clientObject).then(
-              (user) => {
-                
-                this.userService.createNewUser(this.currentUser).then(() => {
-                  this.firebaseAuth.sendSignInLinkToEmail(this.currentUser.email,actionCodeSettings).catch((err)=>console.log(err));
-                  Swal.fire('Client data saved!', '', 'success')
-                  this.router.navigate(["Clients"]);
-                })
+            .then(res => {
+              this.currentUser = {
+                id: res.user.uid,
+                fname: this.clientObject.ClientName,
+                lname: "",
+                email: this.clientObject.ClientEmail,
+                num: this.clientObject.MobileNum,
+                nic: null,
+                address: this.clientObject.ClientAddress,
+                zome: this.clientObject.Zone,
+                latitude: this.clientObject.Latitude,
+                longitude: this.clientObject.Longitude,
+                role: "Client"
               }
-            )
-          })
-    
+              this.firebaseCrud.createNewClient(this.clientObject).then(
+                (user) => {
+
+                  this.userService.createNewUser(this.currentUser).then(() => {
+                    this.firebaseAuth.sendSignInLinkToEmail(this.currentUser.email, actionCodeSettings).catch((err) =>  Swal.fire(err.message, '', 'error'));
+                    Swal.fire('Client data saved!', '', 'success')
+                    this.router.navigate(["Clients"]);
+                  })
+                }
+              )
+            })
+
 
         }
       } else if (result.isDenied) {

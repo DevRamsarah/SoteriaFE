@@ -119,15 +119,11 @@ export class NewGuardComponent implements OnInit {
 
     this.mapService.getAllZone().then((querySnapshot) => {
       querySnapshot.forEach((doc) => {
-        // console.log(doc.data());
         this.dropdown.push(doc.data())
       });
-      console.log(this.dropdown);
-      // console.log(this.dropdown[1]);
-
     })
       .catch((error) => {
-        console.log("Error getting documents: ", error);
+        Swal.fire(error.message, '', 'error')
       });
   }
 
@@ -185,9 +181,7 @@ export class NewGuardComponent implements OnInit {
     this.dropdown.forEach(zoneS => {
       var poly = turf.polygon(JSON.parse(zoneS.coords));
       if (turf.booleanPointInPolygon(pt, poly)) {
-        // console.log(zoneS.region);
         this.guardObject.Zone = zoneS.region
-        // console.log(turf.booleanPointInPolygon(pt, poly));
       }
     });
 
@@ -238,7 +232,7 @@ export class NewGuardComponent implements OnInit {
                 this.firebaseCrud.createNewGuard(this.guardObject).then(
                   () => {
                     this.userService.createNewUser(this.currentUser).then(() => {
-                      this.firebaseAuth.sendSignInLinkToEmail(this.currentUser.email,actionCodeSettings).catch((err)=>console.log(err));
+                      this.firebaseAuth.sendSignInLinkToEmail(this.currentUser.email,actionCodeSettings).catch((err)=>        Swal.fire(err.message, '', 'error'));
                       Swal.fire('Guard data saved!', '', 'success')
                       this.router.navigate(["Guards"]);
                     })
@@ -252,9 +246,5 @@ export class NewGuardComponent implements OnInit {
           Swal.fire('Changes are not saved', '', 'info')
         }
       })
-
-
-    // console.log(this.guardObject);
-
   }
 }

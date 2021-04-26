@@ -34,7 +34,6 @@ export class InvoiceComponent implements OnInit {
 
 
     this.firebaseCrud.getInvoice().subscribe((Dispatches: any) => {
-      console.log(Dispatches);
       this.data = Dispatches.filter((client) => client.recordStatus === 'archieve');
       this.data2 = Dispatches.filter((client) => client.recordStatus === 'active');
       this.loading = false;
@@ -74,8 +73,6 @@ export class InvoiceComponent implements OnInit {
   }
 
   editData(id) {
-    // console.log(id);
-
     location.href = "Invoicer/New-invoice/?edit=" + id;
   }
   deleteData(id) {

@@ -13,8 +13,6 @@ export class SidebarComponent implements OnInit {
   constructor(public firebaseService: FirebaseService
   ) {
     this.firebaseService.getOneUser(localStorage.getItem('userid')).subscribe((user: any) => {
-      console.log(user);
-
       localStorage.setItem('CurentUser', JSON.stringify(user))
     })
 

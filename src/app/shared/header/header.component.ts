@@ -18,8 +18,6 @@ role = false
 
   ngOnInit(): void {
     this.firebaseService.getOneUser(localStorage.getItem('userid')).subscribe((user: any) => {
-      console.log(user);
-      
       localStorage.setItem('CurentUser', JSON.stringify(user))
     })
 

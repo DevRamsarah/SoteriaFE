@@ -80,12 +80,7 @@ export class AddInvoiceComponent implements OnInit {
         clientData.id = client.ClientID;
         clientData.Name = client.ClientName;
         this.clientD.push(clientData);
-
-
-
       });
-      // console.log(this.clientD);
-
     })
 
   }
@@ -109,14 +104,8 @@ export class AddInvoiceComponent implements OnInit {
     }, 1000);
 
     html2pdf(element, opt);
-
-
-
   }
-
-
   addFieldValue() {
-
     this.fieldArray.push(this.newAttribute)
     this.newAttribute = {};
   }
@@ -141,23 +130,13 @@ export class AddInvoiceComponent implements OnInit {
 
     this.fire.collection('postSite', ref => ref.where("ClientName", "==", this.ClientDrop)).valueChanges({ idField: 'PostSiteID' })
       .subscribe((PostSite: any) => {
-        console.log(PostSite);
-
         PostSite.forEach(ps => {
           let PostSiteData: any = {};
           PostSiteData.id = ps.PostSiteID;
           PostSiteData.Name = ps.PsLocation;
           this.PostSiteD.push(PostSiteData);
-
-
-
         });
-        // console.log(this.clientD);
-
       })
-
-
-
   }
   getAddress($event) {
     this.fire.collection('postSite', ref => ref.where("PsLocation", "==", this.PostSiteDrop)).valueChanges()
@@ -180,7 +159,6 @@ export class AddInvoiceComponent implements OnInit {
           )
         }
       })
-      console.log(this.guardlist);
     })
   }
   generate() {
@@ -194,7 +172,6 @@ export class AddInvoiceComponent implements OnInit {
       this.selectedGuard.push(nearest.properties)
       this.guardlist.splice(nearest.properties.featureIndex, 1)
     }
-    console.log(this.selectedGuard);
     this.SchedulerCRUD.createNewScheduler(
       {
         start: (this.fieldArray[0].start).toString(),

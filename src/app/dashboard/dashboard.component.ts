@@ -51,8 +51,6 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.firebaseService.getOneUser(localStorage.getItem('userid')).subscribe((user: any) => {
-      console.log(user);
-      
       localStorage.setItem('CurentUser', JSON.stringify(user))
     })
 
@@ -99,8 +97,6 @@ export class DashboardComponent implements OnInit {
 
 
   initializeMap() {
-    // console.log(this.GuardC);
-    
     this.map = new mapboxgl.Map({
       container: 'map',
       style: this.style,
@@ -119,7 +115,6 @@ export class DashboardComponent implements OnInit {
     this.map.on('load', (event) => {
 
       this.GuardC.forEach(element => {
-        console.log(element);
         this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#053AFD" })
         this.marker1.setLngLat([element.Longitude, element.Latitude])
           .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
@@ -129,7 +124,6 @@ export class DashboardComponent implements OnInit {
       
 
       this.PostSiteC.forEach(element => {
-        console.log(element);
         this.marker1 = new mapboxgl.Marker({ draggable: false, color: "#05FD1F" })
         this.marker1.setLngLat([element.Longitude, element.Latitude])
           .setPopup(new mapboxgl.Popup({ offset: 5 }) // add popups
