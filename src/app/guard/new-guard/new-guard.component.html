@@ -125,8 +125,8 @@
                                                                                         Number</strong>
                                                                         </label><input class="form-control" type="text"
                                                                                 placeholder="Nic" required
-                                                                                pattern="/^T[0-3]\d[0-1]\d{10}$/"
-                                                                                onKeyPress="if(this.value.length==8) return false;"
+                                                                                
+                                                                                onKeyPress="if(this.value.length==14) return false;"
                                                                                 [ngModelOptions]="{standalone: true}"
                                                                                 [(ngModel)]="this.guardObject.nid"
                                                                                 [ngClass]="this.guardObject.nid == '' ? 'is-invalid' : ''">
