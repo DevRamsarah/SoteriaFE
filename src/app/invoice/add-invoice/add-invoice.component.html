@@ -77,7 +77,7 @@
                                     <th>Service</th>
                                     <th>Hours</th>
                                     <th>Rate/Hour</th>
-                                    <th>Quantity</th>
+                                    <th>Guard</th>
                                     <th>Amount(Rs)</th>
                                     <th *ngIf="pdf">Action</th>
 
@@ -108,13 +108,13 @@
                                         <input [(ngModel)]="field.hours"  class="form-control" type="text" name="{{field.hours}}" readonly />
                                     </td>
                                     <td>
-                                        <input [(ngModel)]="field.rate"  class="form-control" type="number" name="{{field.rate}}" />
+                                        <input [(ngModel)]="field.rate"  [min]="1"  class="form-control" type="number" name="{{field.rate}}" />
                                     </td>
                                     <td>
-                                        <input [(ngModel)]="field.quatity"  class="form-control" type="number"  (ngModelChange)="getAmount($event,i)"  name="{{field.quatity}}" />
+                                        <input [(ngModel)]="field.quatity" [min]="1" [max]="20"  class="form-control" type="number"  (ngModelChange)="getAmount($event,i)"  name="{{field.quatity}}" />
                                     </td>
                                     <td >
-                                        <input [(ngModel)]="field.amount" class="form-control" type="number" name="{{field.amount}}"  />
+                                        <input [(ngModel)]="field.amount" class="form-control" type="number" name="{{field.amount}}" readonly  />
                                     </td>
                                     <td *ngIf="pdf">
                                         <button class="btn btn-danger"  type="button" (click)="deleteFieldValue(i)"><i class="fas fa-minus-square"></i></button>
@@ -123,7 +123,7 @@
                                 </tr>
                                 <tr  *ngIf="pdf">
                                   
-                                    <td colspan="6" class="text-center">
+                                    <td colspan="6" class="text-center" *ngIf="add">
                                         <button class="btn btn-primary" type="button" (click)="addFieldValue()">Add</button>
                                     </td>
                                 </tr>

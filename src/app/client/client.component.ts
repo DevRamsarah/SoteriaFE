@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 import * as mapboxgl from "mapbox-gl";
 import { environment } from '../../environments/environment'
 import Swal from 'sweetalert2';
+import { AngularFirestore } from '@angular/fire/firestore';
 
 @Component({
   selector: 'app-client',
@@ -42,7 +43,7 @@ export class ClientComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(public firebaseCrud: ClientService, public router: Router) {
+  constructor(public firebaseCrud: ClientService,public fire: AngularFirestore, public router: Router) {
     //init map api token
     mapboxgl.accessToken = 'pk.eyJ1IjoibGVkZXYyMiIsImEiOiJjazZkdjR2bTAxbTA1M2VwazJ3d3ZobWQzIn0.fFPWIyd4gaaSLiuwx_ROJA'
 
@@ -121,7 +122,7 @@ export class ClientComponent implements AfterViewInit {
     location.href = "Clients/New-client/?edit=" + id;
   }
   //delete data
-  deleteData(id) {
+  deleteData(id,name) {
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -132,7 +133,14 @@ export class ClientComponent implements AfterViewInit {
       confirmButtonText: 'Yes, delete it!'
     }).then((result) => {
       if (result.isConfirmed) {
-        this.firebaseCrud.deleteClient(id).then(
+        this.firebaseCrud.deleteClient(id).then(()=>{
+          this.fire.collection('postSite', ref => ref.where("ClientName", "==",name)).valueChanges({ idField: 'clientID' })
+          .subscribe(((PostSite: any) => {
+            PostSite.forEach(element => {
+              this.fire.collection('postSite').doc(element.clientID).delete();
+            });
+          }))
+        }).then(
           () => {
             Swal.fire(
               'Deleted!',

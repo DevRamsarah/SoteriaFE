@@ -150,23 +150,40 @@ export class PostSiteComponent implements OnInit {
     
   }
   archieve(id) {
-
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "Do you want to archive this client data?",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, archive it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
     this.firebaseCrud.updateStatus(id,"archieve").then(
       () => {
-        alert("Guard archieve")// add sweet alert
+        Swal.fire(
+          'Archived!',
+          'Your file has been archive.',
+          'success'
+        )
       }
     )
-  }
-  unarchieve(id) {
 
-    this.firebaseCrud.updateStatus(id,"active").then(
-      () => {
-        alert("Guard active")// add sweet alert
-      
-      }
-    )
   }
+})
+
 }
+unarchieve(id) {
 
-
-
+  this.firebaseCrud.updateStatus(id, "active").then(
+    () => {
+      Swal.fire(
+        'UnArchived!',
+        'Your file has been unarchive.',
+        'success'
+      )
+    }
+  )
+}
+}

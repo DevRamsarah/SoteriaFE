@@ -44,40 +44,38 @@
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Mobile
                                             Number</strong></label><input class="form-control" type="text"
-                                        placeholder="5555-5555" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.MobileNum"></div>
+                                        placeholder="5555-5555"  
+                                        onKeyPress="if(this.value.length==8) return false;"
+                                        [ngClass]="(this.postSiteObject.MobileNum != null && this.postSiteObject.MobileNum<10000000) ? 'is-invalid' : ''"
+                                         required [ngModelOptions]="{standalone: true}" 
+                                         [(ngModel)]="this.postSiteObject.MobileNum"></div>
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Phone
-                                            Number</strong></label><input class="form-control" type="text"
-                                        placeholder="5555-5555" required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.PhoneNum"></div>
+                                            Number</strong></label><input class="form-control" type="number"
+                                        placeholder="5555-5555"  
+                                        onKeyPress="if(this.value.length==8) return false;"
+                                        [ngClass]="(this.postSiteObject.PhoneNum != null && this.postSiteObject.PhoneNum<10000000) ? 'is-invalid' : ''"
+
+                                          [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.PhoneNum"></div>
                             </div>
                             <div class="col">
                                 <div class="form-group"><label for="Mobile Number"><strong>Fax
-                                        </strong></label><input class="form-control" type="text" placeholder="5555-5555"
-                                        required [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.faxNum"></div>
+                                        </strong></label><input class="form-control" type="number" placeholder="5555-5555" 
+                    [ngClass]="(postSiteObject.faxNum != null && postSiteObject.faxNum<10000000) ? 'is-invalid' : ''"
+                    
+                    onKeyPress="if(this.value.length==8) return false;"
+                                         [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.faxNum"></div>
                             </div>
                         </div>
                         <div class="form-row">
-                            <div class="col">
+                            <div class="col-6">
 
                                 <div class="form-group"><label for="Email"><strong>Email Address</strong></label><input
                                         class="form-control" type="email" placeholder="user@example.com" required
                                         [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.ClientEmail">
-                                </div>
-                            </div>
-                            <div class="col">
-                                <div class="form-group">
-                                    <label for="Category"><strong>Category
-                                    </strong></label>
-                                <input class="form-control" list="clientD" placeholder="Select" required
-                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="this.postSiteObject.Category">
-                                <datalist id="clientD">
-                                    <option *ngFor="let gua of clientD" [value]="gua.Name">
-                                        {{gua.id}}
-                                    </option>
-                                </datalist>
                                 </div>
                             </div>
                         </div>
@@ -103,11 +101,12 @@
 
                                 <label for="Lat" class="mt-2 mr-4"><strong>Latitude</strong></label><input
                                     class="form-control col-4" type="text" placeholder="Latitude" required
-                                    [ngClass]="this.postSiteObject.Latitude == '' ? 'is-invalid' : 'is-valid'"
+                                    [ngClass]="this.postSiteObject.Latitude < -22|| this.postSiteObject.Latitude >0? 'is-invalid' : ''"
                                     [(ngModel)]="this.postSiteObject.Latitude" [ngModelOptions]="{standalone: true}">
                                 <div class="col-lg-2 col-md-0 col-sm-0"></div>
                                 <label for="Long" class="mt-2 mr-4"><strong>Longitude</strong></label><input
                                     class="form-control col-4" type="text" placeholder="Longitude" required
+                                    [ngClass]="this.postSiteObject.Longitude < -50 || this.postSiteObject.Longitude > 60 ? 'is-invalid' : ''"
                                     [(ngModel)]="this.postSiteObject.Longitude" [ngModelOptions]="{standalone: true}">
                             </fieldset>
                         </div>

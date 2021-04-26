@@ -20,6 +20,7 @@ export class AddInvoiceComponent implements OnInit {
   loading = false;
   minDate: Date;
   maxDate: Date;
+  add=true
   invoice = {
     Title: "",
     Summary: "",
@@ -108,11 +109,13 @@ export class AddInvoiceComponent implements OnInit {
   addFieldValue() {
     this.fieldArray.push(this.newAttribute)
     this.newAttribute = {};
+    this.add=false
   }
 
   deleteFieldValue(index) {
     this.invoice.total = this.invoice.total - this.fieldArray[index].amount
     this.fieldArray.splice(index, 1);
+    this.add=true
   }
   getChange(event, i) {
     this.fieldArray[i].hours = Math.abs(this.fieldArray[i].end - this.fieldArray[i].start) / 36e5;
@@ -202,7 +205,7 @@ export class AddInvoiceComponent implements OnInit {
         if (result.isConfirmed) {
           this.invoiceCRUD.createNewInvoice(this.invoice).then(
             () => {
-              Swal.fire('Client data edited!', '', 'success')
+              Swal.fire('Invoice data saved!', '', 'success')
               this.router.navigate(["Invoicer"]);
             })
         }

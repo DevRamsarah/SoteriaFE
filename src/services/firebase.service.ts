@@ -45,13 +45,34 @@ export class FirebaseService {
       })
   }
 async updatePassword(password){
-  console.log(password);
-  
   await (await this.firebaseAuth.currentUser).updatePassword(password)
   .then(() =>
    Swal.fire('Password saved!', '', 'success')
-   ).then(()=>window.location.reload())
+   ).then(()=>      this.redirect()
+   )
 
+}
+redirect() {
+  setTimeout(() => {
+
+    if (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Admin") {
+      window.location.href = "Dashboard"
+    } 
+    if (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Client") {
+      window.location.href = "Location"
+    } 
+    if (JSON.parse(localStorage.getItem('CurentUser'))[0].role == "Guard") {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Guard Mail Detected!',
+        text: 'Please use the Mobile app.',
+        footer: "Please contact the admin to resolve this issue."
+      }).then(() => {
+        localStorage.clear();
+        window.location.reload()
+      })
+    } 
+  }, 4000);
 }
 reset(emailAddress){
   this.firebaseAuth.sendPasswordResetEmail(emailAddress).then(function() {

@@ -84,9 +84,9 @@
                                                                                 for="Mobile Number"><strong>Mobile
                                                                                         Number</strong></label><input
                                                                                 class="form-control" type="number"
+                                                                                [ngClass]="(this.guardObject.MobileNum != null && this.guardObject.MobileNum<10000000) ? 'is-invalid' : ''"
                                                                                 pattern="/^-?\d+\.?\d*$/"
                                                                                 onKeyPress="if(this.value.length==8) return false;"
-                                                                                [ngClass]="this.guardObject.MobileNum == '' ? 'is-invalid' : ''"
                                                                                 placeholder="5555-5555" required
                                                                                 [ngModelOptions]="{standalone: true}"
                                                                                 [(ngModel)]="this.guardObject.MobileNum">
@@ -99,7 +99,8 @@
                                                                                 class="form-control" type="number"
                                                                                 pattern="/^-?\d+\.?\d*$/"
                                                                                 onKeyPress="if(this.value.length==8) return false;"
-                                                                                [ngClass]="this.guardObject.PhoneNum == '' ? 'is-invalid' : ''"
+                                                                                [ngClass]="(this.guardObject.PhoneNum != null && this.guardObject.PhoneNum<10000000) ? 'is-invalid' : ''"
+
                                                                                 placeholder="5555-5555" required
                                                                                 [ngModelOptions]="{standalone: true}"
                                                                                 [(ngModel)]="this.guardObject.PhoneNum">
@@ -120,12 +121,15 @@
                                                                 </div>
                                                         </div>
                                                         <div class="col">
-                                                                <div class="form-group"><label for="NIC"><strong>NID
+                                                                <div class="form-group"><label for="NIC"><strong>NIC
                                                                                         Number</strong>
                                                                         </label><input class="form-control" type="text"
                                                                                 placeholder="Nic" required
+                                                                                pattern="/^T[0-3]\d[0-1]\d{10}$/"
+                                                                                onKeyPress="if(this.value.length==8) return false;"
                                                                                 [ngModelOptions]="{standalone: true}"
-                                                                                [(ngModel)]="this.guardObject.nid">
+                                                                                [(ngModel)]="this.guardObject.nid"
+                                                                                [ngClass]="this.guardObject.nid == '' ? 'is-invalid' : ''">
                                                                 </div>
                                                         </div>
 

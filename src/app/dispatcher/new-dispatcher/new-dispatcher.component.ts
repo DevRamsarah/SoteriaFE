@@ -135,9 +135,9 @@ edit=false
       })
   }
   submit() {
-    this.invoiceObject.ClientID= this.ClientDrop
-    this.invoiceObject.Guard= this.guardDrop
-    this.invoiceObject.PostSite= this.PostSiteDrop
+
+    console.log(this.invoiceObject);
+    
     Swal.fire({
       title: 'Do you want to save the changes?',
       showDenyButton: true,
@@ -156,7 +156,9 @@ edit=false
             }
           )
         } else {
-    
+          this.invoiceObject.ClientID= this.ClientDrop
+          this.invoiceObject.Guard= this.guardDrop
+          this.invoiceObject.PostSite= this.PostSiteDrop
           this.firebaseCrud.createNewDispatchTicket(this.invoiceObject).then(
             () => {
               Swal.fire('Dispatch data saved!', '', 'success')

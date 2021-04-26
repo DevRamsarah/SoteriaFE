@@ -26,7 +26,6 @@ export class NewPostSiteComponent implements OnInit {
     MobileNum: null,
     PhoneNum: null,
     faxNum: null,
-    Category: null,
     ClientEmail: null,
     ClientAddress: null,  
     Latitude: '',
@@ -71,7 +70,6 @@ export class NewPostSiteComponent implements OnInit {
       this.firebaseCrud.getOnePostSite(new URLSearchParams(window.location.search).get("edit")).subscribe((client: any) => {
         this.postSiteObject = {
 
-          Category: client.Category,
           ClientEmail: client.ClientEmail,
           ClientName: client.ClientName,
           ContactName: client.ContactName,
@@ -179,20 +177,30 @@ export class NewPostSiteComponent implements OnInit {
   submit() {
       
     this.loading = true;
+    Swal.fire({
+      title: 'Do you want to save the changes?',
+      showDenyButton: true,
+      showCancelButton: false,
+      confirmButtonText: `Save`,
+      denyButtonText: `Don't save`,
+    }).then((result) => {
     if (new URLSearchParams(window.location.search).has("edit")) {
       this.firebaseCrud.updatePostSite(new URLSearchParams(window.location.search).get("edit"), this.postSiteObject).then(
         () => {
-          alert("PostSite Edit")// add sweet alert
-        }
+          Swal.fire('Post Site data edited!', '', 'success')
+          this.router.navigate(["PostSite"]);
+    }
       )
     } else {
 
       this.firebaseCrud.createNewPostSite(this.postSiteObject).then(
         () => {
-          alert("PostSite Added")// add sweet alert
+          Swal.fire('Post Site saved!', '', 'success')
+          this.router.navigate(["PostSite"]);
         }
       )
     }
+    })
     this.router.navigate(["PostSite"]);
 
   }

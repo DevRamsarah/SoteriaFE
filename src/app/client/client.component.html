@@ -71,7 +71,7 @@
                       >Archive</button>
                       <button mat-menu-item *ngIf="!recStatus"(click)="unarchieve(element.ClientID)"
                       >Unarchive</button>
-                      <button mat-menu-item *ngIf="!recStatus" (click)="deleteData(element.ClientID)"
+                      <button mat-menu-item *ngIf="!recStatus" (click)="deleteData(element.ClientID,element.ClientName)"
                       >Delete</button>
                       </mat-menu>
                   </td>
