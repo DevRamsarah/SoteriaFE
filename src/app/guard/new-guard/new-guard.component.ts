@@ -193,7 +193,7 @@ export class NewGuardComponent implements OnInit {
   }
   submit() {
     const actionCodeSettings = {
-      url:'http://localhost:4200/Dashboard',
+      url:'https://soteria-a2ac4.web.app/Dashboard',
       handleCodeInApp:true
   };
     Swal.fire({

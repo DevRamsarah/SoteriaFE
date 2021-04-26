@@ -131,7 +131,8 @@ const routes: Routes = [
     path: 'Invoicer/New-invoice', component: AddInvoiceComponent, canActivate: [AuthGuard],
 
   },
-  
+  { path: '**', redirectTo: 'Dashboard', pathMatch: 'full' },
+
 
 ];
 
