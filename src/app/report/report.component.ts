@@ -3,8 +3,9 @@ import { addDays } from '@progress/kendo-date-math';
 import { addWeeks } from '@progress/kendo-date-math';
 import { addMonths } from '@progress/kendo-date-math';
 import { convertToCSV } from '../../app/utils/generateCSV';
-import { ClientService } from 'src/services/client/client.service';
+// import { ClientService } from 'src/services/client/client.service';
 import Swal from 'sweetalert2';
+import { InvoiceService } from 'src/services/invoice/invoice.service';
 
 const date = new Date();
 var day = addDays(date, -1);
@@ -18,7 +19,7 @@ export class ReportComponent implements OnInit {
   error = false;
   _loading: boolean = false;
 
-  constructor(private reportService: ClientService) { }
+  constructor(private reportService: InvoiceService) { }
 
   firstDay = new Date(); //returns first date of the month, `2000-11-1`
   weekly = (this.firstDay = addDays(date, -7));
@@ -33,6 +34,7 @@ export class ReportComponent implements OnInit {
   }
 
   generate_csv() {
+    let arrguard = []
     this.error = false;
     this._loading = true;
     if (this.range.start.getTime() != this.range.end.getTime()) {
@@ -46,21 +48,66 @@ export class ReportComponent implements OnInit {
         this.range.start.toISOString().substr(0, 10) + ' ' + '00:00:00';
       var to = this.range.end.toISOString().substr(0, 10) + ' ' + '00:00:00';
     }
+    Date.prototype.addHours = function (h) {
+      this.setHours(this.getHours() + h);
+      return this;
+    }
 
     this.reportService.getStats(from, to).subscribe(
       (data: any) => {
         let reports = data;
         this._loading = false;
+        // console.log(reports)
+
+        Date.prototype.subHours = function (h) {
+          this.setHours(this.getHours() - h);
+          return this;
+        }
         if (reports.length > 0) {
-          let r2 = reports.map((r) => ({
-            'Employee ID': r.ClientID,
-            'Employee Name': r.ClientName,
-            'Address': r.ClientAddress,
-            'Mobile Number': r.travel_amount,
-            'Zone': r.Zone,
-            'Post-Site': r.PsLocation,
-          }));
-          convertToCSV(r2, `${from} to ${to}.csv`);
+          let r3 = reports.filter(function (pilot) {
+            let minDate = new Date(from.split(" 00:00:00")[0]);
+            let maxDate = new Date(to.split(" 00:00:00")[0]);
+            let c = new Date(pilot.Currentdate);
+            minDate.addHours(20)
+            maxDate.addHours(20)
+            c.subHours(4)
+   
+
+
+
+            if (c >= minDate && c <= maxDate) {
+              return pilot;
+            }
+
+          });
+          let r2 = r3.map((r) => ({
+            'Date': r.Currentdate,
+            'Title': r.Title,
+            'Client Name': r.Clientid,
+            'Post Site': r.PostSiteid,
+            'Address': r.Summary,
+            'Guard': r.ArrayGuard.map((a) => {
+              let arr = []
+              arr.push(a.name)
+              return arr
+            }),
+            'Amount': r.total,
+            'Start': r.arrayDes.map((a) => {
+              return (new Date(a.start.seconds * 1000).toISOString().split('T')[0])
+            }),
+            'End': r.arrayDes.map((a) => {
+              return (new Date(a.end.seconds * 1000).toISOString().split('T')[0])
+            })
+            ,
+          }
+
+          ));
+try {
+  
+  convertToCSV(r2, `${new Date(from).addHours(28).toISOString().split('T')[0]} to ${new Date(to).addHours(28).toISOString().split('T')[0]}.csv`);
+} catch (error) {
+  Swal.fire("No record found, Please try another range", '', 'error')
+}
         } else {
           this.error = true;
         }

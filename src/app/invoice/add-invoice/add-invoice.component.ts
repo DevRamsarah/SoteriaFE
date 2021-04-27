@@ -34,8 +34,8 @@ export class AddInvoiceComponent implements OnInit {
     PostSiteid: "",
     ClientName: "",
     PostSiteName: "",
-    recordStatus: "active"
-
+    recordStatus: "active",
+    ArrayGuard:[]
 
   }
   field = {
@@ -173,8 +173,10 @@ export class AddInvoiceComponent implements OnInit {
       var points = turf.featureCollection(this.guardlist);
       var nearest = turf.nearestPoint(targetPoint, points);
       this.selectedGuard.push(nearest.properties)
+      this.invoice.ArrayGuard.push(nearest.properties)
       this.guardlist.splice(nearest.properties.featureIndex, 1)
     }
+
     this.SchedulerCRUD.createNewScheduler(
       {
         start: (this.fieldArray[0].start).toString(),
